@@ -1,0 +1,66 @@
+.logo-landing{
+  max-width: 156px;
+}
+@media screen and (max-width: 500px) {
+  .logo-landing{
+    max-width: 100px;
+  }
+}
+.pagination .page-link{
+  font-size: 1.5rem;
+}
+
+.project-filter li:hover a, .project-filter li.current a {
+  color: white;
+  background: var(--primary-color);
+}
+
+.text-riset{
+  color: #256FB2!important;
+}
+.border-riset{
+  border-color: #256FB2!important;
+}
+.bg-riset{
+  background: #256FB2!important;
+}
+.text-seni{
+  color: #F3572C!important;
+}
+.border-seni{
+  border-color: #F3572C!important;
+}
+.bg-seni{
+  background: #F3572C!important;
+}
+.text-or{
+  color: #1CA6B5!important;
+}
+.border-or{
+  border-color: #1CA6B5!important;
+}
+.bg-or{
+  background: #1CA6B5!important;
+}
+
+.carousel-content{
+  height: 561px;
+  background: #fff;
+  display: flex;
+}
+.carousel-content img{
+  width: 50% !important;
+  height: 100% !important;
+  object-fit: cover;
+}
+.carousel-content .cc-content{
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 36px;
+}
+.text-primary{
+  color: var(--primary-color)!important;
+}

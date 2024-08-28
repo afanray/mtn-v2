@@ -1,0 +1,18 @@
+<?php
+
+	namespace App\Models;
+
+	use Illuminate\Database\Eloquent\Model;
+
+	class Regencies extends Model
+	{
+    protected $table = 'regencies';
+    protected $fillable = [
+      'code',
+      'name',
+      'province_code',
+      'province_id',
+      'latitude',
+      'longitude',
+    ];
+	}
