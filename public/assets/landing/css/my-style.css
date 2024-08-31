@@ -1,0 +1,29 @@
+.banner {
+  background: url("background-image.jpg") no-repeat center center;
+  background-size: cover;
+  padding: 50px 0;
+  color: white;
+  text-align: center;
+}
+
+.icon {
+  font-size: 50px;
+  margin-bottom: 10px;
+}
+
+.talent-card {
+  text-align: center;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #f8f9fa;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.talent-card h5 {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.talent-card p {
+  margin-bottom: 20px;
+}
