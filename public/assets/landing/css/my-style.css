@@ -25,7 +25,7 @@
   margin-top: -200px;
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  height: 350px; /* Fixed height */
+  height: 400px; /* Fixed height */
   transition: background-color 0.3s ease;
   overflow: hidden;
   align-items: center;
@@ -83,7 +83,7 @@
   background: url("assets/landing/images/background/spacers_200px.svg")
     no-repeat center center;
   background-size: cover; /* Ensure the background covers the whole section */
-  width: 100wv; /* Full viewport width */
+  width: 100wv;
   height: 150px;
   display: flex;
   position: relative;

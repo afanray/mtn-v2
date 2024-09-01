@@ -8,7 +8,6 @@
             <div class="container text-white">
                 <h2>BASIS DATA TERPADU MANAJEMEN TALENTA NASIONAL</h2>
             </div>
-
         </section>
         <section class="py-5">
             <div class="container">
@@ -96,7 +95,7 @@
         </h3>
 
         <div class="row">
-            <div class="col-lg-7">
+            <div class="col-lg-9">
                 <div class="card">
                     <!-- Main Video -->
                     <iframe class="w-full h-60 mb-6" id="mainVideo" height="448" src="{{ $mainVideoSrc }}" scrolling="no"
@@ -105,8 +104,7 @@
                         referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 </div>
             </div>
-
-            <div class="col-lg-5 bg-white ">
+            <div class="col-lg-3 bg-white ">
                 <h3 class="text-2xl font-semibold mb-4">More Videos</h3>
                 <ul class="space-y-4">
                     @foreach ($videos as $index => $videoUrl)
