@@ -40,11 +40,13 @@
     <!--====== Responsive css ======-->
     <link rel="stylesheet" href="{{ asset('assets/landing/css/responsive.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/landing/css/custom.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('assets/landing/css/leaflet-1.9.4.css') }}">
     @yield('css')
 </head>
 
 <body>
-    <div class="page-wrapper">
+    <div class="page-wrapper ">
 
         <!-- Preloader -->
         <div class="preloader"></div>
@@ -92,7 +94,6 @@
                                         <li @class(['current' => $activeMenu === 'contact'])><a href="/contact">Kontak</a></li>
                                     </ul>
                                 </div>
-
                             </nav>
                             <!-- Main Menu End-->
                         </div>

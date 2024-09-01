@@ -49,6 +49,71 @@ class HomeController extends Controller
     $testimoni = Testimoni::valid()->with(['province', 'regency'])->get();
     $praktikBaik = PraktikBaik::valid()->with(['bidang'])->limit(4)->get();
     $bidang = Bidang::all();
+
+    $mainVideoSrc = "https://www.youtube.com/embed/DRS0G2NNQ-A?si=Ssy5RghjlthPhtI_"; // Default main video
+    $videos = [
+      "https://www.youtube.com/embed/DRS0G2NNQ-A?si=Ssy5RghjlthPhtI_",
+      "https://www.youtube.com/embed/JZ-9nWDhg94?si=_C8xPsDtlUmXd5qF",
+      // Add more video URLs as needed
+    ];
+    $dataSorotan = [
+      [
+        'id' => 1,
+        'name' => 'Prof. Tommy Firman, Ph.D',
+        'role' => 'Kepakaran Ilmu Perencanaan Wilayah dan Kota',
+        'imageUrl' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCrQEAkIItpqI1PjC2DqArIm7REU5zxaWxqg&s',
+        'cover' => '/images/bgAnugrah-01.png',
+        'link' => 'https://sappk.itb.ac.id/selamat-prof-em-itb-ir-tommy-firman-m-sc-ph-d-meraih-penghargaan-worlds-top-2-scientist-2023/'
+      ],
+      [
+        'id' => 2,
+        'name' => 'Prof. Ir. I Gede Wenten, M.S.c., Ph.D',
+        'role' => 'Kepakaran Intensifikasi Proses Teknik Kimia',
+        'imageUrl' => 'https://www.fti.itb.ac.id/wp-content/uploads/sites/9/2021/06/IGW.jpg',
+        'cover' => '/images/bgAnugrah-01.png',
+        'link' => 'https://www.itb.ac.id/berita/9-dosen-itb-masuk-worlds-top-2-scientist-2023/59966'
+      ],
+      [
+        'id' => 3,
+        'name' => 'Rizki Juniansyah',
+        'role' => 'Atlet Angkat Besi',
+        'imageUrl' => 'https://asset.kompas.com/crops/ZcR1eJ_Y2CA36XZyfneALwe3Iok=/0x0:3000x2000/750x500/data/photo/2024/08/09/66b536ac54406.jpeg',
+        'cover' => '/images/bgAnugrah-03.png',
+        'link' => 'https://setkab.go.id/olimpiade-paris-2024-rizki-juniansyah-persembahkan-medali-emas-kedua-untuk-indonesia/'
+      ],
+      [
+        'id' => 4,
+        'name' => 'I Nyoman Nuarta',
+        'role' => 'Pematung',
+        'imageUrl' => 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Nyoman_nuarta_2016_bandung1.jpg',
+        'cover' => '/images/bgAnugrah-02.png',
+        'link' => 'https://nasional.tempo.co/read/1903557/7-karya-terkenal-nyoman-nuarta'
+      ],
+    ];
+
+    $dataBeasiswa = [
+      [
+        "bidang" => "LPDP Scholarship Policy in 2024",
+        "image" => "https://img.harianjogja.com/posts/2024/01/09/1160976/lpdp.jpg",
+        "deskripsi" => "LPDP berkomitmen untuk menyiapkan pemimpin dan profesional masa depan melalui program beasiswa dan mendorong inovasi melalui pendanaan riset untuk mewujudkan Indonesia yang sejahtera, demokratis, dan maju.",
+        "total" => 17004,
+        "url" => "https://lpdp.kemenkeu.go.id/en/beasiswa/kebijakan-umum/"
+      ],
+      [
+        "bidang" => "Beasiswa Bank Indonesia",
+        "image" => "https://feb.umri.ac.id/wp-content/uploads/2020/08/Beasiswa-Bank-Indonesia-2020-1024x1024.jpg",
+        "deskripsi" => "Beasiswa unggulan adalah beasiswa yang diberikan pada Perguruan Tinggi Negeri (PTN) yang bekerjasama dengan Bank Indonesia, sedangkan beasiswa reguler adalah beasiswa yang diberikan kepada PTN/PTS/SMK.",
+        "total" => 35919,
+        "url" => "https://bicara131.bi.go.id/knowledgebase/article/KA-01149/en-us"
+      ],
+      [
+        "bidang" => "Beasiswa Unggulan Kemendikbudristek",
+        "image" => "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyp9I_mSXWWyTXCFsJovRyyfoo3s6RyVw8fA&s",
+        "deskripsi" => "Beasiswa unggulan Kemendikbudristek adalah beasiswa yang diberikan oleh Pemerintah Indonesia melalui Kemendikbudristek bagi yang ingin melanjutkan pendidikan ke jenjang S1, S2, dan S3 baik di dalam negeri maupun di luar negeri.",
+        "total" => 9322,
+        "url" => "https://beasiswaunggulan.kemdikbud.go.id"
+      ],
+    ];
     return view('landing.new-home', [
       'highlight_talenta' => $highlightTalenta,
       'anugrah_talenta' => $anugrahTalenta,
@@ -57,7 +122,11 @@ class HomeController extends Controller
       'testimoni' => $testimoni,
       'praktik_baik' => $praktikBaik,
       'bidang' => $bidang,
-      'activeMenu' => 'home'
+      'activeMenu' => 'home',
+      'mainVideoSrc' => $mainVideoSrc,
+      'videos' => $videos,
+      'dataBeasiswa' => $dataBeasiswa,
+      'dataSorotan' => $dataSorotan,
     ]);
   }
 

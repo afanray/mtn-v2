@@ -638,7 +638,7 @@
                             $.each(res.data, function(index, item) {
                                 $('#test_regency').append(
                                     `<option value="${item.id}">${item.name}</option>`
-                                    );
+                                );
                             })
                             $('#test_regency').niceSelect('update')
                         }
