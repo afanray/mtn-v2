@@ -69,7 +69,7 @@ class HomeController extends Controller
         'id' => 2,
         'name' => 'Prof. Ir. I Gede Wenten, M.S.c., Ph.D',
         'role' => 'Kepakaran Intensifikasi Proses Teknik Kimia',
-        'imageUrl' => 'https://www.fti.itb.ac.id/wp-content/uploads/sites/9/2021/06/IGW.jpg',
+        'imageUrl' => 'https://upload.wikimedia.org/wikipedia/commons/3/3b/I_Gede_Wenten_ITB_2020.jpg',
         'cover' => '/images/bgAnugrah-01.png',
         'link' => 'https://www.itb.ac.id/berita/9-dosen-itb-masuk-worlds-top-2-scientist-2023/59966'
       ],
