@@ -50,6 +50,51 @@ class TalentaController extends Controller
     ]);
   }
 
+  public function countBidang()
+  {
+    $talentaCounts = DB::table('talenta')
+      ->select('bidang', DB::raw('count(*) as total'))
+      ->groupBy('bidang',)
+      ->get();
+
+    // Customize response
+    $response = $talentaCounts->groupBy('bidang')->map(function ($items, $categoryId,) {
+
+      $images = ["ic_risnov.jpeg",  "ic_senbud.jpeg", "ic_olahraga.jpeg",];
+
+      $deskripsis = ["Meningkatkan jumlah dan kualitas SDM Iptek nasional, berkontribusi pada inovasi, serta meningkatkan rekognisi internasional talenta riset dan inovasi melalui ajang dan portofolio.", "Meningkatnya jumlah dan kualitas Talenta Seni Budaya yang kreatif, berkontribusi pada kebudayaan nasional, serta peningkatan rekognisi internasional dan penyelenggaraan ajang seni budaya berkelas internasional di Indonesia", "Meningkatnya jumlah dan kualitas olahragawan berprestasi serta tenaga keolahragaan bersertifikat internasional, dengan peningkatan rekognisi dan raihan prestasi di cabang olahraga Olimpiade dan Paralimpiade."];
+
+      if ($categoryId == "Riset dan Inovasi") {
+        $image = $images[0];
+      } elseif ($categoryId == "Seni Budaya") {
+        $image = $images[1];
+      } else {
+        $image = $images[2];
+      }
+
+      if ($categoryId == "Riset dan Inovasi") {
+        $deskripsi = $deskripsis[0];
+      } elseif ($categoryId == "Seni Budaya") {
+        $deskripsi = $deskripsis[1];
+      } else {
+        $deskripsi = $deskripsis[2];
+      }
+
+      $total = $items->map(function ($item) {
+        return $item->total;
+      });
+
+      return  [
+        'bidang' => $categoryId,
+        'image' => $image,
+        'deskripsi' => $deskripsi,
+        'total' => $total[0]
+      ];
+    }); // Ensure this is an array for resource collection
+
+    return response()->json($response->values());
+  }
+
   function getCountTahapanBidang(Request $request)
   {
 

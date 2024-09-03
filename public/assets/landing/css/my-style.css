@@ -70,6 +70,13 @@
   max-width: calc(33.333% - 1rem); /* Adjusts for the gap */
 }
 
+.dashboard-section {
+  position: relative;
+  z-index: 2; /* Adjust padding as needed */
+  align-items: center;
+  justify-content: center;
+}
+
 .dashboard-section-rotator {
   position: relative;
   z-index: 2; /* Adjust padding as needed */
@@ -90,8 +97,8 @@
 }
 
 .banner-rotator p {
-  font-size: 25px;
-  margin-top: 45px;
+  font-size: 1.2rem;
+  padding: 10px;
 }
 
 .relative {
@@ -117,6 +124,7 @@
   margin-right: auto;
   width: 50%;
 }
+
 @media (max-width: 768px) {
   .banner {
     background: url("assets/landing/images/background/banner_website.jpeg")
@@ -129,6 +137,11 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end; /* Align content to the bottom */
+  }
+
+  .dashboard-section p {
+    font-size: 20px;
+    line-height: 2;
   }
   .card-container .talent-card {
     flex: 1 1 100%; /* 1 card per row */
@@ -181,15 +194,16 @@
     background: url("assets/landing/images/background/spacers_200px.svg")
       no-repeat center center;
     background-size: cover; /* Ensure the background covers the whole section */
-    width: 93%; /* Full viewport width */
-    height: 80px;
+    /* width: 100wv; */
+    height: 120px;
     display: flex;
     position: relative;
   }
 
   .banner-rotator p {
-    font-size: 23px;
-    margin-top: 10px;
+    font-size: 0.8rem;
+    padding: 10px;
+    line-height: 1.6;
   }
 
   .relative {
@@ -219,6 +233,11 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end; /* Align content to the bottom */
+  }
+
+  .dashboard-section p {
+    font-size: 25px;
+    line-height: 2;
   }
   .card-container .talent-card {
     flex: 1 1 100%; /* 1 card per row */
@@ -278,17 +297,17 @@
     background: url("assets/landing/images/background/spacers_200px.svg")
       no-repeat center center;
     background-size: cover; /* Ensure the background covers the whole section */
-    width: 93%; /* Full viewport width */
-    height: 80px;
+    width: 100wv; /* Full viewport width */
+    height: 120px;
     display: flex;
     position: relative;
   }
 
   .banner-rotator p {
-    font-size: 23px;
-    margin-top: 10px;
+    font-size: 0.8rem;
+    padding: 10px;
+    line-height: 1.5;
   }
-
   .relative {
     position: relative;
     width: 100%;
@@ -351,8 +370,9 @@
 }
 
 .icon-sorotan .img {
-  height: 80px;
-  border-radius: 50%;
+  height: 120px;
+  width: 120px;
+  border-radius: 100%;
 }
 
 .beasiswa-card {

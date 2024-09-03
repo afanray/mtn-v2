@@ -2,7 +2,7 @@
 @section('title', 'Home')
 @section('body')
     <!--====== Hero Section Start ======-->
-    <section class="dashboard-section rel z-2 pt-120 pb-75">
+    <section class="dashboard-section rel z-2 pt-120 mb-20">
         <!-- Banner Section -->
         <section class="banner" style="background-image: url('assets/landing/images/background/banner_website.jpeg');">
             <div class="container text-white">
@@ -20,37 +20,37 @@
 
     <!-- Content Section -->
 
-    <!--====== Hero Section End ======-->
-    <section class="dashboard-section-rotator rel z-2 ">
-        <section class="banner-rotator mx-auto"
-            style="background-image: url('assets/landing/images/background/spacers_200px.svg');">
-            <div class="relative flex  mx-auto px-4 py-12">
-                <div class="max-w-3xl w-full h-auto mt-12">
-                    <p class="text-white text-sm-center items-center justify-center text-center text-[25px]"
-                        id="rotating-text">
-                    </p>
-                </div>
+    <section class="container bg-white  mb-5 p-10 rounded-lg">
+        <section class="banner-rotator mx-auto text-center justify-content-center align-items-center "
+            style="background-image: url('assets/landing/images/background/spacers_200px.svg'); background-size: cover; background-position: center;">
+            <div class="d-flex justify-content-center align-items-center py-5">
+                <p class="text-white" id="rotating-text">
+                    <!-- Teks yang berotasi akan muncul di sini -->
+                </p>
             </div>
         </section>
     </section>
 
-    <section class="container bg-white dark:bg-gray-800 px-5 sm:px-8 md:px-16 lg:px-40 pt-5 dark:border-gray-700 mt-50">
-        <h3 class="text-gray-900 sm:text-5xl md:text-6xl lg:text-3xl font-bold text-left mx-auto max-w-6xl mt-7 mb-5">
+    <section class="container bg-white mt-5 mb-5">
+        <h3 class="font-weight-bold text-left mx-auto mt-4 mb-4">
             Anugrah Talenta Nasional
         </h3>
 
         <div class="row">
             @foreach ($dataSorotan as $item)
-                <div class="col-lg-3 col-md-12 ">
-
+                <div class="col-lg-3 col-md-12">
                     <a href="{{ $item['link'] }}">
                         <div class="sorotan-card wow fadeInUp delay-0-3s"
-                            style="visibility: visible; animation-name: fadeInUp; background-image: url('/assets/landing/{{ $item['cover'] }}')">
+                            style="visibility: visible; animation-name: fadeInUp; background-image: url('/assets/landing/{{ $item['cover'] }}');">
                             <div class="icon-sorotan">
                                 <img src="{{ $item['imageUrl'] }}" class="img" alt="image">
                             </div>
-                            <h6 class="text-white mt-100">{{ $item['name'] }}</h6>
-                            <p class="text-white">{{ $item['role'] }}</p>
+                            <div class="bg-white rounded-lg p-1 mt-50 text-center " style="height: 100px;">
+                                <h6 class="text-gray">{{ $item['name'] }}</h6>
+                                <p class="text-gray">{{ $item['role'] }}</p>
+
+                            </div>
+
                         </div>
                     </a>
 
@@ -60,8 +60,8 @@
     </section>
 
 
-    <section class="container bg-white dark:bg-gray-800 px-5 sm:px-8 md:px-16 lg:px-40 pt-5 dark:border-gray-700 mt-50">
-        <h3 class="text-gray-900 sm:text-5xl md:text-6xl lg:text-3xl font-bold text-left mx-auto max-w-6xl mt-7 mb-5">
+    <section class="container bg-white mt-5 mb-5">
+        <h3 class="font-weight-bold text-left mx-auto mt-4 mb-4">
             Beasiswa dan Hibah
         </h3>
 
@@ -88,54 +88,60 @@
         </div>
     </section>
 
-
-    <section class="container bg-white mt-50 mb-50">
-        <h3 class=" font-bold text-left mx-auto max-w-6xl mt-7 mb-5">
+    <section class="container bg-white mt-5 mb-10">
+        <h3 class="font-weight-bold text-left mx-auto mt-4 mb-4">
             Videografis Manajemen Talenta Nasional
         </h3>
 
         <div class="row">
-            <div class="col-lg-9">
+            <!-- Main Video Section -->
+            <div class="col-lg-9 mb-4 mb-lg-0">
                 <div class="card">
-                    <!-- Main Video -->
-                    <iframe class="w-full h-60 mb-6" id="mainVideo" height="448" src="{{ $mainVideoSrc }}" scrolling="no"
-                        title="YouTube video player"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    <div class="embed-responsive embed-responsive-16by9 rounded-lg">
+                        <iframe class="embed-responsive-item" id="mainVideo" src="{{ $mainVideoSrc }}"
+                            title="YouTube video player"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-3 bg-white ">
-                <h3 class="text-2xl font-semibold mb-4">More Videos</h3>
-                <ul class="space-y-4">
+
+            <!-- More Videos Section -->
+            <div class="col-lg-3">
+                <h3 class="h5 font-weight-bold mb-4">More Videos</h3>
+                <ul class="list-unstyled">
                     @foreach ($videos as $index => $videoUrl)
-                        <li onclick="setMainVideoSrc('{{ $videoUrl }}')" class="cursor-pointer relative"
-                            role="button">
-                            <iframe class="w-full secondaryIframe mb-20" src="{{ $videoUrl }}"
-                                title="YouTube video {{ $index + 1 }}"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+                        <li onclick="setMainVideoSrc('{{ $videoUrl }}')" class="cursor-pointer mb-3" role="button">
+                            <div class="embed-responsive embed-responsive-16by9 rounded-lg">
+                                <iframe class="embed-responsive-item secondaryIframe" src="{{ $videoUrl }}"
+                                    title="YouTube video {{ $index + 1 }}"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen
+                                    loading="lazy"></iframe>
+                            </div>
                         </li>
                     @endforeach
                 </ul>
-
             </div>
         </div>
     </section>
 
-
-    <section class="banner-rotator mx-auto"
+    <section class="banner-rotator mx-auto justify-content-center align-items-center"
         style="background-image: url('assets/landing/images/background/spacers_200px.svg');">
-        <div class="relative flex  mx-auto px-4 py-12">
-            <div class="max-w-3xl w-full h-auto mt-12">
-                <p class="text-white items-center justify-center text-center text-[25px]">Gugus Tugas Manajemen Talenta
-                    Nasional</p>
-            </div>
+
+        <div class="d-flex justify-content-center align-items-center p-5 ">
+            <h3 class="text-white text-center text-bold " id="rotating-text">
+                Gugus Tugas Manajemen Talenta
+                Nasional
+                <!-- Teks yang berotasi akan muncul di sini -->
+            </h3>
         </div>
+
     </section>
 
 
     <!--====== Partners Section Start ======-->
-    <section class="partners-section rel z-1 pt-30 rpt-150 pb-90 rpb-60">
+    <section class="partners-section rel z-1 mt-10 mb-10">
         <div class="container">
             <div class="row">
                 <div class="col-xl-12 col-lg-10 d-flex flex-column align-items-center">
@@ -204,15 +210,23 @@
             height: 56px;
             padding: 8px 16px;
         }
+
+        #rotating-text {
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .fade-out {
+            opacity: 0;
+        }
+
+        .fade-in {
+            opacity: 1;
+        }
     </style>
 @endsection
 
 @section('js')
-    <script>
-        function setMainVideoSrc(src) {
-            document.getElementById('mainVideo').src = src;
-        }
-    </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="{{ asset('assets/landing/js/jqueryValidation/jquery.validate.min.js') }}"></script>
@@ -329,69 +343,74 @@
             $('input[name="recaptcha"]').val(t);
             $("#test-form").submit();
         }
-        document.addEventListener('DOMContentLoaded', function() {
-            // Example data array
-            const talentData = [{
-                    iconClass: 'fas fa-dumbbell',
-                    icon: '/assets/media/icons/bidang/ic_olahraga.jpeg',
-                    title: 'Bidang Olahraga',
-                    description: 'Meningkatnya jumlah dan kualitas olahragawan berprestasi serta tenaga keolahragaan bersertifikat internasional, dengan peningkatan rekognisi dan raihan prestasi di cabang olahraga Olimpiade dan Paralimpade.',
-                    count: '17,004 Talenta'
-                },
-                {
-                    iconClass: 'fas fa-flask',
-                    icon: '/assets/media/icons/bidang/ic_risnov.jpeg',
-                    title: 'Bidang Riset dan Inovasi',
-                    description: 'Meningkatkan jumlah dan kualitas SDM Iptek nasional, berkontribusi pada inovasi, serta meningkatkan rekognisi internasional talenta riset dan inovasi melalui ajang dan portofolio.',
-                    count: '35,919 Talenta'
-                },
-                {
-                    iconClass: 'fas fa-palette',
-                    icon: '/assets/media/icons/bidang/ic_senbud.jpeg',
-                    title: 'Bidang Seni Budaya',
-                    description: 'Meningkatnya jumlah dan kualitas Talenta Seni Budaya yang kreatif, berkontribusi pada kebudayaan nasional, serta peningkatan rekognisi internasional dan penyelenggaraan ajang seni budaya berkelas internasional di Indonesia.',
-                    count: '9,322 Talenta'
-                }
-            ];
 
+        function setMainVideoSrc(src) {
+            document.getElementById('mainVideo').src = src;
+        }
+
+        const baseUrl = `${window.location.protocol}//${window.location.host}/`;
+
+        document.addEventListener('DOMContentLoaded', async function() {
             const container = document.getElementById('talent-cards-container');
+            const apiEndpoint = `${baseUrl}api/bidang-count`; // Ganti dengan endpoint API Anda
+            // Menampilkan indikator loading
 
-            talentData.forEach(talent => {
-                const card = document.createElement('div');
-                card.className = 'col-md-4';
-                const iconClass = talent.title === 'Bidang Olahraga' ? 'text-danger' : talent.title ===
-                    'Bidang Seni Budaya' ? 'text-success' : 'text-primary';
+            console.log(apiEndpoint);
+            container.innerHTML = '<p>Loading data...</p>';
+            try {
+                const response = await fetch(apiEndpoint);
 
-                card.innerHTML = `
-                <div class="talent-card ">
+                // Memeriksa apakah respons berhasil
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
 
-                    <div class="icon-tahapan text-danger">
-                        <img src="${talent.icon}"
-                            class="img" alt="">
+                const talentData = await response.json();
+
+                // Memastikan container kosong sebelum menambahkan elemen baru
+                container.innerHTML = '';
+
+                talentData.forEach(talent => {
+                    const card = document.createElement('div');
+                    card.className = 'col-md-4';
+
+                    card.innerHTML = `
+                <div class="talent-card">
+                    <div class="icon-tahapan ">
+                        <img src="/assets/media/icons/bidang/${talent.image}" class="img" alt="${talent.bidang}">
                     </div>
-                    <h5>${talent.title}</h5>
-                    <p>${talent.description}</p>
-                    <h6>${talent.count}</h6>
+                    <h5>${talent.bidang}</h5>
+                    <p>${talent.deskripsi}</p>
+                    <h6>${talent.total} Talenta</h6>
                 </div>
             `;
 
-                container.appendChild(card);
-            });
-
-
+                    container.appendChild(card);
+                });
+            } catch (error) {
+                console.error('Error fetching talent data:', error);
+                container.innerHTML = '<p>Terjadi kesalahan saat memuat data. Silakan coba lagi nanti.</p>';
+            }
         });
+
         document.addEventListener('DOMContentLoaded', function() {
             const texts = [
                 "Mempersiapkan Talenta yang berdaya saing dan terekognisi di tingkat internasional pada bidang Riset dan Inovasi, Seni Budaya, serta Olahraga.",
-                "Menjamin penyelenggaraan upaya pembibitan, pengembangan, dan penguatan Talenta nasional secara holistik, terintegrasi, dan berkelanjutan."
+                "Menjamin penyelenggaraan upaya pembibitan, pengembangan, dan penguatan Talenta nasional secara holistik, terintegrasi, dan berkelanjutan.",
+                "Mengoordinasikan dan menyelaraskan kebijakan dan program oleh kementerian/ lembaga, pemerintah daerah provinsi, pemerintah daerah kabupaten/kota, dan peran Pemangku Kepentingan dalam rangka pembibitan, pengembangan, dan penguatan Talenta."
             ];
 
             let index = 0;
             const textElement = document.getElementById('rotating-text');
 
             function rotateText() {
-                textElement.textContent = texts[index];
-                index = (index + 1) % texts.length;
+                textElement.classList.add('fade-out'); // Add fade-out class for smooth transition
+                setTimeout(() => {
+                    textElement.textContent = texts[index];
+                    textElement.classList.remove('fade-out');
+                    textElement.classList.add('fade-in'); // Add fade-in class for smooth transition
+                    index = (index + 1) % texts.length;
+                }, 500); // Time matches the CSS transition time for fade-out
             }
 
             setInterval(rotateText, 3000); // Rotate every 3 seconds
