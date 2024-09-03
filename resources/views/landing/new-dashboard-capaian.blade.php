@@ -22,16 +22,6 @@
 
     <section class="services-section-three bg-lighter pt-50 rel z-1 bg-white">
         <div class="container">
-            {{-- <div class="row justify-content-start text-left">
-                <div class="col-xl-7 col-lg-8 col-md-10">
-                    <div class="section-title mb-55">
-                        <h5>Ringkasan Jumlah Talenta</h5>
-                        <p>
-                            Berikut adalah ringkasan jumlah talenta yang telah terdaftar di platform kami.
-                        </p>
-                    </div>
-                </div>
-            </div> --}}
             <ul class="nav nav-tabs project-filter justify-content-center mb-55 mtn-tab" id="talenta-tab" role="tablist">
                 <li class="nav-item current p-10" role="presentation"
                     onclick="showTahapanSasaranMtn(event, 'talenta-tab-1')">
@@ -57,54 +47,7 @@
                         style="visibility: visible; animation-name: fadeInUp;">
                         {{-- <div class="py-5"> --}}
                         <div class="container">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="tahapan-card text-center wow fadeInUp delay-0-2s"
-                                        style="visibility: visible; animation-name: fadeInUp; background-color: #3d81c3;">
-                                        <div class="icon-tahapan text-danger">
-                                            <img src="/assets/media/icons/tahapan/prabibit_risetdaninovasi.svg"
-                                                class="img" alt="">
-                                        </div>
-                                        <h5 class="text-white mt-5">Prabibit</h5>
-                                        <h3 class="text-white">17,004 Talenta</h3>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="tahapan-card text-center wow fadeInUp delay-0-3s"
-                                        style="visibility: visible; animation-name: fadeInUp; background-color: #3d81c3;">
-                                        <div class="icon-tahapan text-danger">
-                                            <img src="/assets/media/icons/tahapan/bibit_risetdaninovasi.svg" class="img"
-                                                alt="Prabibit">
-                                        </div>
-                                        <h5 class="text-white mt-5 ">Bibit</h5>
-                                        <h3 class="text-white">17,004 Talenta</h3>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="tahapan-card text-center wow fadeInUp delay-0-4s"
-                                        style="visibility: visible; animation-name: fadeInUp; background-color: #3d81c3;">
-                                        <div class="icon-tahapan text-danger">
-                                            <img src="/assets/media/icons/tahapan/potensi_risetdaninovasi.svg"
-                                                class="img" alt="">
-                                        </div>
-                                        <h5 class="text-white mt-5">Potensi</h5>
-                                        <h3 class="text-white">17,004 Talenta</h3>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-md-3">
-                                    <div class="tahapan-card text-center wow fadeInUp delay-0-5s"
-                                        style="visibility: visible; animation-name: fadeInUp;
-                                        background-color: #3d81c3;">
-                                        <div class="icon-tahapan text-danger">
-                                            <img src="/assets/media/icons/tahapan/unggul_risetdaninovasi.svg"
-                                                class="img" alt="">
-                                        </div>
-                                        <h5 class="text-white mt-5">Unggul</h5>
-                                        <h3 class="text-white">17,004 Talenta</h3>
-                                    </div>
-                                </div>
+                            <div class="row" id="talenta-tab-1-details">
                             </div>
                         </div>
                         {{-- </div> --}}
@@ -235,48 +178,7 @@
                 <div class="tab-pane fade" id="talenta-2" role="tabpanel" aria-labelledby="talenta-2-tab">
                     <ul class="nav solutions-tab-nav nav-pills flex-xl-column nav-fill mb-50" style="">
                         <div class="container">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="tahapan-card text-center" style="background-color: #0EAA4B;">
-                                        <div class="icon-tahapan text-danger">
-                                            <img src="/assets/media/icons/tahapan/prabibit_senibudaya.svg" class="img"
-                                                alt="">
-                                        </div>
-                                        <h5 class="text-white mt-5">Prabibit</h5>
-                                        <h3 class="text-white">17,004 Talenta</h3>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="tahapan-card text-center" style="background-color: #0EAA4B;">
-                                        <div class="icon-tahapan text-danger">
-                                            <img src="/assets/media/icons/tahapan/bibit_senibudaya.svg" class="img"
-                                                alt="Prabibit">
-                                        </div>
-                                        <h5 class="text-white mt-5 ">Bibit</h5>
-                                        <h3 class="text-white">17,004 Talenta</h3>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="tahapan-card text-center" style="background-color: #0EAA4B;">
-                                        <div class="icon-tahapan text-danger">
-                                            <img src="/assets/media/icons/tahapan/potensi_senibudaya.svg" class="img"
-                                                alt="">
-                                        </div>
-                                        <h5 class="text-white mt-5">Potensi</h5>
-                                        <h3 class="text-white">17,004 Talenta</h3>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="tahapan-card text-center" style="background-color: #0EAA4B;">
-                                        <div class="icon-tahapan text-danger">
-                                            <img src="/assets/media/icons/tahapan/unggul_senibudaya.svg" class="img"
-                                                alt="">
-                                        </div>
-                                        <h5 class="text-white mt-5">Unggul</h5>
-                                        <h3 class="text-white">17,004 Talenta</h3>
-                                    </div>
-                                </div>
-
+                            <div class="row" id="talenta-tab-2-details">
                             </div>
                         </div>
                     </ul>
@@ -391,47 +293,7 @@
                 <div class="tab-pane fade" id="talenta-3" role="tabpanel" aria-labelledby="talenta-3-tab">
                     <ul class="nav solutions-tab-nav nav-pills flex-xl-column nav-fill mb-50" style="">
                         <div class="container">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="tahapan-card text-center" style="background-color: #ff4133;">
-                                        <div class="icon-tahapan text-danger">
-                                            <img src="/assets/media/icons/tahapan/prabibit_olahraga.svg" class="img"
-                                                alt="">
-                                        </div>
-                                        <h5 class="text-white mt-5">Prabibit</h5>
-                                        <h3 class="text-white">17,004 Talenta</h3>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="tahapan-card text-center" style="background-color: #ff4133;">
-                                        <div class="icon-tahapan text-danger">
-                                            <img src="/assets/media/icons/tahapan/bibit_olahraga.svg" class="img"
-                                                alt="Prabibit">
-                                        </div>
-                                        <h5 class="text-white mt-5 ">Bibit</h5>
-                                        <h3 class="text-white">17,004 Talenta</h3>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="tahapan-card text-center" style="background-color: #ff4133;">
-                                        <div class="icon-tahapan text-danger">
-                                            <img src="/assets/media/icons/tahapan/potensi_olahraga.svg" class="img"
-                                                alt="">
-                                        </div>
-                                        <h5 class="text-white mt-5">Potensi</h5>
-                                        <h3 class="text-white">17,004 Talenta</h3>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="tahapan-card text-center" style="background-color: #ff4133;">
-                                        <div class="icon-tahapan text-danger">
-                                            <img src="/assets/media/icons/tahapan/unggul_olahraga.svg" class="img"
-                                                alt="">
-                                        </div>
-                                        <h5 class="text-white mt-5">Unggul</h5>
-                                        <h3 class="text-white">17,004 Talenta</h3>
-                                    </div>
-                                </div>
+                            <div class="row" id="talenta-tab-3-details">
                             </div>
                         </div>
                     </ul>
@@ -578,9 +440,28 @@
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script>
+        // Mendapatkan base URL dari halaman saat ini
+        const baseUrl = `${window.location.protocol}//${window.location.host}/`;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simulasikan klik pada tab default saat halaman dimuat
+            const defaultTab = document.querySelector('#talenta-1-tab');
+            if (defaultTab) {
+                showTahapanSasaranMtn({
+                    currentTarget: defaultTab
+                }, 'talenta-tab-1');
+            }
+        });
+
         function showTahapanSasaranMtn(evt, tabName) {
             // Dapatkan semua elemen dengan class="tab-content" dan sembunyikan
             const tabContent = document.getElementsByClassName('tab-content');
+            let bidang = (tabName === "talenta-tab-1") ?
+                "Riset dan Inovasi" :
+                (tabName === "talenta-tab-2") ?
+                "Seni Budaya" :
+                "Olahraga";
+
             for (let i = 0; i < tabContent.length; i++) {
                 tabContent[i].style.display = 'none';
             }
@@ -588,13 +469,71 @@
             // Hapus class "active" dari semua elemen tablinks
             const tabLinks = document.getElementsByClassName('tablinks');
             for (let i = 0; i < tabLinks.length; i++) {
-                tabLinks[i].className = tabLinks[i].className.replace(' active', '');
+                tabLinks[i].classList.remove('active');
             }
 
             // Tampilkan tab yang dipilih dan tambahkan class "active" ke tombol yang dipilih
             document.getElementById(tabName).style.display = 'block';
-            evt.currentTarget.className += ' active';
-        };
+            evt.currentTarget.classList.add('active');
+
+            // Panggil fungsi untuk mengambil data dari API
+            fetchDataForTab(bidang);
+        }
+
+        function fetchDataForTab(bidang) {
+            // Tentukan tabName dan color berdasarkan bidang
+            let tabName = (bidang === "Riset dan Inovasi") ?
+                "talenta-tab-1" :
+                (bidang === "Seni Budaya") ?
+                "talenta-tab-2" :
+                "talenta-tab-3";
+
+            let color = (bidang === "Riset dan Inovasi") ?
+                "#3d81c3" :
+                (bidang === "Seni Budaya") ?
+                "#0EAA4B" :
+                "#ff4133";
+
+            const apiUrl = `${baseUrl}api/bidang-tahapan?_qb=${bidang}`;
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    // Proses data yang diterima dari API dan perbarui tampilan tab
+                    updateTabContent(tabName, color, data);
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        }
+
+        function updateTabContent(tabName, color, data) {
+            // Pastikan elemen konten ada sebelum mengaksesnya
+            const contentElement = document.getElementById(`${tabName}-details`);
+            if (!contentElement) return;
+
+            let contentHtml = '';
+
+            // Iterasi melalui data tahapan dan buat HTML untuk setiap item
+            data.tahapan.forEach(item => {
+                contentHtml += `
+            <div class="col-md-3">
+                <div class="tahapan-card text-center wow fadeInUp delay-0-2s"
+                        style="visibility: visible; animation-name: fadeInUp; background-color: ${color};">
+                        <div class="icon-tahapan text-danger">
+                        <img src="/assets/media/icons/tahapan/${item.image}" class="img"
+                            alt="">
+                        </div>
+                <h5 class="text-white mt-5">${item.tahapan}</h5>
+                <h3 class="text-white">${item.total} Talenta</h3>
+                </div>
+            </div>
+        `;
+            });
+
+            // Update konten HTML di elemen tab
+            contentElement.innerHTML = contentHtml;
+        }
 
         //   chart risnov start
         Highcharts.chart('risnov-indikator-1', {
