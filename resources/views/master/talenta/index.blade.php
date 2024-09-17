@@ -42,7 +42,8 @@
             <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_user_table">
                 <thead>
                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                        <th class="min-w-20px">ID</th>
+                        <th class="min-w-20px">No.</th>
+                        <th class="min-w-125px">Talenta ID</th>
                         <th class="min-w-125px">Nama Talenta</th>
                         <th class="min-w-125px">NIK</th>
                         <th class="min-w-125px">Bidang</th>
@@ -134,7 +135,11 @@
         function defineColumn() {
             const columns = [{
                     data: 'id',
-                    title: 'ID',
+                    title: 'No.',
+                },
+                {
+                    data: 'kode_talenta',
+                    title: 'TALENTA ID',
                 },
                 {
                     data: 'nama_talenta',
@@ -185,7 +190,8 @@
                     sortable: false,
                     className: 'text-center',
                     render: function(data, type, row) {
-                        return `<a href="${dashboardUrl}/data-master/talenta/edit/${row.id}" class="edit-row me-3"><i class="fa fa-pencil-alt"></i></a>
+                        return `<a href="${dashboardUrl}/data-master/talenta/show/${row.id}" class="edit-row me-3"><i class="fa fa-circle-info"></i></a>
+                    <a href="${dashboardUrl}/data-master/talenta/edit/${row.id}" class="edit-row me-3"><i class="fa fa-pencil-alt"></i></a>
                     <a href="#" id="${row.id}" class="delete-row"><i class="fa fa-trash"></i></a>
                 `;
                     },

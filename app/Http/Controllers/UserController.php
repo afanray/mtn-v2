@@ -14,6 +14,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -63,6 +64,30 @@ class UserController extends Controller
   }
 
   public function store(Request $request): RedirectResponse {
+    
+
+      $validator = Validator::make($request->all(), [
+        'password' => [
+            'required',
+            'string',
+            'min:8',
+            'regex:/[a-z]/',
+            'regex:/[A-Z]/',
+            'regex:/[0-9]/',
+            'regex:/[@$!%*#?&]/',
+        ],
+    ], [
+        'password.required' => 'Password wajib diisi.',
+        'password.min' => 'Password harus minimal 8 karakter.',
+        'password.regex' => 'Password harus mengandung huruf besar, kecil, angka, dan simbol.',
+    ]);
+    
+    if ($validator->fails()) {
+        return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+    }
+
     $model = new User();
     if($request->input('id')){
       $model = User::find($request->input('id'));

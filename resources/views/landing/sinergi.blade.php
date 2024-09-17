@@ -36,7 +36,7 @@
             <div class="solution-content">
               {{--              <i class="flaticon-data-analysis"></i>--}}
               <h3><a>Pembuatan Akun</a></h3>
-              <p>UUntuk dapat mengakses layanan ini silahkan kontak Sekretariat Manajemen Talenta untuk mendapatkan Username dan Password</p>
+              <p>Untuk dapat mengakses layanan ini silahkan kontak Sekretariat Manajemen Talenta untuk mendapatkan Username dan Password</p>
             </div>
             <a href="{{ route('home.about') }}" class="learn-more">Link <i class="fas fa-arrow-right"></i></a>
           </div>

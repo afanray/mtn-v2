@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class TalentaPrestasi extends Model
 {
     use HasFactory;
+    protected $table = 'talenta_prestasi';
+
+    public function talenta()
+    {
+        return $this->belongsTo(Talenta::class);
+    }
 }

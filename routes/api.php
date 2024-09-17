@@ -43,4 +43,5 @@ Route::middleware(['auth:api'])->group(function () {
 Route::middleware('throttle:100,1')->group(function () {
   Route::get('/bidang-count', [TalentaController::class, 'countBidang']);
   Route::get('/bidang-tahapan', [TalentaController::class, 'getCountTahapanBidang']);
+  Route::get('/talenta-show', [TalentaController::class, 'show']);
 });

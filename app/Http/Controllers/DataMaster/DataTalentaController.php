@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\DataMaster;
 
-use App\Http\Controllers\Controller;
 use App\Models\Bidang;
-use App\Models\HighLightTalenta;
 use App\Models\Talenta;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use App\Models\HighLightTalenta;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
+use App\Http\Resources\TalentaResource;
 use Yajra\DataTables\Facades\DataTables;
 
 class DataTalentaController extends Controller
@@ -42,10 +43,23 @@ class DataTalentaController extends Controller
   {
     $bidang = Bidang::all();
     $model = Talenta::find($id);
+
     return view('master.talenta.form', [
       'activeMenu' => 'master-talenta',
       'model' => $model,
       'bidang' => $bidang,
+    ]);
+  }
+
+
+  public function show(int $id)
+  {
+    $bidang = Bidang::all();
+    $model = Talenta::find($id);
+    $talenta = new TalentaResource($model);
+    return view('master.talenta.show', [
+      'activeMenu' => 'master-talenta',
+      'model' => $talenta,
     ]);
   }
 

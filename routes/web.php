@@ -116,6 +116,7 @@ Route::middleware(['auth:web'])->group(function () {
         Route::get('/data', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'data'])->name('data-master.talenta.data');
         Route::get('/add', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'add'])->name('data-master.talenta.add');
         Route::get('/edit/{id}', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'edit'])->name('data-master.talenta.edit');
+        Route::get('/show/{id}', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'show'])->name('data-master.talenta.show');
         Route::get('/delete/{id}', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'delete'])->name('data-master.talenta.delete');
         Route::post('/store', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'store'])->name('data-master.talenta.save');
       });

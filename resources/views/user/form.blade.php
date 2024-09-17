@@ -58,6 +58,9 @@
                   @if($model->id)
                     <span class="form-text text-muted">Abaikan bila password tidak ingin diganti.</span>
                   @endif
+                    @error('password')
+                    <span class="text-danger">{{ $message }}</span>
+                  @enderror
                 </div>
               </div>
             </div>

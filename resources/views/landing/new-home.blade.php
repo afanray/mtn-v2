@@ -31,6 +31,20 @@
         </section>
     </section>
 
+    {{-- <div class="container mb-20">
+        <div class="wow fadeInUp delay-0-2s" style="visibility: visible; animation-name: fadeInUp;">
+            <div class="card">
+                <div class="card-header wow fadeInUp delay-0-4s " style="visibility: visible; animation-name: fadeInUp;">
+                    <h3>Sebaran Talenta Berprestasi</h3>
+                </div>
+
+                <div class=" wow fadeInUp delay-0-6s" style="visibility: visible; animation-name: fadeInUp;">
+                    <div id='map' style="height: 400px; width: 100wv;"></div>
+                </div>
+            </div>
+        </div>
+    </div> --}}
+
     <section class="container bg-white mt-5 mb-5">
         <h3 class="font-weight-bold text-left mx-auto mt-4 mb-4">
             Anugrah Talenta Nasional
@@ -228,6 +242,8 @@
 
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('assets/landing/js/leaflet-1.9.4.js') }}"></script>
+
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="{{ asset('assets/landing/js/jqueryValidation/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('assets/landing/js/jqueryValidation/additional-methods.min.js') }}"></script>
@@ -418,5 +434,100 @@
             // Initialize the first text
             rotateText();
         });
+    </script>
+
+    <script>
+        const map = L.map('map').setView([-4.574485818324603, 114.23146202697515], 4);
+
+        const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        const baseballIcon = L.icon({
+            iconUrl: 'baseball-marker.png',
+            iconSize: [32, 37],
+            iconAnchor: [16, 37],
+            popupAnchor: [0, -28]
+        });
+
+        function onEachFeature(feature, layer) {
+            let popupContent = `<p>I started out as a GeoJSON ${feature.geometry.type}, but now I'm a Leaflet vector!</p>`;
+
+            if (feature.properties && feature.properties.popupContent) {
+                popupContent += feature.properties.popupContent;
+            }
+
+            layer.bindPopup(popupContent);
+        }
+
+        /* global campus, bicycleRental, freeBus, coorsField */
+        // const bicycleRentalLayer = L.geoJSON([bicycleRental, campus], {
+
+        //     style(feature) {
+        //         return feature.properties && feature.properties.style;
+        //     },
+
+        //     onEachFeature,
+
+        //     pointToLayer(feature, latlng) {
+        //         return L.circleMarker(latlng, {
+        //             radius: 8,
+        //             fillColor: '#ff7800',
+        //             color: '#000',
+        //             weight: 1,
+        //             opacity: 1,
+        //             fillOpacity: 0.8
+        //         });
+        //     }
+        // }).addTo(map);
+
+        // const freeBusLayer = L.geoJSON(freeBus, {
+
+        //     filter(feature, layer) {
+        //         if (feature.properties) {
+        //             // If the property "underConstruction" exists and is true, return false (don't render features under construction)
+        //             return feature.properties.underConstruction !== undefined ? !feature.properties
+        //                 .underConstruction : true;
+        //         }
+        //         return false;
+        //     },
+
+        //     onEachFeature
+        // }).addTo(map);
+
+        // const coorsLayer = L.geoJSON(coorsField, {
+
+        //     pointToLayer(feature, latlng) {
+        //         return L.marker(latlng, {
+        //             icon: baseballIcon
+        //         });
+        //     },
+
+        //     onEachFeature
+        // }).addTo(map);
+        const legend = L.control({
+            position: 'bottomright'
+        });
+
+        legend.onAdd = function(map) {
+
+            const div = L.DomUtil.create('div', 'info legend');
+            const grades = [0, 10, 20, 50, 100, 200, 500, 1000];
+            const labels = [];
+            let from, to;
+
+            for (let i = 0; i < grades.length; i++) {
+                from = grades[i];
+                to = grades[i + 1];
+
+                labels.push(`<i style="background:${getColor(from + 1)}"></i> ${from}${to ? `&ndash;${to}` : '+'}`);
+            }
+
+            div.innerHTML = labels.join('<br>');
+            return div;
+        };
+
+        legend.addTo(map);
     </script>
 @endsection

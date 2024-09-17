@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Request\TalentaRequest;
+use App\Http\Resources\TalentaResource;
 
 class TalentaController extends Controller
 {
@@ -61,7 +62,6 @@ class TalentaController extends Controller
     $response = $talentaCounts->groupBy('bidang')->map(function ($items, $categoryId,) {
 
       $images = ["ic_risnov.jpeg",  "ic_senbud.jpeg", "ic_olahraga.jpeg",];
-
       $deskripsis = ["Meningkatkan jumlah dan kualitas SDM Iptek nasional, berkontribusi pada inovasi, serta meningkatkan rekognisi internasional talenta riset dan inovasi melalui ajang dan portofolio.", "Meningkatnya jumlah dan kualitas Talenta Seni Budaya yang kreatif, berkontribusi pada kebudayaan nasional, serta peningkatan rekognisi internasional dan penyelenggaraan ajang seni budaya berkelas internasional di Indonesia", "Meningkatnya jumlah dan kualitas olahragawan berprestasi serta tenaga keolahragaan bersertifikat internasional, dengan peningkatan rekognisi dan raihan prestasi di cabang olahraga Olimpiade dan Paralimpiade."];
 
       if ($categoryId == "Riset dan Inovasi") {
@@ -127,5 +127,18 @@ class TalentaController extends Controller
       'tahapan' => $tahapan
     ];
     return response()->json($data);
+  }
+
+  public function show(Request $request)
+  {
+    $talentaId = $request->get('_qid', "");
+    $talenta = Talenta::find($talentaId);
+    if (!$talenta) {
+      return response()->json([
+        'status' => 'error',
+        'message' => 'Talenta not found'
+      ], 404);
+    }
+    return new TalentaResource($talenta);
   }
 }

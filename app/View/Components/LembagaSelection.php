@@ -23,6 +23,7 @@ class LembagaSelection extends Component
       public ?int $initLembagaUnitId = null,
       public ?int $initLembagaId = null,
       public ?bool $viewOnly = false,
+      
     )
     {
         //
