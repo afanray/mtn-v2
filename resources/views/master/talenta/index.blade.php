@@ -157,7 +157,7 @@
                     sortable: false,
                 },
                 {
-                    data: 'tahapan',
+                    data: 'level_talenta.name',
                     title: 'Tahapan',
                     sortable: false,
                 },

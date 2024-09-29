@@ -11,6 +11,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 use Yajra\DataTables\Facades\DataTables;
@@ -126,4 +127,71 @@ class UserController extends Controller
     $model->delete();
     return response()->json([]);
   }
+
+
+public function updatePassword(): View {
+    $userId = auth()->user()->id;
+    $model = User::find($userId);
+    return view('user.update-form',[
+      'activeMenu' => 'update password',
+      'model' => $model,
+      
+    ]);
+  }
+
+public function saveNewPassword(Request $request): RedirectResponse {
+    // Validasi input
+    $validator = Validator::make($request->all(), [
+        'oldpassword' => [
+            'required',
+        ],
+        'newpassword' => [
+            'required',
+            'string',
+            'min:8',
+            'regex:/[a-z]/',  // Huruf kecil
+            'regex:/[A-Z]/',  // Huruf besar
+            'regex:/[0-9]/',  // Angka
+            'regex:/[@$!%*#?&]/', // Simbol
+            'confirmed' // Validasi untuk memastikan password baru dan konfirmasi password cocok
+        ],
+    ], [
+        'oldpassword.required' => 'Password lama wajib diisi.',
+        'newpassword.required' => 'Password baru wajib diisi.',
+        'newpassword.min' => 'Password baru harus minimal 8 karakter.',
+        'newpassword.regex' => 'Password baru harus mengandung huruf besar, kecil, angka, dan simbol.',
+        'newpassword.confirmed' => 'Konfirmasi password baru tidak cocok.',
+    ]);
+
+    // Jika validasi gagal, kembalikan ke halaman sebelumnya dengan pesan error
+    if ($validator->fails()) {
+        return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+    }
+
+    // Cari pengguna berdasarkan ID
+    $model = User::find($request->input('id'));
+
+    // Verifikasi password lama
+    if (!Hash::check($request->input('oldpassword'), $model->password)) {
+        return redirect()->back()->withErrors(['oldpassword' => 'Password lama tidak sesuai.'])->withInput();
+    }
+
+    // Jika password lama sesuai, lakukan hashing dan simpan password baru
+    if ($request->filled('newpassword')) {
+        $model->password = Hash::make($request->input('newpassword'));
+    }
+
+    // Simpan model yang diperbarui
+    $model->save();
+
+    // Hapus data input terkait user (sesuai logika di aplikasi)
+    $model->user_inputs()->delete();
+
+    // Redirect ke dashboard dengan pesan sukses
+    return redirect()->route('user.update-password')->with('alert-success', 'Password berhasil diperbarui.');
+}
+
+
 }

@@ -8,8 +8,10 @@ use Illuminate\Http\Request;
 use App\Models\HighLightTalenta;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Resources\TalentaResource;
+use App\Models\TalentaPrestasi;
 use Yajra\DataTables\Facades\DataTables;
 
 class DataTalentaController extends Controller
@@ -22,8 +24,15 @@ class DataTalentaController extends Controller
   }
 
   public function data(): JsonResponse
+  
   {
-    $data = Talenta::query()->with(['lembaga', 'bidang', 'lembaga_unit', 'lembaga_induk']);
+    $user = Auth::user();
+    $data = Talenta::query()
+             ->with(['lembaga', 'bidang', 'level_talenta', 'lembaga_unit', 'lembaga_induk']);
+          // Jika user bukan superadmin, tambahkan filter berdasarkan lembaga_id
+              if ($user->role !== 'superadmin') {
+                  $data->where('lembaga_id', '=', $user->lembaga_id);
+              }
     $dataTable = DataTables::of($data)->toJson();
     return response()->json($dataTable->getData());
   }
@@ -54,7 +63,7 @@ class DataTalentaController extends Controller
 
   public function show(int $id)
   {
-    $bidang = Bidang::all();
+    // $bidang = Bidang::all();
     $model = Talenta::find($id);
     $talenta = new TalentaResource($model);
     return view('master.talenta.show', [
@@ -63,6 +72,7 @@ class DataTalentaController extends Controller
     ]);
   }
 
+  
   public function store(Request $request): RedirectResponse
   {
     $model = new Talenta();
@@ -76,6 +86,9 @@ class DataTalentaController extends Controller
     $model->lembaga_id = $request->input('lembaga_id');
     $model->bidang_id = $request->input('bidang_id');
     $model->level_talenta_id = $request->input('level_talenta_id');
+    $model->province_id = $request->input('province_id');
+    $model->regency_id = $request->input('regency_id');
+
     if ($request->file('foto_talenta')) {
       $file = $request->file('foto_talenta');
       list($realName, $ext) = explode('.', $file->getClientOriginalName());
@@ -87,10 +100,47 @@ class DataTalentaController extends Controller
     return redirect()->route('data-master.talenta.index')->with('alert-success', ($request->input('id') ? 'Sunting' : 'Tambah') . ' Data Berhasil');
   }
 
+  public function prestasiAdd($id)
+      {
+      // $talentaId = $request->get('id');
+        // @dd($id );
+        $bidang = Bidang::all();
+        $model = Talenta::find($id);
+        $talenta = new TalentaResource($model);
+        return view('master.talenta.prestasi-form', [
+          'activeMenu' => 'master-talenta-tambah-prestasi',
+          'model' => $talenta,
+          'bidang' => $bidang,
+        ]);
+      }
+
+  public function prestasiStore(Request $request, $id): RedirectResponse
+  {
+  // @dd($request->all());
+    $model = new TalentaPrestasi();
+    // if ($request->input('id')) {
+    //   $model = Talenta::find($request->input('id'));
+    // }
+    $model->talenta_id = $id;
+    $model->nama_prestasi = $request->input('nama_prestasi');
+    $model->deskripsi = $request->input('deskripsi');
+    $model->bidang_id = $request->input('bidang_id');
+    $model->sub_bidang = $request->input('subbidang');
+    $model->tanggal_perolehan = $request->input('tanggal_perolehan');
+    $model->penyelenggara = $request->input('penyelenggara');
+    $model->tingkat_rekognisi = $request->input('tingkat_rekognisi');
+    $model->prestasi = $request->input('prestasi');
+    $model->link_web = $request->input('link_web');
+
+    $model->save();
+    return redirect()->route('data-master.talenta.index')->with('alert-success', 'Tambah Data Berhasil');
+  }
+
   public function delete(int $id): JsonResponse
   {
     $model = Talenta::find($id);
     HighLightTalenta::query()->where('talenta_id', $id)->delete();
+    TalentaPrestasi::query()->where('talenta_id', $id)->delete();
     $model->delete();
 
     return response()->json([]);

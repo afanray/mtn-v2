@@ -61,9 +61,9 @@ class CapaianIndikatorController extends Controller
         (select count(id) from talenta where level_talenta_id = 10) as or_potensial,
         (select count(id) from talenta where level_talenta_id = 11) as or_unggul
       ');
-      return view('capaian-indikator.summary',[
+      return view('capaian-indikator.new-summary',[
         'activeMenu' => 'summary',
-        'ringkasan'=>$ringkasan[0],
+        // 'ringkasan'=>$ringkasan[0],
       ]);
     }
 

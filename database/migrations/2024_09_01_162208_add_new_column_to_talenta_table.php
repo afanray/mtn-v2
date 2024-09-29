@@ -16,14 +16,14 @@ return new class extends Migration
             $table->string('nisn')->nullable();
             $table->string('nim')->nullable();
             $table->string('tgl_lahir')->nullable();
-            $table->string('bidang')->nullable();
+            $table->string('bidang_talenta')->nullable();
             $table->string('tahapan')->nullable();
             $table->string('produsen_data')->nullable();
             $table->string('walidata')->nullable();
             $table->string('tahun')->nullable();
             $table->string('kecamatan')->nullable();
-            $table->string('kabkota')->nullable();
-            $table->string('provinsi')->nullable();
+            $table->string('regency_id')->nullable();
+            $table->string('province_id')->nullable();
             $table->boolean('status')->default(0);
         });
     }

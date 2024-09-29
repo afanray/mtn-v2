@@ -5,13 +5,13 @@
     <div class="container">
       <div class="banner-inner">
         <h1 class="page-title wow fadeInUp delay-0-2s">HighLight Talenta</h1>
-        <nav aria-label="breadcrumb">
+      </div>
+<nav aria-label="breadcrumb">
           <ol class="breadcrumb wow fadeInUp delay-0-4s" style="visibility: visible; animation-name: fadeInUp;">
             <li class="breadcrumb-item"><a href="{{ route('home.news') }}">Berita & Kegiatan</a></li>
             <li class="breadcrumb-item active">HighLight Talenta</li>
           </ol>
         </nav>
-      </div>
     </div>
     <img class="dots-shape" src="/assets/landing/images/shapes/white-dots-two.png" alt="Shape">
     <img class="tringle-shape slideLeftRight" src="/assets/landing/images/shapes/white-tringle.png" alt="Shape">

@@ -16,12 +16,12 @@ return new class extends Migration
             $table->integer('talenta_id');
             $table->string('nama_prestasi');
             $table->string('deskripsi');
-            $table->string('bidang');
+            $table->string('bidang_id');
             $table->string('tanggal_perolehan');
             $table->string('penyelenggara');
-            $table->string('tingkat');
-            $table->string('medali');
-            $table->string('skor');
+            $table->string('tingkat_rekognisi');
+            $table->string('prestasi');
+            $table->string('link_web');
             $table->boolean('status')->default(0);
             $table->timestamps();
         });

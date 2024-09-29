@@ -17,6 +17,8 @@ class Talenta extends Model
     'lembaga_unit_id',
     'bidang_id',
     'level_talenta_id',
+    'province_id',
+    'regency_id',
   ];
 
   public function lembaga(): BelongsTo
@@ -37,6 +39,21 @@ class Talenta extends Model
   public function bidang(): BelongsTo
   {
     return $this->belongsTo(Bidang::class, 'bidang_id');
+  }
+
+  public function level_talenta(): BelongsTo
+  {
+    return $this->belongsTo(LevelTalenta::class, 'level_talenta_id');
+  }
+
+  public function province(): BelongsTo
+  {
+    return $this->belongsTo(Province::class, 'province_id');
+  }
+
+  public function regency(): BelongsTo
+  {
+    return $this->belongsTo(Regencies::class, 'regency_id');
   }
 
   public function pendidikan()

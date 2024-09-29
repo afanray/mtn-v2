@@ -3,14 +3,14 @@
 @section('body')
   <section class="page-banner bg-blue rel z-1" style="">
     <div class="container">
+<nav aria-label="breadcrumb">
+                <ol class="breadcrumb wow fadeInUp delay-0-4s" style="visibility: visible; animation-name: fadeInUp;">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active">Praktek Baik</li>
+                </ol>
+            </nav>
       <div class="banner-inner">
         <h1 class="page-title wow fadeInUp delay-0-2s">Praktik Baik</h1>
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb wow fadeInUp delay-0-4s" style="visibility: visible; animation-name: fadeInUp;">
-            <li class="breadcrumb-item"><a href="{{ route('home.index') }}">Home</a></li>
-            <li class="breadcrumb-item active">Praktik Baik</li>
-          </ol>
-        </nav>
       </div>
     </div>
     <img class="dots-shape" src="/assets/landing/images/shapes/white-dots-two.png" alt="Shape">

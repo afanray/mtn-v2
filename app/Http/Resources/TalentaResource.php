@@ -18,15 +18,19 @@ class TalentaResource extends JsonResource
             'id' => $this->id,
             'talentaId' => $this->kode_talenta,
             'nama' => $this->nama_talenta,
-            'bidang' => $this->bidang,
             'produsen_data' => $this->produsen_data,
             'tahun' => $this->tahun,
             'kecamatan' => $this->kecamatan,
             'kabupaten' => $this->kabkota,
             'provinsi' => $this->provinsi,
-            'pendidikan' => PendidikanResource::collection($this->pendidikan),
-            'prestasi' => PrestasiResource::collection($this->prestasi),
-            'keahlian' => KeahlianResource::collection($this->keahlian),
+            'pendidikan' => PendidikanResource::collection($this->whenLoaded('pendidikan')),
+            'prestasi' => PrestasiResource::collection($this->whenLoaded('prestasi')),
+            'keahlian' => KeahlianResource::collection($this->whenLoaded('keahlian')),
+            'lembaga' => new LembagaResource($this->whenLoaded('lembaga')),
+            'bidang' => new BidangResource($this->whenLoaded('bidang')),
+            'level_talenta' => new LevelTalentaResource($this->whenLoaded('level_talenta')),
+            'province' => new ProvinceResource($this->whenLoaded('province')),
+            'regency' => new RegencyResource($this->whenLoaded('regency')),
         ];
     }
 

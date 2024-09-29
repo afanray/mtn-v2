@@ -3,6 +3,12 @@
 @section('body')
   <section class="page-banner bg-blue rel z-1" style="">
     <div class="container">
+<nav aria-label="breadcrumb">
+                <ol class="breadcrumb wow fadeInUp delay-0-4s" style="visibility: visible; animation-name: fadeInUp;">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active">Pustaka</li>
+                </ol>
+            </nav>
       <div class="banner-inner">
         <h1 class="page-title wow fadeInUp delay-0-2s">Pustaka MTN</h1>
       </div>

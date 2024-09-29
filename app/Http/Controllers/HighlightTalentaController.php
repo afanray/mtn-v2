@@ -31,18 +31,18 @@ class HighlightTalentaController extends Controller
 
   public function add(): View
   {
-    $bidang = Bidang::all();
-    $bidangFokus = BidangFokus::all();
-    $talenta = Talenta::all()->limit(4);
-    $ref_prizes = RefPrizes::all();
+    // $bidang = Bidang::all();
+    // $bidangFokus = BidangFokus::all();
+    // $talenta = Talenta::all()->limit(4);
+    // $ref_prizes = RefPrizes::all();
     $model = new HighLightTalenta();
     return view('highlight-talenta.form', [
       'activeMenu' => 'ht',
       'model' => $model,
-      'bidang' => $bidang,
-      'bidang_fokus' => $bidangFokus,
-      'talenta' => $talenta,
-      'ref_prizes' => $ref_prizes,
+      // 'bidang' => $bidang,
+      // 'bidang_fokus' => $bidangFokus,
+      // 'talenta' => $talenta,
+      // 'ref_prizes' => $ref_prizes,
     ]);
   }
 

@@ -4,6 +4,12 @@
 
     <section class="page-banner bg-blue rel z-1" style="">
         <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb wow fadeInUp delay-0-4s" style="visibility: visible; animation-name: fadeInUp;">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+            </nav>
             <div class="banner-inner">
                 <h2 class="text-bold text-white wow fadeInUp delay-0-2s">Dashboard</h2>
                 <p class="text-white"> Dashboard Manajemen Talenta Nasional adalah platform untuk memantau dan mengelola
@@ -467,7 +473,7 @@
             }
 
             // Hapus class "active" dari semua elemen tablinks
-            const tabLinks = document.getElementsByClassName('tablinks');
+            const tabLinks = document.getElementsByClassName('tablist');
             for (let i = 0; i < tabLinks.length; i++) {
                 tabLinks[i].classList.remove('active');
             }

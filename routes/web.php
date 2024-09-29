@@ -33,7 +33,6 @@ Route::post('/common/get-talenta', [\App\Http\Controllers\CommonController::clas
 Route::get('login', [\App\Http\Controllers\AuthController::class, 'login'])->name('login');
 Route::post('login', [\App\Http\Controllers\AuthController::class, 'submitLogin'])->name('auth.login');
 Route::middleware(['auth:web'])->group(function () {
-
   Route::get('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('auth.logout');
   Route::prefix('dashboard')->group(function () {
     Route::get('/', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
@@ -47,6 +46,8 @@ Route::middleware(['auth:web'])->group(function () {
       Route::get('/edit/{id}', [\App\Http\Controllers\UserController::class, 'edit'])->name('user.edit');
       Route::get('/delete/{id}', [\App\Http\Controllers\UserController::class, 'delete'])->name('user.delete');
       Route::post('/store', [\App\Http\Controllers\UserController::class, 'store'])->name('user.save');
+      Route::get('/update-password', [\App\Http\Controllers\UserController::class, 'updatePassword'])->name('user.update-password');
+      Route::post('/new-password-saved', [\App\Http\Controllers\UserController::class, 'saveNewPassword'])->name('user.save-new-password');
     });
     Route::prefix('data')->group(function () {
       Route::get('/', [\App\Http\Controllers\DataDasarController::class, 'index'])->name('data.index');
@@ -79,18 +80,18 @@ Route::middleware(['auth:web'])->group(function () {
       Route::post('/store', [\App\Http\Controllers\AnugrahTalentaController::class, 'store'])->name('anugrah-talenta.save');
     });
     Route::prefix('testimoni')->group(function () {
-      Route::get('/', [\App\Http\Controllers\TestimoniController::class, 'index'])->name('testimoni.index');
-      Route::get('/data', [\App\Http\Controllers\TestimoniController::class, 'data'])->name('testimoni.data');
-      Route::post('/store', [\App\Http\Controllers\TestimoniController::class, 'store'])->name('testimoni.save');
-      Route::post('/delete', [\App\Http\Controllers\TestimoniController::class, 'delete'])->name('testimoni.delete');
+      Route::get('/', [\App\Http\Controllers\TestimoniController::class, 'index'])->name('testimoni.index')->middleware('role:superadmin');
+      Route::get('/data', [\App\Http\Controllers\TestimoniController::class, 'data'])->name('testimoni.data')->middleware('role:superadmin');
+      Route::post('/store', [\App\Http\Controllers\TestimoniController::class, 'store'])->name('testimoni.save')->middleware('role:superadmin');
+      Route::post('/delete', [\App\Http\Controllers\TestimoniController::class, 'delete'])->name('testimoni.delete')->middleware('role:superadmin');
     });
     Route::prefix('common')->group(function () {
-      Route::post('/store-lembaga', [\App\Http\Controllers\CommonController::class, 'storeLembaga'])->name('common.lembaga-store');
-      Route::post('/store-ref-penghargaan', [\App\Http\Controllers\CommonController::class, 'storeRefPenghargaan'])->name('common.ref-penghargaan-store');
-      Route::post('/store-talenta', [\App\Http\Controllers\CommonController::class, 'storeTalenta'])->name('common.talenta-store');
-      Route::post('/get-lembaga-unit', [\App\Http\Controllers\CommonController::class, 'getLembagaUnit'])->name('common.get-lembaga-unit');
-      Route::post('/get-lembaga-direktorat', [\App\Http\Controllers\CommonController::class, 'getLembagaDirektorat'])->name('common.get-lembaga-direktorat');
-      Route::post('/get-regencies', [\App\Http\Controllers\CommonController::class, 'getRegencies'])->name('common.get-regencies');
+      Route::post('/store-lembaga', [\App\Http\Controllers\CommonController::class, 'storeLembaga'])->name('common.lembaga-store')->middleware('role:superadmin,pic_direktorat');
+      Route::post('/store-ref-penghargaan', [\App\Http\Controllers\CommonController::class, 'storeRefPenghargaan'])->name('common.ref-penghargaan-store')->middleware('role:superadmin,pic_direktorat');
+      Route::post('/store-talenta', [\App\Http\Controllers\CommonController::class, 'storeTalenta'])->name('common.talenta-store')->middleware('role:superadmin,pic_direktorat');
+      Route::post('/get-lembaga-unit', [\App\Http\Controllers\CommonController::class, 'getLembagaUnit'])->name('common.get-lembaga-unit')->middleware('role:superadmin,pic_direktorat');
+      Route::post('/get-lembaga-direktorat', [\App\Http\Controllers\CommonController::class, 'getLembagaDirektorat'])->name('common.get-lembaga-direktorat')->middleware('role:superadmin,pic_direktorat');
+      Route::post('/get-regencies', [\App\Http\Controllers\CommonController::class, 'getRegencies'])->name('common.get-regencies')->middleware('role:superadmin,pic_direktorat');
     });
     Route::prefix('praktik-baik')->group(function () {
       Route::get('/', [\App\Http\Controllers\PraktikBaikController::class, 'index'])->name('praktik-baik.index');
@@ -103,38 +104,44 @@ Route::middleware(['auth:web'])->group(function () {
       Route::post('/delete', [\App\Http\Controllers\PraktikBaikController::class, 'delete'])->name('praktik-baik.delete');
     });
     Route::prefix('pustaka')->group(function () {
-      Route::get('/', [\App\Http\Controllers\PustakaController::class, 'index'])->name('pustaka.index');
-      Route::get('/data', [\App\Http\Controllers\PustakaController::class, 'data'])->name('pustaka.data');
-      Route::get('/add', [\App\Http\Controllers\PustakaController::class, 'add'])->name('pustaka.add');
-      Route::get('/edit/{id}', [\App\Http\Controllers\PustakaController::class, 'edit'])->name('pustaka.edit');
-      Route::post('/delete', [\App\Http\Controllers\PustakaController::class, 'delete'])->name('pustaka.delete');
-      Route::post('/store', [\App\Http\Controllers\PustakaController::class, 'store'])->name('pustaka.save');
+      Route::get('/', [\App\Http\Controllers\PustakaController::class, 'index'])->name('pustaka.index')->middleware('role:superadmin');
+      Route::get('/data', [\App\Http\Controllers\PustakaController::class, 'data'])->name('pustaka.data')->middleware('role:superadmin');
+      Route::get('/add', [\App\Http\Controllers\PustakaController::class, 'add'])->name('pustaka.add')->middleware('role:superadmin');
+      Route::get('/edit/{id}', [\App\Http\Controllers\PustakaController::class, 'edit'])->name('pustaka.edit')->middleware('role:superadmin');
+      Route::post('/delete', [\App\Http\Controllers\PustakaController::class, 'delete'])->name('pustaka.delete')->middleware('role:superadmin');
+      Route::post('/store', [\App\Http\Controllers\PustakaController::class, 'store'])->name('pustaka.save')->middleware('role:superadmin');
     });
     Route::prefix('data-master')->group(function () {
       Route::prefix('talenta')->group(function () {
-        Route::get('/', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'index'])->name('data-master.talenta.index');
-        Route::get('/data', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'data'])->name('data-master.talenta.data');
-        Route::get('/add', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'add'])->name('data-master.talenta.add');
-        Route::get('/edit/{id}', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'edit'])->name('data-master.talenta.edit');
-        Route::get('/show/{id}', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'show'])->name('data-master.talenta.show');
-        Route::get('/delete/{id}', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'delete'])->name('data-master.talenta.delete');
-        Route::post('/store', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'store'])->name('data-master.talenta.save');
+        Route::get('/', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'index'])->name('data-master.talenta.index')->middleware('role:superadmin,pic_direktorat');
+        Route::get('/data', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'data'])->name('data-master.talenta.data')->middleware('role:superadmin,pic_direktorat');
+        Route::get('/add', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'add'])->name('data-master.talenta.add')->middleware('role:superadmin,pic_direktorat');
+        Route::get('/edit/{id}', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'edit'])->name('data-master.talenta.edit')->middleware('role:superadmin,pic_direktorat');
+        Route::get('/show/{id}', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'show'])->name('data-master.talenta.show')->middleware('role:superadmin,pic_direktorat');
+
+        Route::get('/{id}/prestasi/add/', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'prestasiAdd'])->name('data-master.talenta.prestasi.add')->middleware('role:superadmin,pic_direktorat');
+     
+
+        Route::post('/{id}/prestasi/save/', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'prestasiStore'])->name('data-master.talenta.prestasi.save')->middleware('role:superadmin,pic_direktorat');
+
+        Route::get('/delete/{id}', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'delete'])->name('data-master.talenta.delete')->middleware('role:superadmin,pic_direktorat');
+        Route::post('/store', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'store'])->name('data-master.talenta.save')->middleware('role:superadmin,pic_direktorat');
       });
       Route::prefix('lembaga')->group(function () {
-        Route::get('/', [\App\Http\Controllers\DataMaster\DataLembagaController::class, 'index'])->name('data-master.lembaga.index');
-        Route::get('/data', [\App\Http\Controllers\DataMaster\DataLembagaController::class, 'data'])->name('data-master.lembaga.data');
-        Route::get('/add', [\App\Http\Controllers\DataMaster\DataLembagaController::class, 'add'])->name('data-master.lembaga.add');
-        Route::get('/edit/{id}', [\App\Http\Controllers\DataMaster\DataLembagaController::class, 'edit'])->name('data-master.lembaga.edit');
-        Route::get('/delete/{id}', [\App\Http\Controllers\DataMaster\DataLembagaController::class, 'delete'])->name('data-master.lembaga.delete');
-        Route::post('/store', [\App\Http\Controllers\DataMaster\DataLembagaController::class, 'store'])->name('data-master.lembaga.save');
+        Route::get('/', [\App\Http\Controllers\DataMaster\DataLembagaController::class, 'index'])->name('data-master.lembaga.index')->middleware('role:superadmin');
+        Route::get('/data', [\App\Http\Controllers\DataMaster\DataLembagaController::class, 'data'])->name('data-master.lembaga.data')->middleware('role:superadmin');
+        Route::get('/add', [\App\Http\Controllers\DataMaster\DataLembagaController::class, 'add'])->name('data-master.lembaga.add')->middleware('role:superadmin');
+        Route::get('/edit/{id}', [\App\Http\Controllers\DataMaster\DataLembagaController::class, 'edit'])->name('data-master.lembaga.edit')->middleware('role:superadmin');
+        Route::get('/delete/{id}', [\App\Http\Controllers\DataMaster\DataLembagaController::class, 'delete'])->name('data-master.lembaga.delete')->middleware('role:superadmin');
+        Route::post('/store', [\App\Http\Controllers\DataMaster\DataLembagaController::class, 'store'])->name('data-master.lembaga.save')->middleware('role:superadmin');
       });
       Route::prefix('penghargaan')->group(function () {
-        Route::get('/', [\App\Http\Controllers\DataMaster\DataPenghargaanController::class, 'index'])->name('data-master.penghargaan.index');
-        Route::get('/data', [\App\Http\Controllers\DataMaster\DataPenghargaanController::class, 'data'])->name('data-master.penghargaan.data');
-        Route::get('/add', [\App\Http\Controllers\DataMaster\DataPenghargaanController::class, 'add'])->name('data-master.penghargaan.add');
-        Route::get('/edit/{id}', [\App\Http\Controllers\DataMaster\DataPenghargaanController::class, 'edit'])->name('data-master.penghargaan.edit');
-        Route::get('/delete/{id}', [\App\Http\Controllers\DataMaster\DataPenghargaanController::class, 'delete'])->name('data-master.penghargaan.delete');
-        Route::post('/store', [\App\Http\Controllers\DataMaster\DataPenghargaanController::class, 'store'])->name('data-master.penghargaan.save');
+        Route::get('/', [\App\Http\Controllers\DataMaster\DataPenghargaanController::class, 'index'])->name('data-master.penghargaan.index')->middleware('role:superadmin');
+        Route::get('/data', [\App\Http\Controllers\DataMaster\DataPenghargaanController::class, 'data'])->name('data-master.penghargaan.data')->middleware('role:superadmin');
+        Route::get('/add', [\App\Http\Controllers\DataMaster\DataPenghargaanController::class, 'add'])->name('data-master.penghargaan.add')->middleware('role:superadmin');
+        Route::get('/edit/{id}', [\App\Http\Controllers\DataMaster\DataPenghargaanController::class, 'edit'])->name('data-master.penghargaan.edit')->middleware('role:superadmin');
+        Route::get('/delete/{id}', [\App\Http\Controllers\DataMaster\DataPenghargaanController::class, 'delete'])->name('data-master.penghargaan.delete')->middleware('role:superadmin');
+        Route::post('/store', [\App\Http\Controllers\DataMaster\DataPenghargaanController::class, 'store'])->name('data-master.penghargaan.save')->middleware('role:superadmin');
       });
     });
   });

@@ -85,7 +85,7 @@
       return redirect()->route('data-master.lembaga.index')->with('alert-success', ($request->input('id') ? 'Sunting' : 'Tambah'). ' Data Berhasil');
     }
 
-    public function delete(int $id): JsonResponse {
+    // public function delete(int $id): JsonResponse {
 
-    }
+    // }
 	}

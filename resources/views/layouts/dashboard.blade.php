@@ -8,7 +8,7 @@
     <meta name="description" content="MTN Dashboard" />
     <meta name="keywords" content="kelase" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="shortcut icon" href="{{ asset('/favicon.ico') }}" />
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!--begin::Fonts(mandatory for all pages)-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
@@ -22,6 +22,7 @@
     <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
     <link href="{{ asset('/assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('/assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('assets/landing/css/my-style.css') }}">
     <!--end::Global Stylesheets Bundle-->
     <style>
         .app-main {
@@ -112,6 +113,12 @@
                                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
                                     data-kt-menu="true">
                                     <!--begin::Menu item-->
+
+                                    <div class="menu-item px-5">
+                                        <a href="{{ route('user.update-password') }}" class="menu-link px-5">Perubahan
+                                            Password</a>
+                                    </div>
+
                                     <div class="menu-item px-5">
                                         <a href="{{ route('auth.logout') }}" class="menu-link px-5">Keluar</a>
                                     </div>
@@ -328,38 +335,40 @@
                                         <!--end:Menu link-->
                                     </div>
                                     <!--end:Menu item-->
-                                    <!--begin:Menu item-->
-                                    <div data-kt-menu-trigger="click" @class([
-                                        'menu-item',
-                                        'menu-accordion',
-                                        'hover show' => in_array($activeMenu, [
-                                            'master-talenta',
-                                            'master-lembaga',
-                                            'master-penghargaan',
-                                        ]),
-                                    ])>
-                                        <!--begin:Menu link-->
-                                        <span class="menu-link">
-                                            <span class="menu-icon">
-                                                <i class="fa fa-cogs fs-4"></i>
-                                            </span>
-                                            <span class="menu-title">Data Master</span>
-                                            <span class="menu-arrow"></span>
+                                @endif
+                                <!--begin:Menu item-->
+                                <div data-kt-menu-trigger="click" @class([
+                                    'menu-item',
+                                    'menu-accordion',
+                                    'hover show' => in_array($activeMenu, [
+                                        'master-talenta',
+                                        'master-lembaga',
+                                        'master-penghargaan',
+                                    ]),
+                                ])>
+                                    <!--begin:Menu link-->
+                                    <span class="menu-link">
+                                        <span class="menu-icon">
+                                            <i class="fa fa-cogs fs-4"></i>
                                         </span>
-                                        <!--end:Menu link-->
-                                        <!--begin:Menu sub-->
-                                        <div class="menu-sub menu-sub-accordion">
-                                            <!--begin:Menu item-->
-                                            <div class="menu-item">
-                                                <!--begin:Menu link-->
-                                                <a class="menu-link {{ $activeMenu === 'master-talenta' ? 'active' : '' }}"
-                                                    href="{{ route('data-master.talenta.index') }}">
-                                                    <span class="menu-bullet"><span
-                                                            class="bullet bullet-dot"></span></span>
-                                                    <span class="menu-title">Data Talenta</span></a>
-                                                <!--end:Menu link-->
-                                            </div>
-                                            <!--end:Menu item-->
+                                        <span class="menu-title">Data Master</span>
+                                        <span class="menu-arrow"></span>
+                                    </span>
+                                    <!--end:Menu link-->
+                                    <!--begin:Menu sub-->
+                                    <div class="menu-sub menu-sub-accordion">
+                                        <!--begin:Menu item-->
+                                        <div class="menu-item">
+                                            <!--begin:Menu link-->
+                                            <a class="menu-link {{ $activeMenu === 'master-talenta' ? 'active' : '' }}"
+                                                href="{{ route('data-master.talenta.index') }}">
+                                                <span class="menu-bullet"><span
+                                                        class="bullet bullet-dot"></span></span>
+                                                <span class="menu-title">Data Talenta</span></a>
+                                            <!--end:Menu link-->
+                                        </div>
+                                        <!--end:Menu item-->
+                                        @if (\App\Models\User::isSuperAdmin())
                                             <!--begin:Menu item-->
                                             <div class="menu-item">
                                                 <!--begin:Menu link-->
@@ -383,12 +392,12 @@
                                                 </a>
                                                 <!--end:Menu link-->
                                             </div>
-                                            <!--end:Menu item-->
-                                        </div>
-                                        <!--end:Menu sub-->
+                                        @endif
+                                        <!--end:Menu item-->
                                     </div>
-                                    <!--end:Menu item-->
-                                @endif
+                                    <!--end:Menu sub-->
+                                </div>
+                                <!--end:Menu item-->
 
                             </div>
                             <!--end::Menu-->

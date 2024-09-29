@@ -15,4 +15,10 @@
     public function bidang(): BelongsTo {
       return $this->belongsTo(Bidang::class, 'bidang_id');
     }
+  
+
+    public function talenta(): BelongsTo {
+        return $this->belongsTo(Talenta::class, 'talenta_id');
+      }
+
 	}

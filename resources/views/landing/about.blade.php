@@ -3,8 +3,14 @@
 @section('body')
     <section class="page-banner bg-blue rel z-1" style="">
         <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb wow fadeInUp delay-0-4s" style="visibility: visible; animation-name: fadeInUp;">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active">Tentang</li>
+                </ol>
+            </nav>
             <div class="banner-inner">
-                <h1 class="page-title wow fadeInUp delay-0-2s">Manajemen Talenta Nasional</h1>
+                <h1 class="page-title wow fadeInUp delay-0-2s">Manajemen Talenta Nasional (MTN)</h1>
             </div>
         </div>
         <img class="dots-shape" src="/assets/landing/images/shapes/white-dots-two.png" alt="Shape">
@@ -125,8 +131,9 @@
                         role="tab" aria-controls="talenta-2" aria-selected="false">Bidang Seni Budaya</button>
                 </li>
                 <li class="nav-item p-0" role="presentation">
-                    <button class="nav-link " id="talenta-3-tab" data-toggle="tab" data-target="#talenta-3" type="button"
-                        role="tab" aria-controls="talenta-3" aria-selected="false">Bidang Olahraga</button>
+                    <button class="nav-link " id="talenta-3-tab" data-toggle="tab" data-target="#talenta-3"
+                        type="button" role="tab" aria-controls="talenta-3" aria-selected="false">Bidang
+                        Olahraga</button>
                 </li>
             </ul>
             <div class="tab-content" id="talenta-tab-1">
