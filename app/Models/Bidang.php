@@ -11,7 +11,12 @@
 		'name'
 		];
 
-	public function talenta(): BelongsTo  {
-        return $this->belongsTo(Talenta::class, 'talenta_id');
+		public function talenta(): BelongsTo  {
+       	 	return $this->belongsTo(Talenta::class, 'talenta_id');
       }
+
+	public function prestasi()
+		{
+			return $this->belongsTo(TalentaPrestasi::class);
+		}
 	}

@@ -12,18 +12,37 @@
             <form id='add-form' class="form" action="{{ route('highlight-talenta.save') }}" method="POST"
                 enctype="multipart/form-data">
                 <div class="card-body border-top p-9">
+
+                    <div class="row mb-6">
+                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Bidang</label>
+                        <div class="col-lg-8">
+                            <div class="row">
+                                <div class="col-12 fv-row">
+                                    <select name="bidang_id" id="bidang_id" aria-label="Pilih Bidang"
+                                        data-placeholder="Pilih Bidang"
+                                        class="form-select form-select-solid form-select-lg">
+                                        <option value="">Pilih Bidang</option>
+                                        @foreach (\App\Constants\Common::getBidang() as $b)
+                                            <option value="{{ $b->id }}" @selected(old('bidang_id', $model->bidang_id) == $b->id)>
+                                                {{ $b->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row mb-6">
                         <label class="col-lg-4 col-form-label required fw-semibold fs-6">Talenta</label>
                         <div class="col-lg-8">
                             <div class="row">
                                 <div class="col-12 fv-row">
-                                    <select name="talenta_id" id="talenta_id" aria-label="Pilih Lembaga"
+                                    <select name="talenta_id" id="talenta_id" aria-label="Pilih Talenta"
                                         data-control="select2" data-placeholder="Pilih Talenta"
                                         class="form-select form-select-solid form-select-lg">
-                                        <option value="">Pilih Talenta</option>
-                                        {{-- @foreach ($talenta as $l)
-                      <option value="{{ $l->id }}" @selected(old('talenta_id', $model->talenta_id) == $l->id) >{{ $l->nama_talenta }}</option>
-                    @endforeach --}}
+                                        <option value="">Pilih Talenta
+                                        </option>
+
+                                        <!-- Options will be loaded dynamically via AJAX based on selected Bidang -->
                                     </select>
                                 </div>
                                 <a class="form-text text-primary cursor-pointer add-talenta">Klik disini untuk membuat
@@ -31,6 +50,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="row mb-6">
                         <label class="col-lg-4 col-form-label required fw-semibold fs-6">Referensi Penghargaan</label>
                         <div class="col-lg-8">
@@ -40,10 +60,10 @@
                                         data-control="select2" data-placeholder="Pilih Penghargaan"
                                         class="form-select form-select-solid form-select-lg">
                                         <option value="">Pilih Penghargaan</option>
-                                        {{-- @foreach ($ref_prizes as $l)
+                                        @foreach ($ref_prizes as $l)
                                             <option value="{{ $l->id }}" @selected(old('ref_prizes_id', $model->ref_prizes_id) == $l->id)>
                                                 {{ $l->name }}</option>
-                                        @endforeach --}}
+                                        @endforeach
                                     </select>
                                 </div>
                                 <a class="form-text text-primary cursor-pointer add-ref-prizes">Klik disini untuk membuat
@@ -107,46 +127,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row mb-6">
-                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Bidang</label>
-                        <div class="col-lg-8">
-                            <div class="row">
-                                <div class="col-12 fv-row">
-                                    <select name="bidang_id" id="bidang_id" aria-label="Pilih Bidang"
-                                        data-placeholder="Pilih Bidang"
-                                        class="form-select form-select-solid form-select-lg">
-                                        <option value="">Pilih Bidang</option>
-                                        @foreach (\App\Constants\Common::getBidang() as $b)
-                                            <option value="{{ $b->id }}" @selected(old('bidang_id', $model->bidang_id) == $b->id)>
-                                                {{ $b->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mb-6 bidang_fokus_id_cont"
-                        style="display: {{ $model->id && $model->bidang_id == \App\Constants\Common::BIDANG_RISET_ID ? 'flex' : 'none' }}">
-                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Bidang Fokus</label>
-                        <div class="col-lg-8">
-                            <div class="row">
-                                <div class="col-12 fv-row">
-                                    <select name="bidang_fokus_id" id="bidang_fokus_id" aria-label="Pilih Bidang Fokus"
-                                        data-placeholder="Pilih Bidang Fokus"
-                                        class="form-select form-select-solid form-select-lg">
-                                        <option value="">Pilih Bidang Fokus</option>
-                                        @foreach (\App\Constants\Common::getBidangFokus() as $b)
-                                            <option value="{{ $b->id }}" @selected(old('bidang_fokus_id', $model->bidang_fokus_id) == $b->id)>
-                                                {{ $b->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <x-lembaga-selection lembaga-induk-name="lembaga_induk_id" lembaga-unit-name="lembaga_unit_id"
-                        lembaga-name="lembaga_id" :init-lembaga-induk-id="$model->lembaga_induk_id" :init-lembaga-unit-id="$model->lembaga_unit_id" :init-lembaga-id="$model->lembaga_id"
-                        :with-add="true"></x-lembaga-selection>
+                    {{-- <x-lembaga-selection lembaga-induk-name="t_lembaga_induk_id" lembaga-unit-name="t_lembaga_unit_id"
+                        lembaga-name="t_lembaga_id" layout="vertical" :with-select2="false"></x-lembaga-selection> --}}
                 </div>
                 <div class="card-footer d-flex justify-content-end py-6 px-9">
                     {{ csrf_field() }}
@@ -267,5 +249,55 @@
                 $('#ref_prizes_id')
             )
         })
+
+        $(document).ready(function() {
+            // Load Talenta when Bidang is selected
+            $('#bidang_id').on('change', function() {
+                let bidangId = $(this).val(); // Get selected Bidang ID
+                let $talentaDropdown = $('#talenta_id'); // Reference Talenta dropdown
+
+                // Clear Talenta options
+                $talentaDropdown.empty().append('<option value="">Memuat...</option>');
+
+                if (bidangId) {
+                    // Make AJAX request to fetch Talenta based on selected Bidang
+                    $.ajax({
+                        url: '/dashboard/data-master/talenta/get-talenta-list', // Route to fetch Talenta
+                        type: 'GET',
+                        data: {
+                            bidang_id: bidangId
+                        }, // Send selected Bidang ID as parameter
+                        success: function(data) {
+                            // Clear existing options and add placeholder
+                            $talentaDropdown.empty().append(
+                                '<option value="">Pilih Talenta</option>');
+
+                            // Append each Talenta to the dropdown
+                            $.each(data, function(key, talenta) {
+                                $talentaDropdown.append('<option value="' + talenta.id +
+                                    '">' + talenta.kode_talenta + ' - ' + talenta
+                                    .nama_talenta + '</option>');
+                            });
+
+                            // Reinitialize select2 after options are loaded
+                            $talentaDropdown.trigger('change');
+                        },
+                        error: function(xhr) {
+                            console.error(xhr);
+                            $talentaDropdown.empty().append(
+                                '<option value="">Gagal memuat data</option>');
+                        }
+                    });
+                } else {
+                    $talentaDropdown.empty().append('<option value="">Pilih Talenta</option>');
+                }
+            });
+
+            // Additional script to register modal actions
+            KTUtil.onDOMContentLoaded(function() {
+                registerModalTalentaAction($('.add-talenta'), $('#talenta_id'));
+                registerModalRefPenghargaanAction($('.add-ref-prizes'), $('#ref_prizes_id'));
+            });
+        });
     </script>
 @endsection

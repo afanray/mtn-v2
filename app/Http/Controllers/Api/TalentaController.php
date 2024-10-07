@@ -141,4 +141,6 @@ class TalentaController extends Controller
     }
     return new TalentaResource($talenta);
   }
+
+   
 }

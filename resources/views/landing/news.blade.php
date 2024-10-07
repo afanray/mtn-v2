@@ -35,7 +35,7 @@
                     <div class="col-xl-3 col-md-6">
                         <div class="blog-item wow fadeInUp delay-0-2s">
                             <div class="image">
-                                <img src="{{ $h->talenta->foto_talenta ? asset('storage/talenta/' . $h->talenta->foto_talenta) : '/assets/landing/images/blog/blog1.jpg' }}"
+                                <img src="{{ $h->talenta->foto_talenta ? asset('storage/talenta/' . $h->talenta->foto_talenta) : 'https://avatar.iran.liara.run/public/boy?username=Ash' }}"
                                     alt="Foto">
                             </div>
                             <div class="blog-author justify-content-center">

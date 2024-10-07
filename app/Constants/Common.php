@@ -27,6 +27,8 @@ class Common {
   const PUSTAKA_PEDOMAN = 2;
   const PUSTAKA_VIDEO = 3;
   const PUSTAKA_INFOGRAFIS = 4;
+  const PUSTAKA_ANUGRAH = 5;
+  const PUSTAKA_BEASISWA = 6;
 
   public static function getTingkat(): array{
     return [
@@ -523,6 +525,10 @@ class Common {
       [
         'value'=>self::PUSTAKA_INFOGRAFIS,
         'label'=>'Pustaka Informasi Visual dalam Bentuk Infografis'
+      ],
+      [
+        'value'=>self::PUSTAKA_ANUGRAH,
+        'label'=>'Pustaka Anugrah Penghargaan Talenta Tingkat Internasional'
       ],
     ];
   }

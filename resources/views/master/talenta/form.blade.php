@@ -82,6 +82,18 @@
                         </div>
                     </div>
                     <div class="row mb-6">
+                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Tanggal Lahir</label>
+                        <div class="col-lg-8">
+                            <div class="row">
+                                <div class="col-12 fv-row">
+                                    <input type="text" name="tgllahir" id="tgllahir"
+                                        class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+                                        placeholder="DD/MM/YYYY" value="{{ old('tgllahir', $model->tgl_lahir) }}" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-6">
                         <label class="col-lg-4 col-form-label required fw-semibold fs-6">Bidang</label>
                         <div class="col-lg-8">
                             <div class="row">
@@ -117,7 +129,7 @@
                         lembaga-name="lembaga_id" :init-lembaga-induk-id="$model->lembaga_induk_id" :init-lembaga-unit-id="$model->lembaga_unit_id" :init-lembaga-id="$model->lembaga_id"
                         :with-add="true"></x-lembaga-selection>
 
-                    <x-address-selection province-name="province_id" regency-name="regency_id" :init-provinsi-id="$model->province_id"
+                    <x-address-selection province-name="province_id" regency-name="regency_id" :init-province-id="$model->province_id"
                         :init-regency-id="$model->regency_id"></x-address-selection>
                 </div>
                 <div class="card-footer d-flex justify-content-end py-6 px-9">
@@ -167,6 +179,13 @@
                                 },
                             }
                         },
+                        'tgllahir': {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Tanggal lahir is required'
+                                },
+                            }
+                        },
                         'bidang_id': {
                             validators: {
                                 notEmpty: {
@@ -174,6 +193,14 @@
                                 },
                             }
                         },
+                        'level_talenta_id': {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Level talenta is required'
+                                },
+                            }
+                        },
+
                         'lembaga_id': {
                             validators: {
                                 notEmpty: {
@@ -192,6 +219,20 @@
                             validators: {
                                 notEmpty: {
                                     message: 'Pusat/Unit/Fakultas is required'
+                                },
+                            }
+                        },
+                        'province_id': {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Province is required'
+                                },
+                            }
+                        },
+                        'regency_id': {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Regency is required'
                                 },
                             }
                         },

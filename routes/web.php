@@ -114,18 +114,29 @@ Route::middleware(['auth:web'])->group(function () {
     Route::prefix('data-master')->group(function () {
       Route::prefix('talenta')->group(function () {
         Route::get('/', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'index'])->name('data-master.talenta.index')->middleware('role:superadmin,pic_direktorat');
-        Route::get('/data', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'data'])->name('data-master.talenta.data')->middleware('role:superadmin,pic_direktorat');
+        Route::get('/data/{bidang_id}', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'data'])->name('data-master.talenta.data')->middleware('role:superadmin,pic_direktorat');
         Route::get('/add', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'add'])->name('data-master.talenta.add')->middleware('role:superadmin,pic_direktorat');
         Route::get('/edit/{id}', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'edit'])->name('data-master.talenta.edit')->middleware('role:superadmin,pic_direktorat');
         Route::get('/show/{id}', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'show'])->name('data-master.talenta.show')->middleware('role:superadmin,pic_direktorat');
 
         Route::get('/{id}/prestasi/add/', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'prestasiAdd'])->name('data-master.talenta.prestasi.add')->middleware('role:superadmin,pic_direktorat');
+
+        Route::get('/{id}/kehalian/add/', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'keahlianAdd'])->name('data-master.talenta.keahlian.add')->middleware('role:superadmin,pic_direktorat');
+
+        Route::get('/{id}/education/add/', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'educationAdd'])->name('data-master.talenta.education.add')->middleware('role:superadmin,pic_direktorat');
      
 
         Route::post('/{id}/prestasi/save/', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'prestasiStore'])->name('data-master.talenta.prestasi.save')->middleware('role:superadmin,pic_direktorat');
 
+        Route::post('/{id}/keahlian/save/', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'keahlianStore'])->name('data-master.talenta.keahlian.save')->middleware('role:superadmin,pic_direktorat');
+
+        Route::post('/{id}/education/save/', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'educationStore'])->name('data-master.talenta.education.save')->middleware('role:superadmin,pic_direktorat');
+
         Route::get('/delete/{id}', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'delete'])->name('data-master.talenta.delete')->middleware('role:superadmin,pic_direktorat');
         Route::post('/store', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'store'])->name('data-master.talenta.save')->middleware('role:superadmin,pic_direktorat');
+
+        Route::get('/get-talenta-list', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'getTalentaList'])->name('data-master.talenta.get-talenta-list')->middleware('role:superadmin,pic_direktorat');
+
       });
       Route::prefix('lembaga')->group(function () {
         Route::get('/', [\App\Http\Controllers\DataMaster\DataLembagaController::class, 'index'])->name('data-master.lembaga.index')->middleware('role:superadmin');

@@ -4,7 +4,7 @@
     <!--====== Hero Section Start ======-->
     <section class="dashboard-section rel z-2 pt-120 mb-20">
         <!-- Banner Section -->
-        <section class="banner" style="background-image: url('assets/landing/images/background/banner_website.jpeg');">
+        <section class="banner" style="background-image: url('assets/landing/images/background/banner_website2.jpg');">
             <div class="container text-white">
                 <h2>BASIS DATA TERPADU MANAJEMEN TALENTA NASIONAL</h2>
             </div>
@@ -45,34 +45,117 @@
         </div>
     </div> --}}
 
+
     <section class="container bg-white mt-5 mb-5">
-        <h3 class="font-weight-bold text-left mx-auto mt-4 mb-4">
-            Anugrah Talenta Nasional
-        </h3>
+        <div class="row align-items-center">
+            <div class="col-lg-6 col-md-12">
+                <h3 class="font-weight-bold text-left mx-auto mt-4 mb-4">
+                    Anugrah Talenta Nasional
+                </h3>
+            </div>
+            <div class="col-lg-6 col-md-12 text-right">
+                <h5 class="font-weight-bold mx-auto mt-4 mb-4">
+                    <a href="/highlight-talenta" class="text-decoration-none">Selengkapnya</a>
+                </h5>
+            </div>
+        </div>
 
         <div class="row">
             @foreach ($dataSorotan as $item)
-                <div class="col-lg-3 col-md-12">
+                <div class="col-lg-3 col-md-12 mt-20">
+
                     <a href="{{ $item['link'] }}">
-                        <div class="sorotan-card wow fadeInUp delay-0-3s"
-                            style="visibility: visible; animation-name: fadeInUp; background-image: url('/assets/landing/{{ $item['cover'] }}');">
-                            <div class="icon-sorotan">
-                                <img src="{{ $item['imageUrl'] }}" class="img" alt="image">
+                        <div class="card wow fadeInUp delay-0-3s"
+                            style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); position: relative; height: 500px;">
+                            <!-- Fixed height applied above (height: 400px) -->
+                            <div class="ribbon"
+                                style="position: absolute; top: 10px; left: 10px; 
+                                            @if ($item['bidang_id'] == 1) background-color: #4575B8; 
+                                            @elseif ($item['bidang_id'] == 2) background-color: #ACAC2E; 
+                                            @elseif ($item['bidang_id'] == 3) background-color: #ED3672; 
+                                            @else background-color: #4575B8; @endif
+                                            color: white; padding: 5px 10px; border-radius: 5px; font-size: 14px;">
+                                2024
                             </div>
-                            <div class="bg-white rounded-lg p-1 mt-50 text-center " style="height: 100px;">
-                                <h6 class="text-gray">{{ $item['name'] }}</h6>
-                                <p class="text-gray">{{ $item['role'] }}</p>
-
+                            <img class="card-img-top" src="{{ $item['imageUrl'] }}" alt="Profile Image"
+                                style="border-radius: 10px 10px 0 0; height: 250px; object-fit: cover;">
+                            <div class="card-body text-center" style="height: 200px;">
+                                <h5 class="card-title">{{ $item['name'] }}</h5>
+                                <div class="info" style="text-align: left;">
+                                    <span class="info-icon">
+                                        <i class="fas fa-award"></i>
+                                    </span>
+                                    <span class="card-text">{{ $item['role'] }}</span>
+                                </div>
                             </div>
-
+                            <!-- Tombol di bagian bawah card -->
+                            <a href="{{ $item['link'] }}" class="btn mt-3 text-white w-75"
+                                style="border-radius: 5px; padding: 10px 20px; position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+                                   @if ($item['bidang_id'] == 1) background-color: #4575B8; 
+                                   @elseif ($item['bidang_id'] == 2) background-color: #ACAC2E; 
+                                   @elseif ($item['bidang_id'] == 3) background-color: #ED3672; 
+                                   @else background-color: #4575B8; @endif ">
+                                Lihat Rekognisi
+                            </a>
                         </div>
                     </a>
+
 
                 </div>
             @endforeach
         </div>
-    </section>
 
+
+        {{-- <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                @foreach ($dataSorotan as $item)
+                    <!-- Menghilangkan chunk -->
+                    <div class="carousel-item active">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-12 mt-20">
+                                <a href="{{ $item['link'] }}">
+                                    <div class="card wow fadeInUp delay-0-3s"
+                                        style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); position: relative; height: 500px;">
+                                        <!-- Fixed height applied above (height: 400px) -->
+                                        <div class="ribbon"
+                                            style="position: absolute; top: 10px; left: 10px; 
+                                            @if ($item['bidang_id'] == 1) background-color: #4575B8; 
+                                            @elseif ($item['bidang_id'] == 2) background-color: #ACAC2E; 
+                                            @elseif ($item['bidang_id'] == 3) background-color: #ED3672; 
+                                            @else background-color: #4575B8; @endif
+                                            color: white; padding: 5px 10px; border-radius: 5px; font-size: 14px;">
+                                            2024
+                                        </div>
+                                        <img class="card-img-top" src="{{ $item['imageUrl'] }}" alt="Profile Image"
+                                            style="border-radius: 10px 10px 0 0; height: 250px; object-fit: cover;">
+                                        <div class="card-body text-center" style="height: 200px;">
+                                            <h5 class="card-title">{{ $item['name'] }}</h5>
+                                            <div class="info" style="text-align: left;">
+                                                <span class="info-icon">
+                                                    <i class="fas fa-award"></i>
+                                                </span>
+                                                <span class="card-text">{{ $item['role'] }}</span>
+                                            </div>
+                                        </div>
+                                        <!-- Tombol di bagian bawah card -->
+                                        <a href="{{ $item['link'] }}" class="btn mt-3 text-white w-100 mx-2"
+                                            style="border-radius: 5px; padding: 10px 20px; position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+                                   @if ($item['bidang_id'] == 1) background-color: #4575B8; 
+                                   @elseif ($item['bidang_id'] == 2) background-color: #ACAC2E; 
+                                   @elseif ($item['bidang_id'] == 3) background-color: #ED3672; 
+                                   @else background-color: #4575B8; @endif ">
+                                            Lihat Rekognisi
+                                        </a>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div> --}}
+
+    </section>
 
     <section class="container bg-white mt-5 mb-5">
         <h3 class="font-weight-bold text-left mx-auto mt-4 mb-4">
@@ -90,7 +173,7 @@
                             </div>
 
                             <h5 class="text-lg md:text-2xl font-bold text-center mb-4 text-blue-600 dark:text-blue-300">
-                                Bidang: {{ $item['bidang'] }}
+                                {{ $item['bidang'] }}
                             </h5>
                             <p class="text-sm ">
                                 {{ $item['deskripsi'] }}
@@ -161,8 +244,10 @@
                 <div class="col-xl-12 col-lg-10 d-flex flex-column align-items-center">
                     <div class="section-title mb-45 text-center d-flex flex-column align-items-center">
                         <p class="w-75">Untuk mengoordinasikan penyelenggaraan DBMTN 2023-2045 yang dilaksanakan oleh
-                            kementerian/lembaga, pemerintah daerah provinsi, pemerintah daerah kabupaten/kota, dan pemangku
-                            kepentingan dan mengoordinasikan penyelesaian permasalahan dan hambatan (debottlenecking) dalam
+                            kementerian/lembaga, pemerintah daerah provinsi, pemerintah daerah kabupaten/kota, dan
+                            pemangku
+                            kepentingan dan mengoordinasikan penyelesaian permasalahan dan hambatan (debottlenecking)
+                            dalam
                             penyelenggaraan DBMTN 2023-2045 telah dibentuk Gugus Tugas MTN yang diketuai oleh Menteri
                             PPN/Kepala Bappenas dan beranggotakan Menteri/Kepala Lembaga terkait</p>
                     </div>
@@ -203,6 +288,7 @@
 @endsection
 
 @section('css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         #test-form .error {
             font-size: 12px;
@@ -460,52 +546,6 @@
 
             layer.bindPopup(popupContent);
         }
-
-        /* global campus, bicycleRental, freeBus, coorsField */
-        // const bicycleRentalLayer = L.geoJSON([bicycleRental, campus], {
-
-        //     style(feature) {
-        //         return feature.properties && feature.properties.style;
-        //     },
-
-        //     onEachFeature,
-
-        //     pointToLayer(feature, latlng) {
-        //         return L.circleMarker(latlng, {
-        //             radius: 8,
-        //             fillColor: '#ff7800',
-        //             color: '#000',
-        //             weight: 1,
-        //             opacity: 1,
-        //             fillOpacity: 0.8
-        //         });
-        //     }
-        // }).addTo(map);
-
-        // const freeBusLayer = L.geoJSON(freeBus, {
-
-        //     filter(feature, layer) {
-        //         if (feature.properties) {
-        //             // If the property "underConstruction" exists and is true, return false (don't render features under construction)
-        //             return feature.properties.underConstruction !== undefined ? !feature.properties
-        //                 .underConstruction : true;
-        //         }
-        //         return false;
-        //     },
-
-        //     onEachFeature
-        // }).addTo(map);
-
-        // const coorsLayer = L.geoJSON(coorsField, {
-
-        //     pointToLayer(feature, latlng) {
-        //         return L.marker(latlng, {
-        //             icon: baseballIcon
-        //         });
-        //     },
-
-        //     onEachFeature
-        // }).addTo(map);
         const legend = L.control({
             position: 'bottomright'
         });

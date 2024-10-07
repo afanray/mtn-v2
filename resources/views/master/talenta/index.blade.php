@@ -4,25 +4,36 @@
     <!--begin::Card-->
     <div class="card">
         <!--begin::Card header-->
+        <div class="card-header card-header-stretch">
+            <h3 class="card-title">Daftar Talenta</h3>
+            <div class="card-toolbar">
+                <ul class="nav nav-tabs nav-line-tabs nav-stretch fs-6 border-0" id="talenta-tab" role="tablist">
+                    <li class="nav-item p-10" role="presentation">
+                        <button class="nav-link active" id="talenta-1-tab" data-toggle="tab" type="button" role="tab"
+                            onclick="showTahapanSasaranMtn(event, 'talenta-tab-1')" aria-controls="talenta-1"
+                            aria-selected="true">Bidang Riset & Inovasi</button>
+                    </li>
+                    <li class="nav-item p-10" role="presentation">
+                        <button class="nav-link" id="talenta-2-tab" data-toggle="tab" type="button" role="tab"
+                            onclick="showTahapanSasaranMtn(event, 'talenta-tab-2')" aria-controls="talenta-2"
+                            aria-selected="false">Bidang Seni Budaya</button>
+                    </li>
+                    <li class="nav-item p-10" role="presentation">
+                        <button class="nav-link" id="talenta-3-tab" data-toggle="tab" type="button" role="tab"
+                            onclick="showTahapanSasaranMtn(event, 'talenta-tab-3')" aria-controls="talenta-3"
+                            aria-selected="false">Bidang Olahraga</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
         <div class="card-header border-0 pt-6">
             <!--begin::Card title-->
             <div class="card-title w-100">
                 <div class="d-flex justify-content-lg-between flex-column flex-lg-row w-100">
-                    <h3 class="card-title">Daftar Talenta</h3>
+                    <h3 class="card-title" id="bidang">Bidang Riset & Inovasi</h3>
                     <!--begin::Search-->
                     <div class="d-flex align-items-center position-relative my-1">
-                        <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
-                        <span class="svg-icon svg-icon-1 position-absolute ms-6">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1"
-                                    transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
-                                <path
-                                    d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
-                                    fill="currentColor" />
-                            </svg>
-                        </span>
-                        <!--end::Svg Icon-->
                         <input id="search" type="text" data-kt-customer-table-filter="search"
                             class="form-control form-control-solid w-250px ps-15 me-3" placeholder="Cari" />
                         <a href="{{ route('data-master.talenta.add') }}" class="btn btn-primary me-4">
@@ -30,13 +41,10 @@
                         </a>
                     </div>
                     <!--end::Search-->
-
                 </div>
-
             </div>
-            <!--begin::Card title-->
         </div>
-        <!--end::Card header-->
+
         <!--begin::Card body-->
         <div class="card-body pt-0">
             <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_user_table">
@@ -62,12 +70,17 @@
     </div>
     <!--end::Card-->
 @endsection
+
 @section('js')
     <script type="text/javascript">
         const blockUI = new KTBlockUI(document.getElementById('kt_app_content_container'), {
             message: 'hapus data...',
         })
+        let bidangId = 1;
+        let table;
+
         $(document).ready(function() {
+
             $('body').on('click', '.delete-row', function() {
                 const id = $(this).attr('id')
                 Swal.fire({
@@ -107,17 +120,15 @@
                     }
                 })
             })
-            const columns = defineColumn()
-            var table = $('#kt_user_table').DataTable({
+            // Inisialisasi DataTables
+            const columns = defineColumn();
+            table = $('#kt_user_table').DataTable({
                 processing: true,
                 serverSide: true,
                 searching: true,
                 ajax: {
-                    url: `/dashboard/data-master/talenta/data`,
+                    url: `/dashboard/data-master/talenta/data/${bidangId}`,
                     type: 'GET',
-                    complete: function() {
-                        $('#kt_user_table_processing').hide()
-                    },
                 },
                 columns: columns,
                 language: {
@@ -125,80 +136,107 @@
                     infoEmpty: 'Menampilkan 0 sampai 0 dari 0 data',
                     loadingRecords: 'Memuat data...',
                 },
-            })
+            });
 
+            // Fungsi pencarian
             $('#search').on('keyup', function() {
-                table.search($('#search').val()).draw()
-            })
-        })
+                table.search($('#search').val()).draw();
+            });
+        });
 
         function defineColumn() {
-            const columns = [{
+            return [{
                     data: 'id',
-                    title: 'No.',
+                    title: 'No.'
                 },
                 {
                     data: 'kode_talenta',
-                    title: 'TALENTA ID',
+                    title: 'TALENTA ID'
                 },
                 {
                     data: 'nama_talenta',
                     title: 'Nama Talenta',
-                    sortable: false,
+                    sortable: true
                 },
                 {
                     data: 'nik',
                     title: 'NIK',
-                    sortable: false,
+                    sortable: true
                 },
+
                 {
                     data: 'bidang.name',
                     title: 'Bidang',
-                    sortable: false,
+                    sortable: true
                 },
                 {
                     data: 'level_talenta.name',
                     title: 'Tahapan',
-                    sortable: false,
+                    sortable: false
                 },
                 {
                     data: 'lembaga_induk.name',
                     title: 'Lembaga Induk',
-                    sortable: false,
+                    sortable: true
                 },
                 {
                     data: 'lembaga_unit.name',
                     title: 'Pusat/Unit/Fakultas',
-                    sortable: false,
+                    sortable: true
                 },
                 {
                     data: 'lembaga.name',
                     title: 'Direktorat/Jurusan',
-                    sortable: false,
+                    sortable: true
                 },
                 {
                     data: 'created_at',
                     title: 'Dibuat Pada',
-                    sortable: false,
-                    render: function(data, type, row) {
-                        return moment(data).format('DD-MM-YYYY HH:mm:ss')
-                    },
+                    sortable: true,
+                    render: function(data) {
+                        return moment(data).format('DD-MM-YYYY HH:mm:ss');
+                    }
                 },
                 {
-                    field: 'id',
+                    data: 'id',
                     title: 'Aksi',
                     sortable: false,
                     className: 'text-center',
                     render: function(data, type, row) {
-                        return `<a href="${dashboardUrl}/data-master/talenta/show/${row.id}" class="edit-row me-3"><i class="fa fa-circle-info"></i></a>
-                    <a href="${dashboardUrl}/data-master/talenta/edit/${row.id}" class="edit-row me-3"><i class="fa fa-pencil-alt"></i></a>
-                    <a href="#" id="${row.id}" class="delete-row"><i class="fa fa-trash"></i></a>
-                `;
-                    },
-                },
-            ]
+                        return `
+                        <a href="/dashboard/data-master/talenta/show/${row.id}" class="edit-row me-3">
+                            <i class="fa fa-circle-info"></i>
+                        </a>
+                        <a href="/dashboard/data-master/talenta/edit/${row.id}" class="edit-row me-3">
+                            <i class="fa fa-pencil-alt"></i>
+                        </a>
+                        <a href="#" id="${row.id}" class="delete-row">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    `;
+                    }
+                }
+            ];
+        }
 
-            return columns
+        function showTahapanSasaranMtn(evt, tabName) {
+            // Tentukan bidang berdasarkan tabName
+            let bidang = (tabName === "talenta-tab-1") ? "Riset dan Inovasi" :
+                (tabName === "talenta-tab-2") ? "Seni Budaya" : "Olahraga";
+
+            bidangId = (bidang === "Riset dan Inovasi") ? "1" :
+                (bidang === "Seni Budaya") ? "2" : "3";
+
+            // Update teks bidang
+            document.getElementById('bidang').innerText = 'Bidang ' + bidang;
+
+            // Update tabel
+            table.ajax.url(`/dashboard/data-master/talenta/data/${bidangId}`).load();
+
+            // Ubah tab yang aktif
+            const tabLinks = document.querySelectorAll('.nav-link');
+            tabLinks.forEach(link => link.classList.remove('active'));
+            evt.currentTarget.classList.add('active');
         }
     </script>
 @endsection

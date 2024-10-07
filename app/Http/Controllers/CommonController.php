@@ -1,5 +1,7 @@
 <?php
 
+
+
 	namespace App\Http\Controllers;
 
 	use App\Models\Lembaga;
@@ -10,6 +12,7 @@
   use Illuminate\Http\JsonResponse;
   use Illuminate\Http\Request;
   use Illuminate\Support\Facades\DB;
+  use Illuminate\Support\Facades\Auth;
 
   class CommonController extends Controller
 	{
@@ -51,22 +54,55 @@
     }
 
     public function storeTalenta(Request $request): JsonResponse{
-      $talenta = new Talenta();
-      $talenta->nama_talenta = $request->input('modal_nama_talenta');
-      $talenta->nik = $request->input('modal_nik');
-      $talenta->lembaga_induk_id = $request->input('t_lembaga_induk_id');
-      $talenta->lembaga_unit_id = $request->input('t_lembaga_unit_id');
-      $talenta->lembaga_id = $request->input('t_lembaga_id');
-      $talenta->bidang_id = $request->input('modal_bidang_id');
-      $talenta->level_talenta_id = $request->input('modal_level_talenta_id');
-      if ($request->file('modal_foto_talenta')){
-        $file = $request->file('modal_foto_talenta');
-        list($realName,$ext) = explode('.',$file->getClientOriginalName());
-        $fileName = $realName.'_'.time().random_int(1,99).'.'.$file->extension();
-        $file->storeAs('public/talenta', $fileName);
-        $talenta->foto_talenta = $fileName;
-      }
-      $talenta->save();
+       $request->validate([
+        'modal_nama_talenta' => 'required|string|max:255',
+        'modal_nik' => 'required|string|max:16',
+        'modal_tgllahir' => 'required|string|max:10',
+        't_lembaga_induk_id' => 'required|integer',
+        't_lembaga_unit_id' => 'required|integer',
+        't_lembaga_id' => 'required|integer',
+        'modal_bidang_id' => 'required|integer',
+        'modal_level_talenta_id' => 'required|integer',
+        'province_id' => 'required|integer',
+        'regency_id' => 'required|integer',
+        'modal_foto_talenta' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // validasi file gambar
+    ]);
+
+    $user = Auth::user();
+    $talenta = new Talenta();
+
+    if ($request->input('id')) {
+      $talenta = Talenta::find($request->input('id'));
+    }
+
+    $kdBidang = ["IDTR-","IDTS-","IDTO-"];
+    $bidangId = $request->input('modal_bidang_id');
+    $angkaTerbesar = DB::table('talenta')
+            ->selectRaw("MAX(CAST(REGEXP_SUBSTR(kode_talenta, '[0-9]+') AS UNSIGNED)) AS angka_terbesar")
+            ->where('bidang_id', $bidangId)
+            ->value('angka_terbesar');
+
+    $newKode = isset($kdBidang[$bidangId - 1]) ? $kdBidang[$bidangId - 1] . ($angkaTerbesar + 1) : null;
+
+    $talenta->kode_talenta = $newKode;
+    $talenta->nama_talenta = $request->input('modal_nama_talenta');
+    $talenta->nik = $request->input('modal_nik');
+    $talenta->tgl_lahir = $request->input('modal_tgllahir');
+    $talenta->lembaga_induk_id = $request->input('t_lembaga_induk_id');
+    $talenta->lembaga_unit_id = $request->input('t_lembaga_unit_id');
+    $talenta->lembaga_id = $request->input('t_lembaga_id');
+    $talenta->bidang_id = $request->input('modal_bidang_id');
+    $talenta->level_talenta_id = $request->input('modal_level_talenta_id');
+    $talenta->province_id = $request->input('province_id');
+    $talenta->regency_id = $request->input('regency_id');
+    $talenta->user_id = $user->id;
+
+    if ($request->file('modal_foto_talenta')) {
+        $fileName = $request->file('modal_foto_talenta')->store('public/talenta');
+        $talenta->foto_talenta = basename($fileName);
+    }
+
+    $talenta->save();
       return response()->json([
         'id'=>$talenta->id,
         'name'=>$talenta->nama_talenta,

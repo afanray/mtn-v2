@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bidang;
-use App\Models\BidangFokus;
-use App\Models\HighLightTalenta;
 use App\Models\Lembaga;
-use App\Models\RefPrizes;
 use App\Models\Talenta;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+use App\Models\RefPrizes;
 use Illuminate\View\View;
+use App\Models\BidangFokus;
+use Illuminate\Http\Request;
+use App\Models\HighLightTalenta;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
 use Yajra\DataTables\Facades\DataTables;
 
 class HighlightTalentaController extends Controller
@@ -24,40 +26,49 @@ class HighlightTalentaController extends Controller
   }
   public function data(): JsonResponse
   {
-    $data = HighLightTalenta::query()->with(['lembaga', 'talenta', 'bidang', 'prizes']);
+    $user = Auth::user();
+    $data = HighLightTalenta::query()
+              ->with(['lembaga', 'talenta', 'bidang', 'prizes']);
+            if ($user->role !== 'superadmin') {
+                  $data->where('created_by', '=', $user->id);
+              };
+
     $dataTable = DataTables::of($data)->toJson();
     return response()->json($dataTable->getData());
   }
 
   public function add(): View
   {
-    // $bidang = Bidang::all();
-    // $bidangFokus = BidangFokus::all();
-    // $talenta = Talenta::all()->limit(4);
-    // $ref_prizes = RefPrizes::all();
+    $bidang = Bidang::all();
+    // $talenta = DB::table('talenta')
+    //       ->where('bidang_id', 2)
+    //       ->get();         
+    $ref_prizes = RefPrizes::all();
     $model = new HighLightTalenta();
     return view('highlight-talenta.form', [
       'activeMenu' => 'ht',
       'model' => $model,
-      // 'bidang' => $bidang,
-      // 'bidang_fokus' => $bidangFokus,
+      'bidang' => $bidang,
       // 'talenta' => $talenta,
-      // 'ref_prizes' => $ref_prizes,
+      'ref_prizes' => $ref_prizes,
     ]);
   }
 
   public function edit(int $id): View
   {
     $bidang = Bidang::all();
-    $bidangFokus = BidangFokus::all();
-    $talenta = Talenta::all();
+    // $bidangFokus = BidangFokus::all();
+    // $talenta = Talenta::all();
+    $talenta = DB::table('talenta')
+          ->where('bidang_id', 1)
+          ->get();  
     $ref_prizes = RefPrizes::all();
     $model = HighLightTalenta::find($id);
     return view('highlight-talenta.form', [
       'activeMenu' => 'ht',
       'model' => $model,
       'bidang' => $bidang,
-      'bidang_fokus' => $bidangFokus,
+      // 'bidang_fokus' => $bidangFokus,
       'talenta' => $talenta,
       'ref_prizes' => $ref_prizes,
     ]);

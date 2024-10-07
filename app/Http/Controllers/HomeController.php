@@ -56,39 +56,54 @@ class HomeController extends Controller
       "https://www.youtube.com/embed/JZ-9nWDhg94?si=_C8xPsDtlUmXd5qF",
       // Add more video URLs as needed
     ];
-    $dataSorotan = [
+
+    // $pustaka = Pustaka::all()->collect();
+    // $pustakaAnugrah = $pustaka->filter(function ($p) {
+    //   return $p->type == Common::PUSTAKA_ANUGRAH;
+    // })->values()->all();
+    // $pustakaBeasiswa = $pustaka->filter(function ($p) {
+    //   return $p->type == Common::PUSTAKA_BEASISWA;
+    // })->values()->all();;
+
+
+     $dataSorotan = [
       [
         'id' => 1,
+        'bidang_id'=>1,
         'name' => 'Prof. Tommy Firman, Ph.D',
-        'role' => 'Kepakaran Ilmu Perencanaan Wilayah dan Kota',
+        'role' => 'Peraih Top 2% Scientist - ITB',
         'imageUrl' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCrQEAkIItpqI1PjC2DqArIm7REU5zxaWxqg&s',
         'cover' => '/images/bgAnugrah-01.png',
         'link' => 'https://sappk.itb.ac.id/selamat-prof-em-itb-ir-tommy-firman-m-sc-ph-d-meraih-penghargaan-worlds-top-2-scientist-2023/'
       ],
       [
         'id' => 2,
-        'name' => 'Prof. Ir. I Gede Wenten, M.S.c., Ph.D',
-        'role' => 'Kepakaran Intensifikasi Proses Teknik Kimia',
-        'imageUrl' => 'https://upload.wikimedia.org/wikipedia/commons/3/3b/I_Gede_Wenten_ITB_2020.jpg',
-        'cover' => '/images/bgAnugrah-01.png',
-        'link' => 'https://www.itb.ac.id/berita/9-dosen-itb-masuk-worlds-top-2-scientist-2023/59966'
+        'bidang_id'=>2,
+        'name' => 'Khozy Rizal Putra ',
+        'role' => 'Festival de Cannes short Film 2023',
+        'imageUrl' => 'https://media.licdn.com/dms/image/v2/C5603AQHKWtBcjkSMYQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1641199284281?e=1733961600&v=beta&t=OjSLgIC6okAmEGzpPGU0piPpBGmglMpzGIHAttEeHJk',
+        'cover' => '/images/bgAnugrah-02.png',
+        'link' => 'https://www.kompasiana.com/rommyzi/66402ae1c57afb6b024332b2/filmografi-khozy-rizal-sutradara-yang-berhasil-membawa-filmnya-dalam-festival-de-cannes-short-film-2023'
       ],
       [
         'id' => 3,
-        'name' => 'Rizki Juniansyah',
-        'role' => 'Atlet Angkat Besi',
-        'imageUrl' => 'https://asset.kompas.com/crops/ZcR1eJ_Y2CA36XZyfneALwe3Iok=/0x0:3000x2000/750x500/data/photo/2024/08/09/66b536ac54406.jpeg',
+        'bidang_id'=>3,
+        'name' => 'Gregoria Mariska Tunjung',
+        'role' => 'Atlet Bulu Tangkis Oliempiade Paris 2024',
+        'imageUrl' => 'https://thumb.viva.co.id/media/frontend/tokoh/2019/05/21/5ce37fddb05be-gregoria-mariska-tunjung_216_287.jpg',
         'cover' => '/images/bgAnugrah-03.png',
-        'link' => 'https://setkab.go.id/olimpiade-paris-2024-rizki-juniansyah-persembahkan-medali-emas-kedua-untuk-indonesia/'
+        'link' => 'https://www.detik.com/jateng/berita/d-7483268/profil-gregoria-tunjung-peraih-medali-perunggu-olimpiade-paris-asal-wonogiri/amp#'
       ],
       [
         'id' => 4,
-        'name' => 'I Nyoman Nuarta',
-        'role' => 'Pematung',
-        'imageUrl' => 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Nyoman_nuarta_2016_bandung1.jpg',
-        'cover' => '/images/bgAnugrah-02.png',
-        'link' => 'https://nasional.tempo.co/read/1903557/7-karya-terkenal-nyoman-nuarta'
+        'bidang_id'=> 1,
+        'name' => 'Hana Fajrianti',
+        'role' => 'Peraih Juara 1 Ajang Young Scientist Award 2024',
+        'imageUrl' => 'https://akcdn.detik.net.id/community/media/visual/2024/10/04/mahasiswa-ui-raih-juara-di-ajang-kompetisi-internasional-jerman_43.jpeg?w=700&q=90',
+        'cover' => '/images/bgAnugrah-01.png',
+        'link' => 'https://www.kompas.com/edu/read/2024/10/06/132924471/sosok-hana-mahasiswa-ui-juara-young-scientist-award-2024-di-jerman?lgn_method=google&google_btn=onetap'
       ],
+
     ];
 
     $dataBeasiswa = [
@@ -101,7 +116,7 @@ class HomeController extends Controller
       ],
       [
         "bidang" => "Beasiswa Bank Indonesia",
-        "image" => "https://feb.umri.ac.id/wp-content/uploads/2020/08/Beasiswa-Bank-Indonesia-2020-1024x1024.jpg",
+        "image" => "https://upload.wikimedia.org/wikipedia/commons/3/39/BI_Logo.png",
         "deskripsi" => "Beasiswa unggulan adalah beasiswa yang diberikan pada Perguruan Tinggi Negeri (PTN) yang bekerjasama dengan Bank Indonesia, sedangkan beasiswa reguler adalah beasiswa yang diberikan kepada PTN/PTS/SMK.",
         "total" => 35919,
         "url" => "https://bicara131.bi.go.id/knowledgebase/article/KA-01149/en-us"
@@ -125,7 +140,7 @@ class HomeController extends Controller
       'activeMenu' => 'home',
       'mainVideoSrc' => $mainVideoSrc,
       'videos' => $videos,
-      'dataBeasiswa' => $dataBeasiswa,
+      'dataBeasiswa' =>  $dataBeasiswa,
       'dataSorotan' => $dataSorotan,
     ]);
   }
@@ -275,6 +290,9 @@ class HomeController extends Controller
     })->values()->all();
     $pustakaVideo = $pustaka->filter(function ($p) {
       return $p->type == Common::PUSTAKA_VIDEO;
+    })->values()->all();
+    $pustakaAnugrah = $pustaka->filter(function ($p) {
+      return $p->type == Common::PUSTAKA_ANUGRAH;
     })->values()->all();;
     $pustakaInfo = $pustaka->filter(function ($p) {
       return $p->type == Common::PUSTAKA_INFOGRAFIS;
@@ -285,6 +303,7 @@ class HomeController extends Controller
       'pedomanTeknis' => $pedomanTeknis,
       'pustakaVideo' => $pustakaVideo,
       'pustakaInfo' => $pustakaInfo,
+      'pustakaAnugrah' => $pustakaAnugrah,
     ]);
   }
 

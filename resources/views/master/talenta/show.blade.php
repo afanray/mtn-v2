@@ -1,3 +1,13 @@
+@php
+    function truncateString($string, $length, $append = '...')
+    {
+        if (strlen($string) <= $length) {
+            return $string;
+        }
+        $truncated = substr($string, 0, $length);
+        return rtrim(substr($truncated, 0, strrpos($truncated, ' '))) . $append;
+    }
+@endphp
 @extends('layouts/dashboard')
 @section('title', 'Profile Talenta')
 @section('body')
@@ -65,105 +75,259 @@
                                 </h4>
                             </div>
                         </div>
+
+                    </div>
+                    <div class="col-lg-4 fv-row">
+                        <!--begin::Image input-->
+                        <div class="col-lg-12 mt-5 mb-5">
+                            <h4 class="text-gray-600 font-weight-bold">NISN</h4>
+                            <div class="col-12 fv-row bg-light-info p-4 mt-2 rounded-1">
+                                <h4 class="text-gray-600">
+                                    {{ $model->nisn ?? 'NISN Belom Tersedia' }}
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 mt-5 mb-5">
+                            <h4 class="text-gray-600 font-weight-bold">TANGGAL LAHIR</h4>
+                            <div class="col-12 fv-row bg-light-info p-4 mt-2 rounded-1">
+                                <h4 class="text-gray-600">
+                                    {{ $model->tgl_lahir ?? 'Tanggal Lahir belum tersedia' }}
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 mt-5 mb-5">
+                            <h4 class="text-gray-600 font-weight-bold">TAHAPAN</h4>
+                            <div class="col-12 fv-row bg-light-info p-4 mt-2 rounded-1">
+                                <h4 class="text-gray-600 ">
+                                    {{ $model->level_talenta->name ?? 'Tahapan Belum Tersedia' }}
+                                </h4>
+                            </div>
+                        </div>
+
                     </div>
 
-                    <div class="col-lg-4 fv-row mt-5">
-                        <!--begin::Image input-->
-                        <div class="col-lg-12 mb-5">
-                            <div class="row align-items-center mb-5">
-                                <div class="col-lg-6">
-                                    <h4 class="text-gray-600 font-weight-bold">RIWAYAT PENDIDIKAN</h4>
-                                </div>
-                                <div class="col-lg-6 text-end">
-                                    <a href="{{ route('data-master.talenta.index', ['id' => $model->id]) }}"
-                                        class="btn btn-primary me-4 btn-sm">
-                                        <i class="fa fa-plus"></i> Tambah
-                                    </a>
-                                </div>
+                    <!--begin::Image input-->
+                    <div class="col-lg-12 mb-5">
+                        <div class="row align-items-center mb-5">
+                            <div class="col-lg-6">
+                                <h4 class="text-gray-600 font-weight-bold">RIWAYAT PENDIDIKAN</h4>
                             </div>
-
-                            <div class="col-12 fv-row bg-light-info p-4 mt-2 rounded-1">
-                                @foreach ($model->pendidikan as $item)
-                                    <h4 class="text-gray-600">
-                                        - {{ $item->nama }}
-                                    </h4>
-                                @endforeach
+                            <div class="col-lg-6 text-end">
+                                <a href="{{ route('data-master.talenta.education.add', ['id' => $model->id]) }}"
+                                    class="btn btn-primary me-4 btn-sm">
+                                    <i class="fa fa-plus"></i> Tambah
+                                </a>
                             </div>
-
                         </div>
-                        <div class="col-lg-12 mt-5 mb-5">
-                            <div class="row align-items-center mb-5">
-                                <div class="col-lg-6">
-                                    <h4 class="text-gray-600 font-weight-bold">RIWAYAT PRESTASI</h4>
-                                </div>
-                                <div class="col-lg-6 text-end">
-                                    <a href="{{ route('data-master.talenta.prestasi.add', ['id' => $model->id]) }}"
-                                        class="btn btn-primary me-4 btn-sm">
-                                        <i class="fa fa-plus"></i> Tambah
-                                    </a>
-                                </div>
-                            </div>
 
-
-                            <div class="col-12 fv-row bg-light-info p-4 rounded-1">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered">
-                                        <thead>
+                        <div class="col-12 fv-row bg-light-info p-4 rounded-1">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Tingkat</th>
+                                            <th>Nama</th>
+                                            <th>Tanggal lulus</th>
+                                            <th>Link</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($model->pendidikan as $item)
                                             <tr>
-                                                <th>Tanggal</th>
-                                                <th>Nama</th>
-                                                <th>Bidang</th>
-                                                <th>Subbidang</th>
-                                                <th>Penyelenggara</th>
-                                                <th>Prestasi</th>
-                                                <th>Rekognisi</th>
+                                                <td class="text-gray-600">{{ $item->tingkat }}</td>
+                                                <td class="text-gray-600">{{ $item->nama }}</td>
+                                                <td class="text-gray-600">{{ $item->tgl_lulus }}</td>
+                                                <td class="justify-content-center">
+                                                    <div class="badge badge-info cursor-pointer">
+                                                        <a href="{{ $item->link_web }}" target="_blank" class="text-white">
+                                                            <i class="fa-solid fa-link text-white"></i>
+                                                        </a>
+                                                    </div>
+
+                                                </td>
+                                                {{-- <td class="justify-content-center">
+                                                    <div class="badge badge-info cursor-pointer" data-bs-toggle="modal"
+                                                        data-bs-target="#imageModal"
+                                                        onclick="showImage('{{ Storage::url('ijazah/' . $item->foto_ijazah) }}')">
+                                                        <i class="fa-solid fa-link text-white"></i>
+                                                    </div>
+                                                </td> --}}
+
+                                                <td class="col">
+                                                    <div class="row-lg-6 ">
+                                                        <div class="badge badge-success cursor-pointer">
+                                                            <i class="fa-solid fa-pen cursor-pointer text-white"></i>
+                                                        </div>
+                                                        <div class="badge badge-danger cursor-pointer">
+                                                            <i class="fa-solid fa-trash text-white "></i>
+                                                        </div>
+                                                    </div>
+                                                </td>
                                             </tr>
-                                        </thead>
-
-                                        <tbody>
-                                            @foreach ($model->prestasi as $item)
-                                                <tr>
-                                                    <td class="text-gray-600">{{ $item->tanggal_perolehan }}</td>
-                                                    <td class="text-gray-600">{{ $item->nama_prestasi }}</td>
-                                                    <td class="text-gray-600">{{ $item->bidang_id }}</td>
-                                                    <td class="text-gray-600">{{ $item->sub_bidang }}</td>
-                                                    <td class="text-gray-600">{{ $item->penyelenggara }}</td>
-                                                    <td class="text-gray-600">{{ $item->prestasi }}</td>
-                                                    <td class="text-gray-600">{{ $item->tingkat_rekognisi }}</td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                                <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="imageModalLabel">Image Preview</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body text-center">
+                                                <img id="modalImage" src="" alt="Preview Image" class="img-fluid">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                            <!-- Modal untuk menampilkan gambar -->
 
                         </div>
 
-                        <div class="col-lg-12 mt-5 mb-5">
-                            <div class="row align-items-center mb-5">
-                                <div class="col-lg-6">
-                                    <h4 class="text-gray-600 font-weight-bold">KEAHLIAN</h4>
-                                </div>
-                                <div class="col-lg-6 text-end">
-                                    <a href="{{ route('data-master.talenta.index', ['id' => $model->id]) }}"
-                                        class="btn btn-primary me-4 btn-sm">
-                                        <i class="fa fa-plus"></i> Tambah
-                                    </a>
-                                </div>
+                        <!-- Modal -->
+
+
+                    </div>
+                    <div class="col-lg-12 mt-5 mb-5">
+                        <div class="row align-items-center mb-5">
+                            <div class="col-lg-6">
+                                <h4 class="text-gray-600 font-weight-bold">RIWAYAT PRESTASI</h4>
                             </div>
-
-
-                            <div class="col-12 fv-row bg-light-info p-4 rounded-1">
-                                @foreach ($model->keahlian as $item)
-                                    <h4 class="text-gray-600">
-                                        {{ $item->id }}
-                                    </h4>
-                                @endforeach
+                            <div class="col-lg-6 text-end">
+                                <a href="{{ route('data-master.talenta.prestasi.add', ['id' => $model->id]) }}"
+                                    class="btn btn-primary me-4 btn-sm">
+                                    <i class="fa fa-plus"></i> Tambah
+                                </a>
                             </div>
-
                         </div>
+
+
+                        <div class="col-12 fv-row bg-light-info p-4 rounded-1">
+                            <div class="table-responsive">
+                                <table class="table table-bordered align-content-center">
+                                    <thead>
+                                        <tr>
+                                            <th>Tanggal</th>
+                                            <th>Nama</th>
+                                            <th>Bidang</th>
+                                            <th>Subbidang</th>
+                                            <th>Penyelenggara</th>
+                                            <th>Prestasi</th>
+                                            <th>Rekognisi</th>
+                                            <th>Link</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        @foreach ($model->prestasi as $item)
+                                            <tr>
+                                                <td class="text-gray-600">{{ $item->tanggal_perolehan }}</td>
+                                                <td class="text-gray-600">{{ $item->nama_prestasi }}</td>
+                                                <td class="text-gray-600">{{ $item->bidang->name }}</td>
+                                                <td class="text-gray-600">{{ $item->sub_bidang }}</td>
+                                                <td class="text-gray-600">{{ $item->penyelenggara }}</td>
+                                                <td class="text-gray-600">{{ $item->prestasi }}</td>
+                                                <td class="text-gray-600">{{ $item->tingkat_rekognisi }}</td>
+                                                <td class="justify-content-center">
+                                                    <div class="badge badge-info cursor-pointer">
+                                                        <a href="{{ $item->link_web }}" target="_blank"
+                                                            class="text-white">
+                                                            <i class="fa-solid fa-link text-white"></i>
+                                                        </a>
+                                                    </div>
+
+                                                </td>
+                                                <td class="col">
+                                                    <div class="row-lg-6 ">
+                                                        <div class="badge badge-success cursor-pointer">
+                                                            <i class="fa-solid fa-pen cursor-pointer text-white"></i>
+                                                        </div>
+                                                        <div class="badge badge-danger cursor-pointer">
+                                                            <i class="fa-solid fa-trash text-white "></i>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-12
+                                                            mt-5 mb-5">
+                        <div class="row align-items-center mb-5">
+                            <div class="col-lg-6">
+                                <h4 class="text-gray-600 font-weight-bold">KEAHLIAN
+                                </h4>
+                            </div>
+                            <div class="col-lg-6 text-end">
+                                <a href="{{ route('data-master.talenta.keahlian.add', ['id' => $model->id]) }}"
+                                    class="btn btn-primary me-4 btn-sm">
+                                    <i class="fa fa-plus"></i> Tambah
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-12 fv-row bg-light-info p-4 rounded-1">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Nama keahlian</th>
+                                            <th>Deskripsi</th>
+                                            <th>Link</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        @foreach ($model->keahlian as $item)
+                                            <tr>
+                                                <td class="text-gray-600">
+                                                    {{ $item->nama_keahlian }}</td>
+                                                <td class="text-gray-600">
+                                                    {{ truncateString($item->deskripsi, 50) }}
+                                                    <!-- Menggunakan fungsi truncateString -->
+                                                </td>
+                                                <td class="justify-content-center">
+                                                    <div class="badge badge-info cursor-pointer">
+                                                        <a href="{{ $item->url }}" target="_blank">
+                                                            <i class="fa-solid fa-link text-white"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                                <td class="col">
+                                                    <div class="row-lg-6 ">
+                                                        <div class="badge badge-success cursor-pointer">
+                                                            <i class="fa-solid fa-pen cursor-pointer text-white"></i>
+                                                        </div>
+                                                        <div class="badge badge-danger cursor-pointer">
+                                                            <i class="fa-solid fa-trash text-white "></i>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
+
+
+            </div>
+            <div class="col-lg-4 fv-row mt-5">
+
             </div>
 
             <div class="card-footer d-flex justify-content-end py-6 px-9">
@@ -175,5 +339,14 @@
     </div>
 @endsection
 @section('js')
-    {{-- <script type="text/javascript"></script> --}}
+    {{--
+<script type="text/javascript"></script> --}}
 @endsection
+
+<script>
+    function showImage(imagePath) {
+        console.log("diklik");
+        // Mengubah src dari img di dalam modal
+        document.getElementById('modalImage').src = imagePath;
+    }
+</script>

@@ -14,4 +14,9 @@ class TalentaPrestasi extends Model
     {
         return $this->belongsTo(Talenta::class);
     }
+
+    public function bidang()
+    {
+        return $this->belongsTo(Bidang::class);
+    }
 }

@@ -97,10 +97,10 @@
                             </nav>
                             <!-- Main Menu End-->
                         </div>
-                        <div class="menu-right d-none d-lg-flex align-items-center ml-lg-auto">
+                        {{-- <div class="menu-right d-none d-lg-flex align-items-center ml-lg-auto">
                             <a href="{{ route('dashboard-capaian') }}" class="theme-btn style-one">Dashboard <i
                                     class="fas fa-arrow-right"></i></a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -149,7 +149,7 @@
                                 <li><a href="{{ route('home.praktik-baik') }}">Praktik Baik</a></li>
                                 <li><a href="/sinergi">Sinergi Data</a></li>
                                 <li><a href="{{ route('home.contact') }}">Kontak</a></li>
-                                <li><a href="{{ route('dashboard-capaian') }}">Dashboard Capaian</a></li>
+                                {{-- <li><a href="{{ route('dashboard-capaian') }}">Dashboard Capaian</a></li> --}}
                             </ul>
                         </div>
                     </div>
