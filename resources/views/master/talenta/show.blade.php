@@ -129,6 +129,7 @@
                                             <th>Nama</th>
                                             <th>Tanggal lulus</th>
                                             <th>Link</th>
+                                            <th>Foto</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -140,27 +141,34 @@
                                                 <td class="text-gray-600">{{ $item->tgl_lulus }}</td>
                                                 <td class="justify-content-center">
                                                     <div class="badge badge-info cursor-pointer">
-                                                        <a href="{{ $item->link_web }}" target="_blank" class="text-white">
+                                                        <a href="{{ $item->ijazah_url }}" target="_blank"
+                                                            class="text-white">
                                                             <i class="fa-solid fa-link text-white"></i>
                                                         </a>
                                                     </div>
 
                                                 </td>
-                                                {{-- <td class="justify-content-center">
-                                                    <div class="badge badge-info cursor-pointer" data-bs-toggle="modal"
+                                                <td class="justify-content-center">
+                                                    <div class="badge badge-primary cursor-pointer" data-bs-toggle="modal"
                                                         data-bs-target="#imageModal"
                                                         onclick="showImage('{{ Storage::url('ijazah/' . $item->foto_ijazah) }}')">
-                                                        <i class="fa-solid fa-link text-white"></i>
+                                                        <i class="fa-solid fa-image text-white"></i>
                                                     </div>
-                                                </td> --}}
+                                                </td>
 
                                                 <td class="col">
                                                     <div class="row-lg-6 ">
                                                         <div class="badge badge-success cursor-pointer">
-                                                            <i class="fa-solid fa-pen cursor-pointer text-white"></i>
+                                                            <a href="{{ route('data-master.talenta.education.edit', ['id' => $item->id]) }}"
+                                                                target="_blank" class="text-white">
+                                                                <i class="fa-solid fa-pen cursor-pointer text-white"></i>
+                                                            </a>
                                                         </div>
                                                         <div class="badge badge-danger cursor-pointer">
-                                                            <i class="fa-solid fa-trash text-white "></i>
+                                                            <a href="#" id="education/{{ $item->id }}"
+                                                                class="delete-row">
+                                                                <i class="fa-solid fa-trash text-white "></i>
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -173,12 +181,13 @@
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="imageModalLabel">Image Preview</h5>
+                                                <h5 class="modal-title" id="imageModalLabel">Preview Ijazah</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body text-center">
-                                                <img id="modalImage" src="" alt="Preview Image" class="img-fluid">
+                                                <img id="modalImage" src="" alt="Preview Image"
+                                                    class="img-fluid">
                                             </div>
                                         </div>
                                     </div>
@@ -245,10 +254,16 @@
                                                 <td class="col">
                                                     <div class="row-lg-6 ">
                                                         <div class="badge badge-success cursor-pointer">
-                                                            <i class="fa-solid fa-pen cursor-pointer text-white"></i>
+                                                            <a href="{{ route('data-master.talenta.prestasi.edit', ['id' => $item->id]) }}"
+                                                                target="_blank" class="text-white">
+                                                                <i class="fa-solid fa-pen cursor-pointer text-white"></i>
+                                                            </a>
                                                         </div>
                                                         <div class="badge badge-danger cursor-pointer">
-                                                            <i class="fa-solid fa-trash text-white "></i>
+                                                            <a href="#" id="prestasi/{{ $item->id }}"
+                                                                class="delete-row">
+                                                                <i class="fa-solid fa-trash text-white "></i>
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -307,10 +322,16 @@
                                                 <td class="col">
                                                     <div class="row-lg-6 ">
                                                         <div class="badge badge-success cursor-pointer">
-                                                            <i class="fa-solid fa-pen cursor-pointer text-white"></i>
+                                                            <a href="{{ route('data-master.talenta.keahlian.edit', ['id' => $item->id]) }}"
+                                                                target="_blank" class="text-white">
+                                                                <i class="fa-solid fa-pen cursor-pointer text-white"></i>
+                                                            </a>
                                                         </div>
                                                         <div class="badge badge-danger cursor-pointer">
-                                                            <i class="fa-solid fa-trash text-white "></i>
+                                                            <a href="#" id="keahlian/{{ $item->id }}"
+                                                                class="delete-row">
+                                                                <i class="fa-solid fa-trash text-white "></i>
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -339,14 +360,63 @@
     </div>
 @endsection
 @section('js')
-    {{--
-<script type="text/javascript"></script> --}}
-@endsection
 
-<script>
-    function showImage(imagePath) {
-        console.log("diklik");
-        // Mengubah src dari img di dalam modal
-        document.getElementById('modalImage').src = imagePath;
-    }
-</script>
+    <script type="text/javascript">
+        const blockUI = new KTBlockUI(document.getElementById('kt_app_content_container'), {
+            message: 'hapus data...',
+        })
+
+        function showImage(imagePath) {
+            console.log("diklik");
+            // Mengubah src dari img di dalam modal
+            document.getElementById('modalImage').src = imagePath;
+        }
+
+        $(document).ready(function() {
+
+            $('body').on('click', '.delete-row', function() {
+                const id = $(this).attr('id')
+                Swal.fire({
+                    title: 'Hapus Talenta',
+                    text: 'Anda yakin akan menghapus data ini?',
+                    icon: 'warning',
+                    buttonsStyling: false,
+                    confirmButtonText: 'Hapus',
+                    showCancelButton: true,
+                    cancelButtonText: 'Batal',
+                    customClass: {
+                        confirmButton: 'btn btn-danger',
+                        cancelButton: 'btn btn-light',
+                    },
+                }).then(function(result) {
+                    if (result.value) {
+                        blockUI.block()
+                        $.ajax({
+                            url: '/dashboard/data-master/talenta/delete/' + id,
+                            type: 'GET',
+                            success: function(res) {
+                                blockUI.release()
+                                // table.draw()
+                                Swal.fire({
+                                    title: 'Hapus Data',
+                                    text: 'Hapus Data Berhasil',
+                                    icon: 'success',
+                                    showConfirmButton: false,
+                                    timer: 2000,
+                                }).then(function() {
+                                    location
+                                        .reload(); // Reload halaman setelah Swal ditutup
+                                });
+                            },
+                            error: function(request, status, error) {
+                                Swal.fire('Something Wrong. Please try Again', '',
+                                    'error')
+                            },
+                        })
+                    }
+                })
+            })
+        });
+    </script>
+
+@endsection

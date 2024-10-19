@@ -39,7 +39,7 @@
                                     <select name="talenta_id" id="talenta_id" aria-label="Pilih Talenta"
                                         data-control="select2" data-placeholder="Pilih Talenta"
                                         class="form-select form-select-solid form-select-lg">
-                                        <option value="">Pilih Talenta
+                                        <option value="{{ old('tahun', $model->talenta_id) }}">Pilih Talenta
                                         </option>
 
                                         <!-- Options will be loaded dynamically via AJAX based on selected Bidang -->
@@ -95,7 +95,7 @@
                         </div>
                     </div>
                     <div class="row mb-6">
-                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Foto Talenta</label>
+                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Foto Rekognisi</label>
                         <div class="col-lg-8">
                             <div class="row">
                                 <div class="col-12 fv-row">

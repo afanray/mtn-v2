@@ -14,6 +14,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
 class HighlightTalentaController extends Controller
@@ -39,10 +40,7 @@ class HighlightTalentaController extends Controller
 
   public function add(): View
   {
-    $bidang = Bidang::all();
-    // $talenta = DB::table('talenta')
-    //       ->where('bidang_id', 2)
-    //       ->get();         
+    $bidang = Bidang::all();        
     $ref_prizes = RefPrizes::all();
     $model = new HighLightTalenta();
     return view('highlight-talenta.form', [
@@ -57,8 +55,6 @@ class HighlightTalentaController extends Controller
   public function edit(int $id): View
   {
     $bidang = Bidang::all();
-    // $bidangFokus = BidangFokus::all();
-    // $talenta = Talenta::all();
     $talenta = DB::table('talenta')
           ->where('bidang_id', 1)
           ->get();  
@@ -78,11 +74,11 @@ class HighlightTalentaController extends Controller
    * @throws \Exception
    */
   public function store(Request $request): RedirectResponse
-  {
-    $model = new HighLightTalenta();
-    if ($request->input('id')) {
-      $model = HighLightTalenta::find($request->input('id'));
-    }
+{
+    // Cek apakah ini untuk update atau create
+    $model = $request->input('id') ? HighLightTalenta::find($request->input('id')) : new HighLightTalenta();
+
+    // Assign input ke model
     $model->talenta_id = $request->input('talenta_id');
     $model->ref_prizes_id = $request->input('ref_prizes_id');
     $model->desc_penghargaan = $request->input('desc_penghargaan');
@@ -93,23 +89,44 @@ class HighlightTalentaController extends Controller
     $model->lembaga_id = $request->input('lembaga_id');
     $model->lembaga_induk_id = $request->input('lembaga_induk_id');
     $model->lembaga_unit_id = $request->input('lembaga_unit_id');
-    if ($request->file('foto_penghargaan')) {
-      $file = $request->file('foto_penghargaan');
-      list($realName, $ext) = explode('.', $file->getClientOriginalName());
-      $fileName = $realName . '_' . time() . random_int(1, 99) . '.' . $file->extension();
-      $file->storeAs('public/penghargaan', $fileName);
-      $model->foto_penghargaan = $fileName;
-    }
-    if ($request->input('id')) {
-      $model->updated_by = auth()->user()->id;
-    }
-    $model->save();
-    return redirect()->route('highlight-talenta.index')->with('alert-success', ($request->input('id') ? 'Sunting' : 'Tambah') . ' Data Berhasil');
-  }
 
-  public function delete(int $id): JsonResponse
+    // Jika ada file foto_penghargaan baru
+    if ($request->file('foto_penghargaan')) {
+        // Hapus file lama jika ada
+        if ($model->foto_penghargaan && Storage::exists('public/penghargaan/' . $model->foto_penghargaan)) {
+            Storage::delete('public/penghargaan/' . $model->foto_penghargaan);
+        }
+
+        // Simpan file baru
+        $fileName = $request->file('foto_penghargaan')->store('public/penghargaan');
+        $model->foto_penghargaan = basename($fileName);
+    }
+
+    // Set updated_by jika update
+    if ($request->input('id')) {
+        $model->updated_by = auth()->user()->id;
+    }
+
+    // Simpan model
+    $model->save();
+
+    // Redirect dengan pesan sukses
+    $message = $request->input('id') ? 'Sunting' : 'Tambah';
+    return redirect()->route('highlight-talenta.index')->with('alert-success', $message . ' Data Berhasil');
+}
+
+  
+
+public function delete(int $id): JsonResponse
   {
     $model = HighLightTalenta::find($id);
+    if (!$model) {
+              return response()->json(['error' => 'Talenta tidak ditemukan'], 404);
+          }
+    if ($model->foto_penghargaan) {
+        $filePath = 'penghargaan/' . $model->foto_penghargaan;
+        Storage::disk('public')->delete($filePath);
+    }
     $model->delete();
     return response()->json([]);
   }

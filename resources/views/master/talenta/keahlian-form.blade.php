@@ -1,18 +1,17 @@
 @extends('layouts/dashboard')
-@section('title', 'Tambah Keahlian')
+@section('title', ($method == 'add' ? 'Tambah' : 'Sunting') . ' Keahlian')
 @section('body')
     <div class="card mb-5 mb-xl-10">
         <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse"
             data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
             <div class="card-title m-0">
-                {{-- <h3 class="fw-bold m-0">{{ $model->id ? 'Sunting' : 'Tambah' }} Talenta</h3> --}}
-                <h3 class="fw-bold m-0">Tambah Keahlian</h3>
+                <h3 class="fw-bold m-0">{{ $method == 'add' ? 'Tambah' : 'Sunting' }} Keahlian</h3>
             </div>
         </div>
         <div id="kt_account_settings_profile_details" class="collapse show">
             <form id='add-form' class="form"
-                action="{{ route('data-master.talenta.keahlian.save', ['id' => $model->id]) }}" method="POST"
-                enctype="multipart/form-data">
+                action="{{ $method == 'add' ? route('data-master.talenta.keahlian.save', ['id' => $model->id]) : route('data-master.talenta.keahlian.saveedit', ['id' => $model->id]) }}"
+                method="POST" enctype="multipart/form-data">
                 <div class="card-body border-top p-9">
                     <div class="row mb-6">
                         <label class="col-lg-4 col-form-label required fw-semibold fs-6">Nama Talenta</label>
@@ -21,7 +20,8 @@
                                 <div class="col-12 fv-row">
                                     <input type="text" name="nama_talenta" id="nama_talenta"
                                         class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                        placeholder="Nama Talenta" value="{{ old('nama_talenta', $model->nama_talenta) }}"
+                                        placeholder="Nama Talenta"
+                                        value="{{ old('nama_talenta', $method == 'add' ? $model->nama_talenta : $model->talenta->nama_talenta) }}"
                                         disabled />
                                 </div>
                             </div>
@@ -71,8 +71,9 @@
                 </div>
                 <div class="card-footer d-flex justify-content-end py-6 px-9">
                     {{ csrf_field() }}
-                    <input type="hidden" name="id" id="id" value="{{ $model->id ?? '' }}" />
-                    <a href="{{ route('data-master.talenta.index') }}"
+                    <input type="hidden" name="idTalenta" id="idTalenta"
+                        value=" {{ $method == 'edit' ? $model->talenta->id : $model->id }}" />
+                    <a href="{{ route('data-master.talenta.show', $method == 'edit' ? $model->talenta->id : $model->id) }}"
                         class="btn btn-light btn-active-light-primary me-2">Batal</a>
                     <button type="submit" class="btn btn-info me-2" id="btn-draft">Simpan</button>
                 </div>
@@ -103,6 +104,13 @@
                             validators: {
                                 notEmpty: {
                                     message: 'Deskripsi is required'
+                                },
+                            }
+                        },
+                        'url': {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Url is required'
                                 },
                             }
                         },

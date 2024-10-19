@@ -15,6 +15,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Resources\TalentaResource;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
 class DataTalentaController extends Controller
@@ -79,7 +80,6 @@ class DataTalentaController extends Controller
   
   public function store(Request $request): RedirectResponse
   {
-
     $request->validate([
         'nama_talenta' => 'required|string|max:255',
         'nik' => 'required|string|max:16',
@@ -123,7 +123,14 @@ class DataTalentaController extends Controller
     $model->regency_id = $request->input('regency_id');
     $model->user_id = $user->id;
 
+  // Jika ada file foto_penghargaan baru
     if ($request->file('foto_talenta')) {
+        // Hapus file lama jika ada
+        if ($model->foto_talenta && Storage::exists('public/talenta/' . $model->foto_talenta)) {
+            Storage::delete('public/talenta/' . $model->foto_talenta);
+        }
+
+        // Simpan file baru
         $fileName = $request->file('foto_talenta')->store('public/talenta');
         $model->foto_talenta = basename($fileName);
     }
@@ -131,41 +138,33 @@ class DataTalentaController extends Controller
     $model->save();
     return redirect()->route('data-master.talenta.index')->with('alert-success', ($request->input('id') ? 'Sunting' : 'Tambah') . ' Data Berhasil');
   }
-
+    
   public function prestasiAdd($id)
-      {
-        $bidang = Bidang::all();
-        $model = Talenta::find($id);
-        $talenta = new TalentaResource($model);
-        return view('master.talenta.prestasi-form', [
-          'activeMenu' => 'master-talenta-tambah-prestasi',
-          'model' => $talenta,
-          'bidang' => $bidang,
-        ]);
-      }
-
-  public function keahlianAdd($id)
-    {
-      $bidang = Bidang::all();
-      $model = Talenta::find($id);
-      $talenta = new TalentaResource($model);
-      return view('master.talenta.keahlian-form', [
-        'activeMenu' => 'master-talenta-tambah-keahlian',
-        'model' => $talenta,
-        'bidang' => $bidang,
-      ]);
-    }
-    public function educationAdd($id)
-    {
-      $bidang = Bidang::all();
-      $model = Talenta::find($id);
-      $talenta = new TalentaResource($model);
-      return view('master.talenta.education-form', [
-        'activeMenu' => 'master-talenta-tambah-education',
-        'model' => $talenta,
-        'bidang' => $bidang,
-      ]);
-    }
+          {
+            $bidang = Bidang::all();
+            $model = Talenta::find($id);
+            $talenta = new TalentaResource($model);
+            $method = "add";
+            return view('master.talenta.prestasi-form', [
+              'activeMenu' => 'master-talenta-tambah-prestasi',
+              'model' => $talenta,
+              'bidang' => $bidang,
+              'method'=>$method
+            ]);
+          }
+ public function prestasiEdit($id)
+  {
+    $bidang = Bidang::all();
+    $model = TalentaPrestasi::find($id);
+    $talenta = new TalentaResource($model);
+    $method = "edit";
+    return view('master.talenta.prestasi-form', [
+      'activeMenu' => 'master-talenta-edit-prestasi',
+      'model' => $talenta,
+      'bidang' => $bidang,
+      'method' => $method,
+    ]);
+  }
 
   public function prestasiStore(Request $request, $id): RedirectResponse
   {
@@ -182,7 +181,59 @@ class DataTalentaController extends Controller
     $model->link_web = $request->input('link_web');
 
     $model->save();
-    return redirect()->route('data-master.talenta.index')->with('alert-success', 'Tambah Data Berhasil');
+     return redirect()->route('data-master.talenta.show', $id)->with('alert-success', 'Tambah Data Berhasil');
+  }
+
+public function prestasiStoreEdit(Request $request, $id): RedirectResponse
+  {
+    $model = TalentaPrestasi::find($id);
+    $model->nama_prestasi = $request->input('nama_prestasi');
+    $model->deskripsi = $request->input('deskripsi');
+    $model->bidang_id = $request->input('bidang_id');
+    $model->sub_bidang = $request->input('subbidang');
+    $model->tanggal_perolehan = $request->input('tanggal_perolehan');
+    $model->penyelenggara = $request->input('penyelenggara');
+    $model->tingkat_rekognisi = $request->input('tingkat_rekognisi');
+    $model->prestasi = $request->input('prestasi');
+    $model->link_web = $request->input('link_web');
+
+    $model->save();
+     return redirect()->route('data-master.talenta.show', $request->input('idTalenta'))->with('alert-success', 'Edit Data Berhasil');
+  }
+
+public function prestasiDelete(int $id): RedirectResponse
+  {
+    $model = TalentaPrestasi::find($id);
+    $model->delete();
+
+    return redirect()->back()->with('alert-success', 'Hapus Data Berhasil');
+  }
+
+  public function educationAdd($id)
+    {
+      $bidang = Bidang::all();
+      $model = Talenta::find($id);
+      $method = "add";
+      $talenta = new TalentaResource($model);
+      return view('master.talenta.education-form', [
+        'activeMenu' => 'master-talenta-tambah-education',
+        'model' => $talenta,
+        'bidang' => $bidang,
+        'method'=> $method
+
+      ]);
+    }
+
+ public function educationEdit($id)
+  {
+    $model = TalentaPendidikan::find($id);
+    $talenta = new TalentaResource($model);
+    $method = "edit";
+    return view('master.talenta.education-form', [
+      'activeMenu' => 'master-talenta-edit-education',
+      'model' => $talenta,
+      'method' => $method,
+    ]);
   }
 
   public function educationStore(Request $request, $id): RedirectResponse
@@ -195,28 +246,110 @@ class DataTalentaController extends Controller
     $model->tgl_lulus = $request->input('tgl_lulus');
     $model->ijazah_url = $request->input('ijazah_url');
     if ($request->file('foto_ijazah')) {
-      $file = $request->file('foto_ijazah');
-      list($realName, $ext) = explode('.', $file->getClientOriginalName());
-      $fileName = $realName . '_' . time() . random_int(1, 99) . '.' . $file->extension();
-      $file->storeAs('public/ijazah', $fileName);
-      $model->foto_ijazah = $fileName;
-    }
+            $fileName = $request->file('foto_ijazah')->store('public/ijazah');
+            $model->foto_ijazah = basename($fileName);
+        }
     $model->save();
-    return redirect()->route('data-master.talenta.index')->with('alert-success', 'Tambah Data Berhasil');
+
+     return redirect()->route('data-master.talenta.show', $id)->with('alert-success', 'Tambah Data Berhasil');
   }
 
+public function educationStoreEdit(Request $request, $id): RedirectResponse
+  {
+    $model = TalentaPendidikan::find($id);
+
+    $model->tingkat = $request->input('tingkat');
+    $model->nama = $request->input('nama');
+    $model->tgl_lulus = $request->input('tgl_lulus');
+    $model->tgl_lulus = $request->input('tgl_lulus');
+    $model->ijazah_url = $request->input('ijazah_url');
+
+   // Cek jika ada file baru yang diunggah
+    if ($request->file('foto_ijazah')) {
+        // Hapus file ijazah lama jika ada
+        if ($model->foto_ijazah && Storage::exists('public/ijazah/' . $model->foto_ijazah)) {
+            Storage::delete('public/ijazah/' . $model->foto_ijazah);
+        }
+
+        // Simpan file ijazah baru
+        $fileName = $request->file('foto_ijazah')->store('public/ijazah');
+        $model->foto_ijazah = basename($fileName);
+    }
+
+    $model->save();
+
+     return redirect()->route('data-master.talenta.show', $request->input('idTalenta'))->with('alert-success', 'Edit Data Berhasil');
+  }
+
+  public function educationDelete(int $id): RedirectResponse
+  {
+    $model = TalentaPendidikan::find($id);
+    if (!$model) {
+          return response()->json(['error' => 'Talenta tidak ditemukan'], 404);
+      }
+    if ($model->foto_ijazah) {
+        $filePath = 'ijazah/' . $model->foto_ijazah;
+        Storage::disk('public')->delete($filePath);
+    }
+
+    $model->delete();
+    return redirect()->back()->with('alert-success', 'Hapus Data Berhasil');
+  }
+
+  public function keahlianAdd($id)
+        {
+          $bidang = Bidang::all();
+          $model = Talenta::find($id);
+          $method = "add";
+          $talenta = new TalentaResource($model);
+          return view('master.talenta.keahlian-form', [
+            'activeMenu' => 'master-talenta-tambah-keahlian',
+            'model' => $talenta,
+            'bidang' => $bidang,
+            'method' => $method,
+          ]);
+        }
+
+  public function keahlianEdit($id)
+    {
+      $model = TalentaKeahlian::find($id);
+      $talenta = new TalentaResource($model);
+      $method = "edit";
+      return view('master.talenta.keahlian-form', [
+        'activeMenu' => 'master-talenta-edit-keahlian',
+        'model' => $talenta,
+        'method' => $method,
+      ]);
+  }
 
   public function keahlianStore(Request $request, $id): RedirectResponse
+    {
+      $model = new TalentaKeahlian();
+      $model->talenta_id = $id;
+      $model->nama_keahlian = $request->input('nama_keahlian');
+      $model->deskripsi = $request->input('deskripsi');
+      $model->url = $request->input('url');
+      $model->save();
+      return redirect()->route('data-master.talenta.show', $id)->with('alert-success', 'Tambah Data Berhasil');
+    }
+
+public function keahlianStoreEdit(Request $request, $id): RedirectResponse
   {
- 
-    $model = new TalentaKeahlian();
-    $model->talenta_id = $id;
+    $model = TalentaKeahlian::find($id);
     $model->nama_keahlian = $request->input('nama_keahlian');
     $model->deskripsi = $request->input('deskripsi');
     $model->url = $request->input('url');
     $model->save();
-    return redirect()->route('data-master.talenta.index')->with('alert-success', 'Tambah Data Berhasil');
+    return redirect()->route('data-master.talenta.show', $request->input('idTalenta'))->with('alert-success', 'Edit Data Berhasil');
   }
+
+  public function keahlianDelete(int $id): RedirectResponse
+    {
+      $model = TalentaKeahlian::find($id);
+      $model->delete();
+
+      return redirect()->back()->with('alert-success', 'Hapus Data Berhasil');
+    }
 
  public function getTalentaList(Request $request)
   {
@@ -241,11 +374,19 @@ class DataTalentaController extends Controller
   public function delete(int $id): JsonResponse
   {
     $model = Talenta::find($id);
+ // Cek jika model ditemukan
+    if (!$model) {
+        return response()->json(['error' => 'Talenta tidak ditemukan'], 404);
+    }
+    if ($model->foto_talenta) {
+        $filePath = 'talenta/' . $model->foto_talenta;
+        Storage::disk('public')->delete($filePath);
+    }
+
     HighLightTalenta::query()->where('talenta_id', $id)->delete();
     TalentaPrestasi::query()->where('talenta_id', $id)->delete();
     TalentaPendidikan::query()->where('talenta_id', $id)->delete();
     TalentaKeahlian::query()->where('talenta_id', $id)->delete();
-    HighLightTalenta::query()->where('talenta_id', $id)->delete();
     $model->delete();
     return response()->json([]);
   }

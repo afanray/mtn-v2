@@ -31,40 +31,25 @@
         </section>
     </section>
 
-    {{-- <div class="container mb-20">
-        <div class="wow fadeInUp delay-0-2s" style="visibility: visible; animation-name: fadeInUp;">
-            <div class="card">
-                <div class="card-header wow fadeInUp delay-0-4s " style="visibility: visible; animation-name: fadeInUp;">
-                    <h3>Sebaran Talenta Berprestasi</h3>
-                </div>
-
-                <div class=" wow fadeInUp delay-0-6s" style="visibility: visible; animation-name: fadeInUp;">
-                    <div id='map' style="height: 400px; width: 100wv;"></div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-
-
     <section class="container bg-white mt-5 mb-5">
         <div class="row align-items-center">
-            <div class="col-lg-6 col-md-12">
-                <h3 class="font-weight-bold text-left mx-auto mt-4 mb-4">
-                    Anugrah Talenta Nasional
+            <div class="col-lg-6 col-md-6">
+                <h3 class="font-weight-bold text-left mx-auto mt-4 mb-4 ">
+                    Highlight Talenta Nasional
                 </h3>
             </div>
-            <div class="col-lg-6 col-md-12 text-right">
-                <h5 class="font-weight-bold mx-auto mt-4 mb-4">
+            {{-- <div class="col-lg-6 col-md-6 text-md-right text-right">
+                <h5 class="font-weight-bold mx-auto mt-4 mb-4 h6 h-md5">
                     <a href="/highlight-talenta" class="text-decoration-none">Selengkapnya</a>
                 </h5>
-            </div>
+            </div> --}}
         </div>
 
         <div class="row">
             @foreach ($dataSorotan as $item)
                 <div class="col-lg-3 col-md-12 mt-20">
 
-                    <a href="{{ $item['link'] }}">
+                    <a href="{{ $item['link_web'] }}">
                         <div class="card wow fadeInUp delay-0-3s"
                             style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); position: relative; height: 500px;">
                             <!-- Fixed height applied above (height: 400px) -->
@@ -75,26 +60,25 @@
                                             @elseif ($item['bidang_id'] == 3) background-color: #ED3672; 
                                             @else background-color: #4575B8; @endif
                                             color: white; padding: 5px 10px; border-radius: 5px; font-size: 14px;">
-                                2024
+                                {{ $item['tahun'] }}
                             </div>
-                            <img class="card-img-top" src="{{ $item['imageUrl'] }}" alt="Profile Image"
-                                style="border-radius: 10px 10px 0 0; height: 250px; object-fit: cover;">
+                            <img class="card-img-top"
+                                src="{{ $item['talenta']['foto_talenta'] ? asset('storage/talenta/' . $item['talenta']['foto_talenta']) : 'https://avatar.iran.liara.run/public/boy?username=Ash' }}""
+                                alt="Profile Image" style="border-radius: 10px 10px 0 0; height: 250px; object-fit: cover;">
                             <div class="card-body text-center" style="height: 200px;">
-                                <h5 class="card-title">{{ $item['name'] }}</h5>
+                                <h5 class="card-title text-uppercase">{{ $item['talenta']['nama_talenta'] }}</h5>
                                 <div class="info" style="text-align: left;">
                                     <span class="info-icon">
                                         <i class="fas fa-award"></i>
                                     </span>
-                                    <span class="card-text">{{ $item['role'] }}</span>
+
+                                    <span class="card-text">
+                                        {{ \Illuminate\Support\Str::words($item['desc_penghargaan'], 10, '...') }}</span>
                                 </div>
                             </div>
                             <!-- Tombol di bagian bawah card -->
-                            <a href="{{ $item['link'] }}" class="btn mt-3 text-white w-75"
-                                style="border-radius: 5px; padding: 10px 20px; position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
-                                   @if ($item['bidang_id'] == 1) background-color: #4575B8; 
-                                   @elseif ($item['bidang_id'] == 2) background-color: #ACAC2E; 
-                                   @elseif ($item['bidang_id'] == 3) background-color: #ED3672; 
-                                   @else background-color: #4575B8; @endif ">
+                            <a href="{{ $item['link_web'] }}" class="btn mt-3 text-white w-75"
+                                style="border-radius: 5px; padding: 10px 20px; position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background-color: #4575B8; ">
                                 Lihat Rekognisi
                             </a>
                         </div>
@@ -104,57 +88,66 @@
                 </div>
             @endforeach
         </div>
+    </section>
 
 
-        {{-- <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                @foreach ($dataSorotan as $item)
-                    <!-- Menghilangkan chunk -->
-                    <div class="carousel-item active">
-                        <div class="row">
-                            <div class="col-lg-3 col-md-12 mt-20">
-                                <a href="{{ $item['link'] }}">
-                                    <div class="card wow fadeInUp delay-0-3s"
-                                        style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); position: relative; height: 500px;">
-                                        <!-- Fixed height applied above (height: 400px) -->
-                                        <div class="ribbon"
-                                            style="position: absolute; top: 10px; left: 10px; 
-                                            @if ($item['bidang_id'] == 1) background-color: #4575B8; 
-                                            @elseif ($item['bidang_id'] == 2) background-color: #ACAC2E; 
-                                            @elseif ($item['bidang_id'] == 3) background-color: #ED3672; 
-                                            @else background-color: #4575B8; @endif
-                                            color: white; padding: 5px 10px; border-radius: 5px; font-size: 14px;">
-                                            2024
-                                        </div>
-                                        <img class="card-img-top" src="{{ $item['imageUrl'] }}" alt="Profile Image"
-                                            style="border-radius: 10px 10px 0 0; height: 250px; object-fit: cover;">
-                                        <div class="card-body text-center" style="height: 200px;">
-                                            <h5 class="card-title">{{ $item['name'] }}</h5>
-                                            <div class="info" style="text-align: left;">
-                                                <span class="info-icon">
-                                                    <i class="fas fa-award"></i>
-                                                </span>
-                                                <span class="card-text">{{ $item['role'] }}</span>
-                                            </div>
-                                        </div>
-                                        <!-- Tombol di bagian bawah card -->
-                                        <a href="{{ $item['link'] }}" class="btn mt-3 text-white w-100 mx-2"
-                                            style="border-radius: 5px; padding: 10px 20px; position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
-                                   @if ($item['bidang_id'] == 1) background-color: #4575B8; 
-                                   @elseif ($item['bidang_id'] == 2) background-color: #ACAC2E; 
-                                   @elseif ($item['bidang_id'] == 3) background-color: #ED3672; 
-                                   @else background-color: #4575B8; @endif ">
-                                            Lihat Rekognisi
-                                        </a>
+    <section class="container bg-white mt-5 mb-5">
+        <div class="row align-items-center">
+            <div class="col-lg-6 col-md-12">
+                <h3 class="font-weight-bold text-left mx-auto mt-4 mb-4">
+                    Berita Talenta Terbaru
+                </h3>
+            </div>
+        </div>
+
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <!-- Carousel Indicators -->
+            <ol class="carousel-indicators">
+                @foreach ($dataBerita as $key => $item)
+                    <li data-target="#carouselExampleIndicators" data-slide-to="{{ $key }}"
+                        class="{{ $key == 0 ? 'active' : '' }}"></li>
+                @endforeach
+            </ol>
+
+            <!-- Carousel Inner -->
+            <div class="carousel-inner shadow  ">
+                @foreach ($dataBerita as $key => $item)
+                    <div class="carousel-item  {{ $key == 0 ? 'active' : '' }}">
+
+                        <div class="card wow fadeInUp delay-0-3s border-0 shadow p-20 rounded">
+                            <div class="row no-gutters">
+                                <div class="col-md-2 d-flex ml-20 align-items-center justify-content-center">
+                                    <img src="{{ $item['imageUrl'] }}" alt="Profile Picture" class="rounded img-fluid">
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="card-body">
+                                        <p class="font-weight-bold">{{ $item['judul'] }}</p>
+                                        <p>
+                                            {{ $item['deskripsi'] }}
+                                        </p>
+                                        <p class="text-sm"> <a href="{{ $item['link'] }}">Sumber:
+                                                {{ $item['sumber'] }}</a>
+                                        </p>
+
+                                        <a href="{{ $item['link'] }}" class="btn btn-primary">Selengkapnya</a>
                                     </div>
-                                </a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 @endforeach
             </div>
-        </div> --}}
 
+            <!-- Carousel Controls -->
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
     </section>
 
     <section class="container bg-white mt-5 mb-5">
@@ -205,16 +198,15 @@
 
             <!-- More Videos Section -->
             <div class="col-lg-3">
-                <h3 class="h5 font-weight-bold mb-4">More Videos</h3>
+                <h3 class="h5 font-weight-bold mb-4">Video lainnya</h3>
                 <ul class="list-unstyled">
                     @foreach ($videos as $index => $videoUrl)
                         <li onclick="setMainVideoSrc('{{ $videoUrl }}')" class="cursor-pointer mb-3" role="button">
                             <div class="embed-responsive embed-responsive-16by9 rounded-lg">
                                 <iframe class="embed-responsive-item secondaryIframe" src="{{ $videoUrl }}"
-                                    title="YouTube video {{ $index + 1 }}"
+                                    title="YouTube video {{ $index + 1 }}" frameborder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen
-                                    loading="lazy"></iframe>
+                                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                             </div>
                         </li>
                     @endforeach
@@ -243,12 +235,12 @@
             <div class="row">
                 <div class="col-xl-12 col-lg-10 d-flex flex-column align-items-center">
                     <div class="section-title mb-45 text-center d-flex flex-column align-items-center">
-                        <p class="w-75">Untuk mengoordinasikan penyelenggaraan DBMTN 2023-2045 yang dilaksanakan oleh
+                        <p class="w-75">Untuk mengoordinasikan penyelenggaraan DBMTN 2024-2045 yang dilaksanakan oleh
                             kementerian/lembaga, pemerintah daerah provinsi, pemerintah daerah kabupaten/kota, dan
                             pemangku
                             kepentingan dan mengoordinasikan penyelesaian permasalahan dan hambatan (debottlenecking)
                             dalam
-                            penyelenggaraan DBMTN 2023-2045 telah dibentuk Gugus Tugas MTN yang diketuai oleh Menteri
+                            penyelenggaraan DBMTN 2024-2045 telah dibentuk Gugus Tugas MTN yang diketuai oleh Menteri
                             PPN/Kepala Bappenas dan beranggotakan Menteri/Kepala Lembaga terkait</p>
                     </div>
                     <div class="row justify-content-lg-center">

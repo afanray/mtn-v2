@@ -146,7 +146,7 @@
                         <div class="footer-widget link-widget">
                             <h4 class="footer-title">&nbsp;</h4>
                             <ul class="list-style-two">
-                                <li><a href="{{ route('home.praktik-baik') }}">Praktik Baik</a></li>
+                                {{-- <li><a href="{{ route('home.praktik-baik') }}">Praktik Baik</a></li> --}}
                                 <li><a href="/sinergi">Sinergi Data</a></li>
                                 <li><a href="{{ route('home.contact') }}">Kontak</a></li>
                                 {{-- <li><a href="{{ route('dashboard-capaian') }}">Dashboard Capaian</a></li> --}}

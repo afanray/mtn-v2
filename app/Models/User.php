@@ -89,6 +89,11 @@ class User extends Authenticatable implements JWTSubject
       return $this->HasMany(UsersInput::class, 'user_id');
     }
 
+    public function news()
+      {
+          return $this->belongsTo(News::class);
+      }
+
     public static function isOperator(): bool {
       return \auth()->user()->role === 'operator';
     }

@@ -29,6 +29,7 @@
             margin-top: var(--kt-app-header-height);
         }
     </style>
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
     @yield('css')
 </head>
 <!--end::Head-->
@@ -306,6 +307,20 @@
                                     </a>
                                     <!--end:Menu link-->
                                 </div>
+
+                                <!--begin:Menu item-->
+                                <div class="menu-item">
+                                    <!--begin:Menu link-->
+                                    <a class="menu-link {{ $activeMenu === 'bk' ? 'active' : '' }}"
+                                        href="{{ route('berita-kegiatan.index') }}">
+                                        <span class="menu-icon">
+                                            <i class="fa-solid fa-file-circle-plus"></i>
+                                            {{-- <i class='fa fa-news fs-4'></i> --}}
+                                        </span>
+                                        <span class="menu-title">Berita dan Kegiatan</span>
+                                    </a>
+                                    <!--end:Menu link-->
+                                </div>
                                 @if (\App\Models\User::isSuperAdmin())
                                     <!--begin:Menu item-->
                                     <div class="menu-item">
@@ -389,6 +404,17 @@
                                                     <span class="menu-bullet">
                                                         <span class="bullet bullet-dot"></span></span>
                                                     <span class="menu-title">Data Referensi Penghargaan</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link {{ $activeMenu === 'master-sinergi-data' ? 'active' : '' }}"
+                                                    href="#">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span></span>
+                                                    <span class="menu-title">Sinergi Data</span>
                                                 </a>
                                                 <!--end:Menu link-->
                                             </div>

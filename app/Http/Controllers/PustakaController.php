@@ -1,5 +1,6 @@
 <?php
 
+
 	namespace App\Http\Controllers;
 
 	use App\Constants\Common;
@@ -8,6 +9,8 @@
   use Illuminate\Http\Request;
   use Illuminate\View\View;
   use Yajra\DataTables\Facades\DataTables;
+  use Illuminate\Support\Facades\Storage;
+
 
   class PustakaController extends Controller
 	{
@@ -53,13 +56,19 @@
       $model->description = $request->input('description');
       $model->link = $request->input('link');
       $model->type = $request->input('type');
-      if ($request->file('image') && $model->type != Common::PUSTAKA_VIDEO){
-        $file = $request->file('image');
-        list($realName,$ext) = explode('.',$file->getClientOriginalName());
-        $fileName = $realName.'_'.time().random_int(1,99).'.'.$file->extension();
-        $file->storeAs('public/pustaka', $fileName);
-        $model->image = $fileName;
-      }
+
+  // Jika ada file foto_penghargaan baru
+    if ($request->file('image') && $model->type != Common::PUSTAKA_VIDEO) {
+        // Hapus file lama jika ada
+        if ($model->image && Storage::exists('public/pustaka/' . $model->image)) {
+            Storage::delete('public/pustaka/' . $model->image);
+        }
+
+        // Simpan file baru
+        $fileName = $request->file('image')->store('public/pustaka');
+        $model->image = basename($fileName);
+    }
+
       if ($request->file('file') && $model->type == Common::PUSTAKA_VIDEO){
         $file = $request->file('file');
         list($realName,$ext) = explode('.',$file->getClientOriginalName());
@@ -68,6 +77,7 @@
         $model->link = $fileName;
         $model->image = null;
       }
+
       $model->save();
       return redirect()->route('pustaka.index')->with('alert-success', ($request->input('id') ? 'Sunting' : 'Tambah'). ' Data Berhasil');
     }
@@ -75,6 +85,14 @@
     public function delete(Request $request): JsonResponse
     {
       $model = Pustaka::find($request->input('id'));
+       
+      if (!$model) {
+            return response()->json(['error' => 'Talenta tidak ditemukan'], 404);
+        }
+      if ($model->image) {
+            $filePath = 'pustaka/' . $model->image;
+            Storage::disk('public')->delete($filePath);
+      }
       $model->delete();
       return response()->json([]);
     }
