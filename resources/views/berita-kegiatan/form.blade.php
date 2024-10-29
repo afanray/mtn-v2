@@ -54,7 +54,7 @@
                                     <input type="text" name="category" id="category"
                                         class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
                                         placeholder="Kategori Berita Kegiatan"
-                                        value="{{ old('category', $model->categories) }}" />
+                                        value="{{ old('category', $model->category) }}" />
                                 </div>
                             </div>
                         </div>
@@ -80,7 +80,7 @@
                                 <div class="col-12 fv-row">
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" name="publish" id="publish"
-                                            checked>
+                                            @if ($model->published == 1) ? checked : '' @endif>
                                         <label class="custom-control-label" for="publish">Publish</label>
                                     </div>
                                 </div>

@@ -1,25 +1,21 @@
 @extends('layouts/landing')
 @section('title', 'Berita & Kegiatan')
 @section('body')
-    <section class="page-banner bg-blue rel z-1" style="">
+    <section class="page-banner rel z-1" style="background-color: #4575B8; height: 200px">
         <div class="container">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb wow fadeInUp delay-0-4s" style="visibility: visible; animation-name: fadeInUp;">
-                    <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item active">Berita & Kegiatan </li>
-                </ol>
-            </nav>
             <div class="banner-inner">
-                <h1 class="page-title wow fadeInUp delay-0-2s">Berita & Kegiatan</h1>
+                <h3 class="text-white wow fadeInUp delay-0-2s">Berita & Kegiatan</h3>
             </div>
         </div>
         <img class="dots-shape" src="/assets/landing/images/shapes/white-dots-two.png" alt="Shape">
         <img class="tringle-shape slideLeftRight" src="/assets/landing/images/shapes/white-tringle.png" alt="Shape">
         <img class="close-shape" src="/assets/landing/images/shapes/white-close.png" alt="Shape">
-        <img src="/assets/landing/images/newsletter/circle.png" alt="shape" class="banner-circle slideUpRight">
+        {{-- <img src="/assets/landing/images/newsletter/circle.png" alt="shape" class="banner-circle slideUpRight"> --}}
         <img class="dots-shape-three slideUpDown delay-1-5s" src="/assets/landing/images/shapes/white-dots-three.png"
             alt="Shape">
     </section>
+
+
     <!--====== Highlight Talenta Section Start ======-->
     <section class="blog-section rel z-1 pb-100 pt-100 rpb-100 rpb-150 rmb-30">
         <div class="container">
@@ -49,14 +45,17 @@
                                 <h4><a href="{{ $h->link_web }}">{{ $h->prizes->name }}</a></h4>
                                 <p>{{ Illuminate\Support\Str::limit($h->desc_penghargaan, 100) }}</p>
                             </div>
-                            <a href="{{ $h->link_web }}" class="learn-more">Lihat <i class="fas fa-arrow-right"></i></a>
+                            <a href="{{ $h->link_web }}" class="learn-more text-white"
+                                style="background-color : #4575B8;">Lihat <i class="fas fa-arrow-right"></i></a>
                         </div>
                     </div>
                 @endforeach
                 <div class="col-lg-12">
                     <div class="news-more-btn text-center pt-30">
-                        <a href="{{ route('home.highlight-talenta') }}" class="theme-btn style-three">Kunjungi Halaman <i
-                                class="fas fa-arrow-right"></i></a>
+                        <a href="{{ route('home.highlight-talenta') }}" class="theme-btn text-white"
+                            style="background-color : #4575B8;">Kunjungi Halaman <i
+                                class="fas
+                            fa-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -65,7 +64,7 @@
     <!--====== Highlight Talenta Section End ======-->
 
     <!--====== Anugrah Talenta Section Start ======-->
-    <section class="blog-section rel z-1 pb-100 rpb-100 rpb-150 rmb-30">
+    {{-- <section class="blog-section rel z-1 pb-100 rpb-100 rpb-150 rmb-30">
         <div class="container">
             <div class="row justify-content-center text-center">
                 <div class="col-xl-6 col-lg-8 col-md-10">
@@ -138,7 +137,8 @@
                                 <h4><a href="{{ $h->link_web }}">{{ $h->nama_ajang }}</a></h4>
                                 <p>{{ Illuminate\Support\Str::limit($h->desc, 100) }}</p>
                             </div>
-                            <a href="{{ $h->link_web }}" class="learn-more">Lihat <i class="fas fa-arrow-right"></i></a>
+                            <a href="{{ $h->link_web }}" class="learn-more">Lihat <i
+                                    class="fas fa-arrow-right"></i></a>
                         </div>
                     </div>
                 @endforeach
@@ -150,6 +150,6 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
     <!--====== Ajang Talenta Section End ======-->
 @endsection

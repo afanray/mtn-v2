@@ -159,7 +159,7 @@
                     sortable: false,
                 },
                 {
-                    data: 'categories',
+                    data: 'category',
                     title: 'Kategori',
                     sortable: false,
                 },
@@ -177,7 +177,6 @@
                         return data; // Jika konten kurang dari 50 kata
                     }
                 },
-
                 {
                     data: 'user.name',
                     title: 'Dibuat Oleh',

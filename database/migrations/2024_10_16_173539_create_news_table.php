@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug');
             $table->string('image');
-            $table->string('categories');
+            $table->string('category');
             $table->string('content');
             $table->string('created_by');
             $table->string('updated_by');

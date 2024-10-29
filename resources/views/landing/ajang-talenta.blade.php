@@ -1,7 +1,7 @@
 @extends('layouts/landing')
 @section('title', 'Ajang Talenta')
 @section('body')
-    <section class="page-banner bg-blue rel z-1" style="">
+    <section class="page-banner rel z-1" style="background-color: #4575B8; height: 200px">
         <div class="container">
             <div class="banner-inner">
                 <h1 class="page-title wow fadeInUp delay-0-2s">Ajang Talenta</h1>
@@ -16,7 +16,7 @@
         <img class="dots-shape" src="/assets/landing/images/shapes/white-dots-two.png" alt="Shape">
         <img class="tringle-shape slideLeftRight" src="/assets/landing/images/shapes/white-tringle.png" alt="Shape">
         <img class="close-shape" src="/assets/landing/images/shapes/white-close.png" alt="Shape">
-        <img src="/assets/landing/images/newsletter/circle.png" alt="shape" class="banner-circle slideUpRight">
+        {{-- <img src="/assets/landing/images/newsletter/circle.png" alt="shape" class="banner-circle slideUpRight"> --}}
         <img class="dots-shape-three slideUpDown delay-1-5s" src="/assets/landing/images/shapes/white-dots-three.png"
             alt="Shape">
     </section>

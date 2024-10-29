@@ -373,7 +373,6 @@
         }
 
         $(document).ready(function() {
-
             $('body').on('click', '.delete-row', function() {
                 const id = $(this).attr('id')
                 Swal.fire({

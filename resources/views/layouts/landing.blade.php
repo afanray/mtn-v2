@@ -42,6 +42,10 @@
     <link rel="stylesheet" href="{{ asset('assets/landing/css/custom.css') }}">
 
     <link rel="stylesheet" href="{{ asset('assets/landing/css/leaflet-1.9.4.css') }}">
+
+    <!-- Tambahkan CSS Swiper -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
     @yield('css')
 </head>
 
@@ -89,7 +93,7 @@
                                         <li @class(['current' => $activeMenu === 'news'])><a href="{{ route('home.news') }}">Berita &
                                                 Kegiatan</a></li>
                                         <li @class(['current' => $activeMenu === 'library'])><a href="/pustaka">Pustaka</a></li>
-                                        <li @class(['current' => $activeMenu === 'pb'])><a href="/praktik-baik">Praktik Baik</a></li>
+                                        {{-- <li @class(['current' => $activeMenu === 'pb'])><a href="/praktik-baik">Praktik Baik</a></li> --}}
                                         <li @class(['current' => $activeMenu === 'sinergi'])><a href="/sinergi">Sinergi Data</a></li>
                                         <li @class(['current' => $activeMenu === 'contact'])><a href="/contact">Kontak</a></li>
                                     </ul>
@@ -157,10 +161,12 @@
                         <div class="footer-widget contact-widget">
                             <h4 class="footer-title">Kontak Kami</h4>
                             <ul class="list-style-three">
-                                <li><i class="fas fa-map-marker-alt"></i> Sekretariat Nasional Manajemen Talenta
+                                <li><i class="fas fa-home" style="color: #4575B8;"></i> Sekretariat
+                                    Nasional Manajemen Talenta
                                     Nasional</li>
-                                <li><i class="fas fa-map-marker-alt"></i> Jl. Taman Suropati No.62 Jakarta 10310</li>
-                                <li><i class="fas fa-phone"></i> Telepon : <a
+                                <li><i class="fas fa-map-marker-alt" style="color: #4575B8;"></i> Jl. Taman Suropati
+                                    No.62 Jakarta 10310</li>
+                                <li><i class="fas fa-phone" style="color: #4575B8;"></i> <a
                                         href="callto:+620213196207">021-3196207</a></li>
                             </ul>
                         </div>
@@ -213,6 +219,8 @@
     <script src="{{ asset('assets/landing/js/slick.min.js') }}"></script>
     <!--====== Main JS ======-->
     <script src="{{ asset('assets/landing/js/script.js') }}"></script>
+    <!-- Tambahkan JavaScript Swiper -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     @yield('js')
 
 </body>

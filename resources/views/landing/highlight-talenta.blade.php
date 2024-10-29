@@ -1,22 +1,16 @@
 @extends('layouts/landing')
 @section('title', 'Highlight Talenta')
 @section('body')
-    <section class="page-banner bg-blue rel z-1" style="">
+    <section class="page-banner rel z-1" style="background-color: #4575B8; height: 200px">
         <div class="container">
             <div class="banner-inner">
-                <h1 class="page-title wow fadeInUp delay-0-2s">HighLight Talenta</h1>
+                <h3 class="text-white wow fadeInUp delay-0-2s">HighLight Talenta</h3>
             </div>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb wow fadeInUp delay-0-4s" style="visibility: visible; animation-name: fadeInUp;">
-                    <li class="breadcrumb-item"><a href="{{ route('home.news') }}">Berita & Kegiatan</a></li>
-                    <li class="breadcrumb-item active">HighLight Talenta</li>
-                </ol>
-            </nav>
         </div>
         <img class="dots-shape" src="/assets/landing/images/shapes/white-dots-two.png" alt="Shape">
         <img class="tringle-shape slideLeftRight" src="/assets/landing/images/shapes/white-tringle.png" alt="Shape">
         <img class="close-shape" src="/assets/landing/images/shapes/white-close.png" alt="Shape">
-        <img src="/assets/landing/images/newsletter/circle.png" alt="shape" class="banner-circle slideUpRight">
+        {{-- <img src="/assets/landing/images/newsletter/circle.png" alt="shape" class="banner-circle slideUpRight"> --}}
         <img class="dots-shape-three slideUpDown delay-1-5s" src="/assets/landing/images/shapes/white-dots-three.png"
             alt="Shape">
     </section>

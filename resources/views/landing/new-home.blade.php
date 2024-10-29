@@ -34,68 +34,67 @@
     <section class="container bg-white mt-5 mb-5">
         <div class="row align-items-center">
             <div class="col-lg-6 col-md-6">
-                <h3 class="font-weight-bold text-left mx-auto mt-4 mb-4 ">
+                <h3 class="font-weight-bold text-left mx-auto mt-4 mb-4">
                     Highlight Talenta Nasional
                 </h3>
             </div>
-            {{-- <div class="col-lg-6 col-md-6 text-md-right text-right">
-                <h5 class="font-weight-bold mx-auto mt-4 mb-4 h6 h-md5">
-                    <a href="/highlight-talenta" class="text-decoration-none">Selengkapnya</a>
-                </h5>
-            </div> --}}
         </div>
 
-        <div class="row">
-            @foreach ($dataSorotan as $item)
-                <div class="col-lg-3 col-md-12 mt-20">
-
-                    <a href="{{ $item['link_web'] }}">
-                        <div class="card wow fadeInUp delay-0-3s"
-                            style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); position: relative; height: 500px;">
-                            <!-- Fixed height applied above (height: 400px) -->
-                            <div class="ribbon"
-                                style="position: absolute; top: 10px; left: 10px; 
-                                            @if ($item['bidang_id'] == 1) background-color: #4575B8; 
-                                            @elseif ($item['bidang_id'] == 2) background-color: #ACAC2E; 
-                                            @elseif ($item['bidang_id'] == 3) background-color: #ED3672; 
-                                            @else background-color: #4575B8; @endif
-                                            color: white; padding: 5px 10px; border-radius: 5px; font-size: 14px;">
-                                {{ $item['tahun'] }}
-                            </div>
-                            <img class="card-img-top"
-                                src="{{ $item['talenta']['foto_talenta'] ? asset('storage/talenta/' . $item['talenta']['foto_talenta']) : 'https://avatar.iran.liara.run/public/boy?username=Ash' }}""
-                                alt="Profile Image" style="border-radius: 10px 10px 0 0; height: 250px; object-fit: cover;">
-                            <div class="card-body text-center" style="height: 200px;">
-                                <h5 class="card-title text-uppercase">{{ $item['talenta']['nama_talenta'] }}</h5>
-                                <div class="info" style="text-align: left;">
-                                    <span class="info-icon">
-                                        <i class="fas fa-award"></i>
-                                    </span>
-
-                                    <span class="card-text">
-                                        {{ \Illuminate\Support\Str::words($item['desc_penghargaan'], 10, '...') }}</span>
+        <div class="swiper-container" style="overflow: hidden;">
+            <div class="swiper-wrapper">
+                @foreach ($dataSorotan->take(8) as $item)
+                    <div class="swiper-slide">
+                        <a href="{{ $item['link_web'] }}">
+                            <div class="card"
+                                style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); height: 450px; overflow: hidden; display: flex; flex-direction: column;">
+                                <div class="ribbon"
+                                    style="position: absolute; top: 10px; left: 10px; 
+                            @if ($item['bidang_id'] == 1) background-color: #4575B8; 
+                            @elseif ($item['bidang_id'] == 2) background-color: #ACAC2E; 
+                            @elseif ($item['bidang_id'] == 3) background-color: #ED3672; 
+                            @else background-color: #4575B8; @endif
+                            color: white; padding: 5px 10px; border-radius: 5px; font-size: 14px;">
+                                    {{ $item['tahun'] }}
                                 </div>
+                                <img class="card-img-top"
+                                    src="{{ $item['talenta']['foto_talenta'] ? asset('storage/talenta/' . $item['talenta']['foto_talenta']) : 'https://avatar.iran.liara.run/public/boy?username=Ash' }}"
+                                    alt="Profile Image"
+                                    style="border-radius: 10px 10px 0 0; height: 200px; object-fit: cover;">
+                                <div class="card-body text-center" style="flex-grow: 1;">
+                                    <h5 class="card-title text-uppercase">{{ $item['talenta']['nama_talenta'] }}</h5>
+                                    <div class="info text-left">
+                                        <span class="info-icon">
+                                            <i class="fas fa-award"></i>
+                                        </span>
+                                        <span class="card-text">
+                                            {{ \Illuminate\Support\Str::words($item['desc_penghargaan'], 10, '...') }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <a href="{{ $item['link_web'] }}" class="btn mt-3 text-white w-75"
+                                    style="border-radius: 5px; padding: 10px 20px; position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background-color: #4575B8;">
+                                    Lihat Rekognisi
+                                </a>
                             </div>
-                            <!-- Tombol di bagian bawah card -->
-                            <a href="{{ $item['link_web'] }}" class="btn mt-3 text-white w-75"
-                                style="border-radius: 5px; padding: 10px 20px; position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background-color: #4575B8; ">
-                                Lihat Rekognisi
-                            </a>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
+                @endforeach
+            </div>
 
+            {{-- <!-- Navigasi Slider -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div> --}}
 
-                </div>
-            @endforeach
+            <!-- Pagination Slider -->
+            <div class="swiper-pagination"></div>
         </div>
     </section>
-
 
     <section class="container bg-white mt-5 mb-5">
         <div class="row align-items-center">
             <div class="col-lg-6 col-md-12">
                 <h3 class="font-weight-bold text-left mx-auto mt-4 mb-4">
-                    Berita Talenta Terbaru
+                    Berita & Kegiatan Terbaru
                 </h3>
             </div>
         </div>
@@ -117,19 +116,17 @@
                         <div class="card wow fadeInUp delay-0-3s border-0 shadow p-20 rounded">
                             <div class="row no-gutters">
                                 <div class="col-md-2 d-flex ml-20 align-items-center justify-content-center">
-                                    <img src="{{ $item['imageUrl'] }}" alt="Profile Picture" class="rounded img-fluid">
+                                    <img src="storage/berita_kegiatan/{{ $item['image'] }}" alt="Profile Picture"
+                                        class="rounded img-fluid">
                                 </div>
                                 <div class="col-md-10">
                                     <div class="card-body">
-                                        <p class="font-weight-bold">{{ $item['judul'] }}</p>
+                                        <h5 class="font-weight-bold">{{ $item['title'] }}</h5>
                                         <p>
-                                            {{ $item['deskripsi'] }}
+                                            {!! \Illuminate\Support\Str::limit(strip_tags($item['content']), 300) !!}
                                         </p>
-                                        <p class="text-sm"> <a href="{{ $item['link'] }}">Sumber:
-                                                {{ $item['sumber'] }}</a>
-                                        </p>
-
-                                        <a href="{{ $item['link'] }}" class="btn btn-primary">Selengkapnya</a>
+                                        <a href="{{ route('berita-kegiatan.view', $item['slug']) }}"
+                                            class="btn btn-primary" style="background-color: #4575B8;">Selengkapnya</a>
                                     </div>
                                 </div>
                             </div>
@@ -152,7 +149,7 @@
 
     <section class="container bg-white mt-5 mb-5">
         <h3 class="font-weight-bold text-left mx-auto mt-4 mb-4">
-            Beasiswa dan Hibah
+            Stakeholder Parnertship
         </h3>
 
         <div class="row">
@@ -233,8 +230,8 @@
     <section class="partners-section rel z-1 mt-10 mb-10">
         <div class="container">
             <div class="row">
-                <div class="col-xl-12 col-lg-10 d-flex flex-column align-items-center">
-                    <div class="section-title mb-45 text-center d-flex flex-column align-items-center">
+                <div class="col-xl-12 col-lg-10 d-flex flex-column align-items-center mt-30">
+                    <div class="section-title text-center d-flex flex-column align-items-center">
                         <p class="w-75">Untuk mengoordinasikan penyelenggaraan DBMTN 2024-2045 yang dilaksanakan oleh
                             kementerian/lembaga, pemerintah daerah provinsi, pemerintah daerah kabupaten/kota, dan
                             pemangku
@@ -243,34 +240,10 @@
                             penyelenggaraan DBMTN 2024-2045 telah dibentuk Gugus Tugas MTN yang diketuai oleh Menteri
                             PPN/Kepala Bappenas dan beranggotakan Menteri/Kepala Lembaga terkait</p>
                     </div>
-                    <div class="row justify-content-lg-center">
-                        <!-- Partner Logos -->
-                        <div class="col-lg-2 col-sm-4 col-6">
-                            <a class="partner-item wow fadeInRight delay-0-2s" href="https://www.bappenas.go.id/">
-                                <img src="{{ asset('assets/media/logos/logoc Bappenas.png') }}" alt="Partner">
-                            </a>
-                        </div>
-                        <div class="col-lg-2 col-sm-4 col-6">
-                            <a class="partner-item wow fadeInRight delay-0-4s" href="https://www.brin.go.id/">
-                                <img src="{{ asset('assets/media/logos/logo BRIN .jpeg') }}" alt="Partner">
-                            </a>
-                        </div>
-                        <div class="col-lg-2 col-sm-4 col-6">
-                            <a class="partner-item wow fadeInRight delay-0-6s" href="https://www.kemdikbud.go.id/">
-                                <img src="{{ asset('assets/media/logos/Dinas Pendidikan.png') }}" alt="Partner">
-                            </a>
-                        </div>
-                        <div class="col-lg-2 col-sm-4 col-6">
-                            <a class="partner-item wow fadeInRight delay-0-8s" href="https://www.ksp.go.id/">
-                                <img src="{{ asset('assets/media/logos/Kantor_Staf_Presiden.png') }}" alt="Partner">
-                            </a>
-                        </div>
-                        <div class="col-lg-2 col-sm-4 col-6">
-                            <a class="partner-item wow fadeInRight delay-0-2s" href="https://www.kemenpora.go.id/">
-                                <img src="{{ asset('assets/media/logos/Kemenpora_Logo.png') }}" alt="Partner"
-                                    style="width: 65%">
-                            </a>
-                        </div>
+
+                    <div class="col-lg-12">
+                        <img src=" {{ asset('assets/landing/images/background/gugus-tugas-mtn.png') }}" class="img-fluid"
+                            alt="anggota gugus tugas">
                     </div>
                 </div>
             </div>
@@ -561,5 +534,39 @@
         };
 
         legend.addTo(map);
+    </script>
+
+    <script>
+        var swiper = new Swiper('.swiper-container', {
+            slidesPerView: 1, // Default 1 slide untuk perangkat kecil
+            spaceBetween: 20, // Jarak antar card
+            loop: true, // Loop aktif
+            autoplay: {
+                delay: 3000, // Durasi tiap slide
+                disableOnInteraction: false,
+            },
+            breakpoints: { // Menggunakan responsivitas dari Swiper
+                576: {
+                    slidesPerView: 2, // 2 card untuk layar kecil
+                },
+                768: {
+                    slidesPerView: 3, // 3 card untuk layar medium
+                },
+                992: {
+                    slidesPerView: 4, // 4 card untuk layar besar
+                },
+                1200: {
+                    slidesPerView: 4, // Tetap 4 card di layar yang lebih besar
+                }
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+        });
     </script>
 @endsection

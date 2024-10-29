@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,6 +28,7 @@ Route::post('/common/get-regencies', [\App\Http\Controllers\CommonController::cl
 Route::post('/common/post-testi', [\App\Http\Controllers\HomeController::class, 'postTesti'])->name('home.common.post-testi');
 Route::post('/common/get-ht-province', [\App\Http\Controllers\CommonController::class, 'getHTProvinsi'])->name('home.common.get-ht-province');
 Route::post('/common/get-talenta', [\App\Http\Controllers\CommonController::class, 'getTalentaByCategory'])->name('home.common.get-talenta');
+Route::get('/berita-kegiatan/view/{id}', [\App\Http\Controllers\HomeController::class, 'viewNews'])->name('berita-kegiatan.view');
 
 Route::get('login', [\App\Http\Controllers\AuthController::class, 'login'])->name('login');
 Route::post('login', [\App\Http\Controllers\AuthController::class, 'submitLogin'])->name('auth.login');
@@ -118,7 +118,6 @@ Route::middleware(['auth:web'])->group(function () {
         Route::get('/show/{id}', [\App\Http\Controllers\NewsController::class, 'show'])->name('berita-kegiatan.show');
         Route::get('/add', [\App\Http\Controllers\NewsController::class, 'add'])->name('berita-kegiatan.add');
         Route::get('/edit/{id}', [\App\Http\Controllers\NewsController::class, 'edit'])->name('berita-kegiatan.edit');
-        Route::get('/view/{id}', [\App\Http\Controllers\NewsController::class, 'show'])->name('berita-kegiatan.view');
         Route::post('/store', [\App\Http\Controllers\NewsController::class, 'store'])->name('berita-kegiatan.save');
         Route::post('/delete/{id}', [\App\Http\Controllers\NewsController::class, 'destroy'])->name('berita-kegiatan.delete');
       });
@@ -171,6 +170,25 @@ Route::middleware(['auth:web'])->group(function () {
         Route::get('/edit/{id}', [\App\Http\Controllers\DataMaster\DataPenghargaanController::class, 'edit'])->name('data-master.penghargaan.edit')->middleware('role:superadmin');
         Route::get('/delete/{id}', [\App\Http\Controllers\DataMaster\DataPenghargaanController::class, 'delete'])->name('data-master.penghargaan.delete')->middleware('role:superadmin');
         Route::post('/store', [\App\Http\Controllers\DataMaster\DataPenghargaanController::class, 'store'])->name('data-master.penghargaan.save')->middleware('role:superadmin');
+      });
+    Route::prefix('sinergi-data')->group(function () {
+        Route::get('/', [\App\Http\Controllers\DataMaster\SinergiDataController::class, 'index'])->name('data-master.sinergi-data.index')->middleware('role:superadmin, pic_direktorat');
+      Route::get('/add', [\App\Http\Controllers\DataMaster\SinergiDataController::class, 'add'])->name('data-master.sinergi-data.add')->middleware('role:superadmin, pic_direktorat');
+      Route::get('/edit/{id}', [\App\Http\Controllers\DataMaster\SinergiDataController::class, 'edit'])->name('data-master.sinergi-data.edit')->middleware('role:superadmin, pic_direktorat');
+      Route::get('/show/{id}', [\App\Http\Controllers\DataMaster\SinergiDataController::class, 'show'])->name('data-master.sinergi-data.show')->middleware('role:superadmin, pic_direktorat');
+      Route::get('/data', [\App\Http\Controllers\DataMaster\SinergiDataController::class, 'data'])->name('data-master.sinergi-data.data')->middleware('role:superadmin, pic_direktorat');
+      Route::post('/store', [\App\Http\Controllers\DataMaster\SinergiDataController::class, 'store'])->name('data-master.sinergi-data.save')->middleware('role:superadmin,pic_direktorat');
+      Route::get('/delete/{id}', [\App\Http\Controllers\DataMaster\SinergiDataController::class, 'destroy'])->name('data-master.sinergi-data.delete')->middleware('role:superadmin, pic_direktorat');
+
+      Route::prefix('population')->group(function () {
+        Route::get('/store', [\App\Http\Controllers\DataMaster\PopulationsController::class, 'store'])->name('data-master.population.save')->middleware('role:superadmin, pic_direktorat');
+
+        Route::post('/sync-populasi/{id}', [\App\Http\Controllers\DataMaster\PopulationsController::class, 'syncPopulasi'])->name('sync.populasi')->middleware('role:superadmin, pic_direktorat');
+
+        Route::get('/delete/{id}', [\App\Http\Controllers\DataMaster\PopulationsController::class, 'destroy'])->name('data-master.sinergi-data.population.delete')->middleware('role:superadmin, pic_direktorat');
+
+        Route::get('/reset/{id}', [\App\Http\Controllers\DataMaster\PopulationsController::class, 'resetPopulation'])->name('data-master.population.reset')->middleware('role:superadmin, pic_direktorat');
+      });
       });
     });
   });

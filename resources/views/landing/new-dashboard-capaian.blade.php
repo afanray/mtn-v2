@@ -2,7 +2,7 @@
 @section('title', 'Dashboard')
 @section('body')
 
-    <section class="page-banner bg-blue rel z-1" style="">
+    <section class="page-banner rel z-1" style="background-color: #4575B8; height: 200px">
         <div class="container">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb wow fadeInUp delay-0-4s" style="visibility: visible; animation-name: fadeInUp;">

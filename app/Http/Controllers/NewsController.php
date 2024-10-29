@@ -69,12 +69,11 @@ class NewsController extends Controller
 
           // Assign input ke model
         $model->title = $request->input('title');
-        $model->slug = Str::slug($request->input('slug'), '-'); 
+        $model->slug = Str::slug($request->input('title'), '-'); 
         $model->content = $request->input('content');
-        $model->categories = $request->input('category');
-        $model->published = $request->has('published') ? 1 : 0;
+        $model->category = $request->input('category');
+        $model->published = $request->has('publish') ? 1 : 0;
         $model->user_id = $user->id;
-        // $model->updated_by = $user->id;
 
         // Jika ada file foto_penghargaan baru
         if ($request->file('image')) {

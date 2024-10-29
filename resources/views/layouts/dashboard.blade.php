@@ -411,7 +411,7 @@
                                             <div class="menu-item">
                                                 <!--begin:Menu link-->
                                                 <a class="menu-link {{ $activeMenu === 'master-sinergi-data' ? 'active' : '' }}"
-                                                    href="#">
+                                                    href="{{ route('data-master.sinergi-data.index') }}">
                                                     <span class="menu-bullet">
                                                         <span class="bullet bullet-dot"></span></span>
                                                     <span class="menu-title">Sinergi Data</span>

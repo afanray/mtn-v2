@@ -54,6 +54,10 @@ class Lembaga extends Model
     return $this->belongsTo(Province::class, 'province_id');
   }
 
+ public function sinergi(): BelongsTo {
+    return $this->belongsTo(SinergiData::class);
+  }
+
   public function regency(): BelongsTo {
     return $this->belongsTo(Regencies::class, 'regency_id');
   }

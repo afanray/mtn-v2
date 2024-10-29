@@ -1,26 +1,20 @@
 @extends('layouts/landing')
 @section('title', 'Tentang')
 @section('body')
-    <section class="page-banner bg-blue rel z-1" style="">
+    <section class="page-banner rel z-1" style="background-color: #4575B8; height: 200px">
         <div class="container">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb wow fadeInUp delay-0-4s" style="visibility: visible; animation-name: fadeInUp;">
-                    <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item active">Tentang</li>
-                </ol>
-            </nav>
             <div class="banner-inner">
-                <h1 class="page-title wow fadeInUp delay-0-2s">Manajemen Talenta Nasional (MTN)</h1>
+                <h3 class="text-white wow fadeInUp delay-0-2s">Manajemen Talenta Nasional (MTN)</h3>
             </div>
         </div>
         <img class="dots-shape" src="/assets/landing/images/shapes/white-dots-two.png" alt="Shape">
         <img class="tringle-shape slideLeftRight" src="/assets/landing/images/shapes/white-tringle.png" alt="Shape">
         <img class="close-shape" src="/assets/landing/images/shapes/white-close.png" alt="Shape">
-        <img src="/assets/landing/images/newsletter/circle.png" alt="shape" class="banner-circle slideUpRight">
+        {{-- <img src="/assets/landing/images/newsletter/circle.png" alt="shape" class="banner-circle slideUpRight"> --}}
         <img class="dots-shape-three slideUpDown delay-1-5s" src="/assets/landing/images/shapes/white-dots-three.png"
             alt="Shape">
     </section>
-    <section class="about-page-section rel z-1 pt-130 pb-100 rpt-100 ">
+    <section class="about-page-section rel z-1 pt-50 pb-50 rpt-100 ">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-xl-5 col-lg-6">
@@ -55,7 +49,7 @@
             </div>
         </div>
     </section>
-    <section class="solutions-section rel z-1 pb-100 rpb-70">
+    <section class="solutions-section rel z-1 pb-50 rpb-70">
         <div class="container">
             <div class="row justify-content-center text-center">
                 <div class="col-xl-6 col-lg-8 col-md-10">
@@ -111,7 +105,7 @@
         <img class="close-shape" src="{{ asset('assets/landing/images/shapes/close.png') }}" alt="Shape">
         <img class="circle-shape" src="{{ asset('assets/landing/images/shapes/circle.png') }}" alt="Shape">
     </section>
-    <section class="services-section-three bg-white rel z-1 pt-100 pb-100 rpb-70">
+    <section class="services-section-three bg-white rel z-1 pb-50 rpb-70">
         <div class="container">
             <div class="row justify-content-center text-center">
                 <div class="col-xl-7 col-lg-8 col-md-10">
@@ -131,8 +125,8 @@
                         role="tab" aria-controls="talenta-2" aria-selected="false">Bidang Seni Budaya</button>
                 </li>
                 <li class="nav-item p-0" role="presentation">
-                    <button class="nav-link " id="talenta-3-tab" data-toggle="tab" data-target="#talenta-3"
-                        type="button" role="tab" aria-controls="talenta-3" aria-selected="false">Bidang
+                    <button class="nav-link " id="talenta-3-tab" data-toggle="tab" data-target="#talenta-3" type="button"
+                        role="tab" aria-controls="talenta-3" aria-selected="false">Bidang
                         Olahraga</button>
                 </li>
             </ul>
