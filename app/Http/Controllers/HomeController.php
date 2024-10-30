@@ -300,14 +300,22 @@ $dataBerita = [
     ]);
   }
 
- public function viewNews($slug): View
-  {
-     $model = News::where('slug', $slug)->firstOrFail();
+public function viewNews($slug): View
+{
+    // Mendapatkan berita berdasarkan slug
+    $model = News::where('slug', $slug)->firstOrFail();
+
+    // Mengambil berita lain selain berita yang sedang dilihat
+    $oldNews = News::query()
+                ->where('id', '!=', $model->id) // Mengecualikan berita yang sedang dilihat
+                ->orderBy('created_at', 'desc')
+                ->limit(5)
+                ->get();
+
     return view('landing.view-berita', [
-      'activeMenu' => 'news',
-      'model'=> $model
+        'activeMenu' => 'news',
+        'model' => $model,
+        'oldNews' => $oldNews
     ]);
-  }
-
-
+}
 }

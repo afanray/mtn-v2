@@ -18,7 +18,7 @@
                         <div class="card">
                             <!--begin::Preview existing avatar-->
                             <div class="img-thumbnail bg-light-info h-250px rounded-2"
-                                style="background-size:cover; background-image: url('{{ $model->foto_talenta ? asset('storage/talenta/' . $model->foto_talenta) : 'https://avatar.iran.liara.run/public/boy?username=Ash' }}')">
+                                style="background-size:cover; background-image: url('{{ $model->lembaga_induk->image ? asset('storage/lembaga/' . $model->lembaga_induk->image) : 'https://avatar.iran.liara.run/public/boy?username=Arh' }}')">
                             </div>
                             <!--end::Preview existing avatar-->
                         </div>

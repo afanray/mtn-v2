@@ -1,5 +1,7 @@
 <?php
 
+
+
 	namespace App\Http\Controllers\DataMaster;
 
 	use App\Http\Controllers\Controller;
@@ -8,6 +10,7 @@
   use Illuminate\Http\RedirectResponse;
   use Illuminate\Http\Request;
   use Yajra\DataTables\Facades\DataTables;
+  use Illuminate\Support\Facades\Storage;
 
   class DataLembagaController extends Controller
 	{
@@ -66,6 +69,9 @@
     }
 
     public function store(Request $request): RedirectResponse{
+
+      // @dd($request->all());
+
       $model = new Lembaga();
       if($request->input('id')){
         $model = Lembaga::find($request->input('id'));
@@ -80,6 +86,17 @@
         $model->parent_id = $request->input('lembaga_induk_id');
       }else if($model->level == 3){
         $model->parent_id = $request->input('lembaga_unit_id');
+      }
+      // Jika ada file iamge lembaga baru
+      if ($request->file('image')) {
+          // Hapus file lama jika ada
+          if ($model->image && Storage::exists('public/lembaga/' . $model->image)) {
+              Storage::delete('public/lembaga/' . $model->image);
+          }
+          // Simpan file baru
+          $fileName = $request->file('image')->store('public/lembaga');
+          $model->image = basename($fileName);
+          // @dd($fileName);
       }
       $model->save();
       return redirect()->route('data-master.lembaga.index')->with('alert-success', ($request->input('id') ? 'Sunting' : 'Tambah'). ' Data Berhasil');

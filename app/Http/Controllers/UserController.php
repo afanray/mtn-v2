@@ -65,11 +65,9 @@ class UserController extends Controller
   }
 
   public function store(Request $request): RedirectResponse {
-    
-
       $validator = Validator::make($request->all(), [
         'password' => [
-            'required',
+            $request->input('id') ? 'nullable' : 'required',
             'string',
             'min:8',
             'regex:/[a-z]/',

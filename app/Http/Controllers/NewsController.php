@@ -27,11 +27,11 @@ class NewsController extends Controller
     {
         $user = Auth::user();
         $data = News::query()
-                ->with('user');
-            if ($user->role !== 'superadmin') {
-                  $data->where('user_id', '=', $user->id);
-              };
-
+                ->with('user')
+                ->orderBy('created_at', 'desc');
+                if ($user->role !== 'superadmin') {
+                    $data->where('user_id', '=', $user->id);
+                };
     $dataTable = DataTables::of($data)->toJson();
     return response()->json($dataTable->getData());
     }

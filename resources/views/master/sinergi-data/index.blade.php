@@ -43,6 +43,7 @@
                 <thead>
                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                         <th class="min-w-20px">ID</th>
+                        <th class="min-w-125px">Logo</th>
                         <th class="min-w-125px">Nama K/L</th>
                         <th class="min-w-125px">Nama K/L</th>
                         <th class="min-w-125px">Nama K/L</th>
@@ -139,6 +140,18 @@
             const columns = [{
                     data: 'id',
                     title: 'ID',
+                },
+                {
+                    data: 'lembaga_induk.image',
+                    title: 'Logo',
+                    sortable: false,
+                    render: function(data, type, row) {
+                        // Jika data gambar ada, gunakan gambar tersebut; jika tidak, gunakan gambar default
+                        const imageUrl = data ? `/storage/lembaga/${data}` :
+                            'https://avatar.iran.liara.run/public/boy';
+
+                        return `<img src="${imageUrl}" style="width: 75px; height: 75px; object-fit: cover;" alt="foto" />`;
+                    }
                 },
                 {
                     data: 'lembaga_induk.name',

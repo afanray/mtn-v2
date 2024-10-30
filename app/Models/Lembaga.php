@@ -20,6 +20,7 @@ class Lembaga extends Model
     'level',
     'parent_id',
     'created_by',
+    'image',
   ];
 
   public static function boot(): void

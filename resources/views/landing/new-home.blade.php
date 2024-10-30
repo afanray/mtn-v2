@@ -81,12 +81,9 @@
                 @endforeach
             </div>
 
-            {{-- <!-- Navigasi Slider -->
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div> --}}
 
             <!-- Pagination Slider -->
-            <div class="swiper-pagination"></div>
+            {{-- <div class="swiper-pagination"></div> --}}
         </div>
     </section>
 
