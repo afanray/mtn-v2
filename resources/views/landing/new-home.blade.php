@@ -122,6 +122,10 @@
                                         <p>
                                             {!! \Illuminate\Support\Str::limit(strip_tags($item['content']), 300) !!}
                                         </p>
+                                        <div class="mb-3 text-muted">
+                                            <small>Dikutip oleh {{ $item->user->name }} pada
+                                                {{ \Carbon\Carbon::parse($item->created_at)->format('d M Y') }}</small>
+                                        </div>
                                         <a href="{{ route('berita-kegiatan.view', $item['slug']) }}"
                                             class="btn btn-primary" style="background-color: #4575B8;">Selengkapnya</a>
                                     </div>

@@ -13,108 +13,141 @@
         <img class="dots-shape-three slideUpDown delay-1-5s" src="/assets/landing/images/shapes/white-dots-three.png"
             alt="Shape">
     </section>
-    <section class="blog-section rel z-1 pb-50 pt-100 rpb-100 rpb-150 rmb-30">
+
+    <section class="blog-section rel z-1 pt-20 pb-100 ">
         <div class="container">
-            <div class="row justify-content-center text-center">
-                <div class="col-xl-6 col-lg-8 col-md-10">
-                    <div class="section-title mb-55">
-                        <h2>Kebijakan</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row align-items-center justify-content-center">
-                @foreach ($kebijakan as $h)
-                    <div class="col-xl-6 col-md-6">
-                        <div class="blog-item wow fadeInUp delay-0-2s">
-                            <div class="image">
-                                <img src="/storage/pustaka/{{ $h->image }}" alt="Foto">
-                            </div>
-                            <div class="blog-content">
-                                <h4><a href="{{ $h->link }}" download="">{{ $h->title }}</a></h4>
-                                <p>{{ Illuminate\Support\Str::limit($h->description, 100) }}</p>
-                            </div>
-                            <a href="{{ $h->link }}" class="learn-more" download="">Unduh <i
-                                    class="fas fa-file-download"></i></a>
+            <div class="row">
+                <div class="col-lg-8 col-md-12">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6 col-md-12">
+                            <h3 class="font-weight-bold text-left mx-auto mt-4 mb-4">
+                                Infografis
+                            </h3>
                         </div>
                     </div>
-                @endforeach
-            </div>
-        </div>
-    </section>
-    <section class="blog-section rel z-1 pb-50 pt-50 rpb-100 rpb-150 rmb-30">
-        <div class="container">
-            <div class="row justify-content-center text-center">
-                <div class="col-xl-6 col-lg-8 col-md-10">
-                    <div class="section-title mb-55">
-                        <h2>Pedoman Teknis</h2>
-                    </div>
+
+                    @if (!empty($pustakaInfo))
+                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                            <!-- Carousel Indicators -->
+                            <ol class="carousel-indicators">
+                                @foreach ($pustakaInfo as $key => $item)
+                                    <li data-target="#carouselExampleIndicators" data-slide-to="{{ $key }}"
+                                        class="{{ $key == 0 ? 'active' : '' }}"></li>
+                                @endforeach
+                            </ol>
+
+                            <!-- Carousel Inner -->
+                            <div class="carousel-inner">
+                                @foreach (array_chunk($pustakaInfo, 4) as $key => $items)
+                                    <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                        <div class="row">
+                                            @foreach ($items as $item)
+                                                <div class="col-md-3 d-flex justify-content-center">
+                                                    <a href="javascript:void(0);"
+                                                        onclick="showModal('{{ asset('storage/pustaka/' . $item['image']) }}', '{{ $item['title'] }}','{{ $item['description'] }}')">
+                                                        <div class="card border-0 rounded p-10"
+                                                            style="width: 100%;
+                                                            height:250px">
+                                                            <img src="storage/pustaka/{{ $item['image'] }}"
+                                                                alt="Profile Picture" class="rounded">
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                            <!-- Carousel Controls -->
+                            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
+                                data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button"
+                                data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    @else
+                        <p class="text-center">Tidak ada berita atau kegiatan terbaru saat ini.</p>
+                    @endif
                 </div>
-            </div>
-            <div class="row align-items-center justify-content-center">
-                @foreach ($pedomanTeknis as $h)
-                    <div class="col-xl-6 col-md-6">
-                        <div class="blog-item wow fadeInUp delay-0-2s">
-                            <div class="image">
-                                <img src="/storage/pustaka/{{ $h->image }}" alt="Foto">
-                            </div>
-                            <div class="blog-content">
-                                <h4><a href="{{ $h->link }}" download="">{{ $h->title }}</a></h4>
-                                <p>{{ Illuminate\Support\Str::limit($h->description, 100) }}</p>
-                            </div>
-                            <a href="{{ $h->link }}" class="learn-more" download="">Unduh <i
-                                    class="fas fa-file-download"></i></a>
+
+                <div class="col-lg-4 col-md-12">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6 col-md-12">
+                            <h3 class="font-weight-bold text-left mx-auto mt-4 mb-4">
+                                Kebijakan MTN </h3>
                         </div>
                     </div>
-                @endforeach
-            </div>
-        </div>
-    </section>
-    <section class="blog-section rel z-1 pb-50 pt-50 rpb-100 rpb-150 rmb-30">
-        <div class="container">
-            <div class="row justify-content-center text-center">
-                <div class="col-xl-6 col-lg-8 col-md-10">
-                    <div class="section-title mb-55">
-                        <h2>Pustaka Video</h2>
-                    </div>
+                    @foreach ($kebijakan as $h)
+                        <a href="{{ $h->link }}">
+                            <div class=" mb-3">
+                                <a href="{{ $h->link }}" class="" download="">
+                                    <div class="row">
+                                        <div class="col-md-4 rounded">
+                                            <img src="{{ asset('storage/pustaka/' . $h->image) }}"
+                                                alt="{{ $h->image }}"
+                                                style="width: 100%; height: 100px; object-fit: contain;">
+                                        </div>
+                                        <div class="col-md-8">
+                                            {{-- <div class="card-body"> --}}
+                                            <p class="text-normal" style="margin-bottom: 5px;">
+                                                {{ $h->title }}</p>
+                                            {{-- </div> --}}
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </a>
+                        @if (!$loop->last)
+                            <hr> <!-- Pembatas antar card, kecuali untuk item terakhir -->
+                        @endif
+                    @endforeach
+
                 </div>
             </div>
-            <div class="row align-items-center">
-                @foreach ($pustakaVideo as $h)
-                    <div class="col-12 col-xl-6">
-                        <video width="100%" controls>
-                            <source src="/storage/pustaka/{{ $h->link }}" type="video/mp4">
-                        </video>
-                    </div>
-                @endforeach
-            </div>
         </div>
     </section>
-    <section class="blog-section rel z-1 pb-50 pt-50 rpb-100 rpb-150 rmb-30">
-        <div class="container">
-            <div class="row justify-content-center text-center">
-                <div class="col-xl-6 col-lg-8 col-md-10">
-                    <div class="section-title mb-55">
-                        <h2>Pustaka Infografis</h2>
-                    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-            </div>
-            <div class="row align-items-center justify-content-center">
-                @foreach ($pustakaInfo as $h)
-                    <div class="col-xl-6 col-md-6">
-                        <div class="blog-item wow fadeInUp delay-0-2s">
-                            <div class="image">
-                                <img src="/storage/pustaka/{{ $h->image }}" alt="Foto">
-                            </div>
-                            <div class="blog-content">
-                                <h4><a href="{{ $h->link }}" download="">{{ $h->title }}</a></h4>
-                                <p>{{ Illuminate\Support\Str::limit($h->description, 100) }}</p>
-                            </div>
-                            <a href="{{ $h->link }}" class="learn-more" download="">Unduh <i
-                                    class="fas fa-file-download"></i></a>
-                        </div>
-                    </div>
-                @endforeach
+                <div class="modal-body text-justify">
+                    <img id="modalImage" src="" alt="Modal Image" class="img-fluid">
+                    <hr>
+                    <p class="card-text" id="description"></p>
+                </div>
+                <!-- Tombol Download -->
+                <a href="" id="downloadLink" class="btn text-white" download style="background-color: #4575B8;">
+                    Unduh
+                </a>
             </div>
         </div>
-    </section>
+    </div>
+
+@endsection
+
+@section('js')
+    <script>
+        function showModal(imageUrl, title, description) {
+            document.getElementById('modalImage').src = imageUrl;
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('description').textContent = description;
+
+            // Mengatur link download
+            document.getElementById('downloadLink').href = imageUrl;
+            $('#imageModal').modal('show');
+        }
+    </script>
 @endsection

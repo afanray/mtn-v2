@@ -11,6 +11,15 @@
     <!--====== Title ======-->
     <title>@yield('title', 'Home') - Manajemen Talenta Nasional Bappenas</title>
     <!--====== Favicon Icon ======-->
+
+    <!--====== Meta media sosial ======-->
+    <meta property="og:title" content="@yield('og_title', 'Manajemen Talenta Nasional Bappenas')" />
+    <meta property="og:description" content="@yield('og_description', 'Manajemen Talenta Nasional Bappenas')" />
+    <meta property="og:image" content="@yield('og_image', asset('https://mtn.bappenas.go.id/assets/media/logos/logo_mtn.png'))" />
+    <meta property="og:url" content="@yield('og_url', url()->current())" />
+    <meta property="og:type" content="website" />
+
+
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     <!--====== Google Fonts ======-->
     <link

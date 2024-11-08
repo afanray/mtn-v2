@@ -110,7 +110,8 @@ Route::middleware(['auth:web'])->group(function () {
       Route::get('/edit/{id}', [\App\Http\Controllers\PustakaController::class, 'edit'])->name('pustaka.edit')->middleware('role:superadmin');
       Route::post('/delete', [\App\Http\Controllers\PustakaController::class, 'delete'])->name('pustaka.delete')->middleware('role:superadmin');
       Route::post('/store', [\App\Http\Controllers\PustakaController::class, 'store'])->name('pustaka.save')->middleware('role:superadmin');
-    });
+      
+      });
 
   Route::prefix('berita-kegiatan')->group(function () {
         Route::get('/', [\App\Http\Controllers\NewsController::class, 'index'])->name('berita-kegiatan.index');

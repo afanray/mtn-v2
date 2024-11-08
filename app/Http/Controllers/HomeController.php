@@ -113,10 +113,37 @@ $dataBerita = [
     $anugrahTalenta = AnugrahTalenta::query()->with(['bidang'])->limit(4)->get();
     $ajangTalenta = AjangTalenta::query()->with(['bidang', 'lembaga'])->limit(4)->get();
 
+    // Ambil mainNews
+    $mainNews = News::query()->where('published', '=', 1)
+        ->orderBy('created_at', 'desc')
+        ->limit(3)
+        ->get();
+
+    // Dapatkan ID dari mainNews
+    $mainNewsIds = $mainNews->pluck('id');
+
+    // Ambil oldNews yang tidak termasuk dalam mainNews
+    $oldNews = News::query()->where('published', '=', 1)
+        ->whereNotIn('id', $mainNewsIds)
+        ->orderBy('created_at', 'desc')
+        ->limit(2)
+        ->get();
+
+ // Ambil oldNews yang tidak termasuk dalam mainNews
+    $moreNews = News::query()->where('published', '=', 1)
+        ->whereNotIn('id', $mainNewsIds)
+        ->orderBy('created_at', 'asc')
+        ->limit(4)
+        ->get();
+
+
     return view('landing.news', [
       'highlight_talenta' => $highlightTalenta,
       'anugrah_talenta' => $anugrahTalenta,
       'ajang_talenta' => $ajangTalenta,
+      'mainNews' =>$mainNews,
+      'oldNews' => $oldNews,
+      'moreNews' => $moreNews,
       'activeMenu' => 'news'
     ]);
   }
@@ -239,19 +266,19 @@ $dataBerita = [
     $pustaka = Pustaka::all()->collect();
     $kebijakan = $pustaka->filter(function ($p) {
       return $p->type == Common::PUSTAKA_KEBIJAKAN;
-    })->values()->all();
+    })->sortByDesc('created_at')->take(4)->values()->all();
     $pedomanTeknis = $pustaka->filter(function ($p) {
       return $p->type == Common::PUSTAKA_PEDOMAN;
-    })->values()->all();
+    })->sortByDesc('created_at')->take(4)->values()->all();
     $pustakaVideo = $pustaka->filter(function ($p) {
       return $p->type == Common::PUSTAKA_VIDEO;
-    })->values()->all();
+    })->sortByDesc('created_at')->take(4)->values()->all();
     $pustakaAnugrah = $pustaka->filter(function ($p) {
       return $p->type == Common::PUSTAKA_ANUGRAH;
-    })->values()->all();;
+    })->sortByDesc('created_at')->take(4)->values()->all();
     $pustakaInfo = $pustaka->filter(function ($p) {
       return $p->type == Common::PUSTAKA_INFOGRAFIS;
-    })->values()->all();
+    })->sortByDesc('created_at')->take(12)->values()->all();
     return view('landing.pustaka', [
       'activeMenu' => 'library',
       'kebijakan' => $kebijakan,

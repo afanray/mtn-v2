@@ -1,5 +1,15 @@
 @extends('layouts/landing')
-@section('title', 'Home')
+
+@section('title', $model->title ?? 'Manajemen Talenta Nasional')
+@section('og_title', $model->title ?? 'Manajemen Talenta Nasional')
+@section('og_description',
+    \Illuminate\Support\Str::limit(strip_tags($model->content), 100) ??
+    'Manajemen Talenta
+    Nasional')
+@section('og_image', asset('storage/berita_kegiatan/' . $model->image) ??
+    asset('https://mtn.bappenas.go.id/assets/media/logos/logo_mtn.png'))
+@section('og_url', url()->current())
+
 @section('body')
     <section class="about-page-section rel z-1 pt-130 pb-100 rpt-100 ">
         <div class="container">
@@ -11,7 +21,7 @@
                         <div class="card-body">
                             <h3 class="card-title">{{ $model->title }}</h3>
                             <div class="mb-3 text-muted">
-                                <small>Ditulis oleh {{ $model->user->name }} pada
+                                <small>Dikutip oleh {{ $model->user->name }} pada
                                     {{ \Carbon\Carbon::parse($model->created_at)->format('d M Y') }}</small>
                             </div>
                             <div class="card-text">
@@ -20,6 +30,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-lg-5 col-md-12">
                     <h5>Berita sebelumnya</h5>
                     @foreach ($oldNews->take(10) as $item)
