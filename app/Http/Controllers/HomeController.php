@@ -30,58 +30,21 @@ class HomeController extends Controller
     $praktikBaik = PraktikBaik::valid()->with(['bidang'])->limit(4)->get();
     $bidang = Bidang::all();
 
-    $mainVideoSrc = "https://www.youtube.com/embed/NTt0TzzCOC8?si=J_l5xAAeOLgyw3OE_"; // Default main video
-    $videos = [
-      "https://www.youtube.com/embed/NTt0TzzCOC8?si=J_l5xAAeOLgyw3OE",
-      "https://www.youtube.com/embed/d3zEvTTpHuk?si=jarUuA5GgYwmqlbi",
-      "https://www.youtube.com/embed/DRS0G2NNQ-A?si=Ssy5RghjlthPhtI_",
-      // "https://www.youtube.com/embed/JZ-9nWDhg94?si=_C8xPsDtlUmXd5qF",
-    ];
+    $pustaka = Pustaka::all()->collect();
+    $pustakaBeasiswa = $pustaka->filter(function ($p) {
+      return $p->type == Common::PUSTAKA_BEASISWA;
+    })->sortByDesc('created_at')->take(12)->values()->all();
 
+    $pustakaMainVideo = $pustaka->filter(function ($p) {
+      return $p->type == Common::PUSTAKA_VIDEO;
+    })->sortByDesc('created_at')->values()->first();
 
-    $dataBeasiswa = [
-      [
-        "bidang" => "LPDP Scholarship Policy in 2024",
-        "image" => "https://img.harianjogja.com/posts/2024/01/09/1160976/lpdp.jpg",
-        "deskripsi" => "LPDP berkomitmen untuk menyiapkan pemimpin dan profesional masa depan melalui program beasiswa dan mendorong inovasi melalui pendanaan riset untuk mewujudkan Indonesia yang sejahtera, demokratis, dan maju.",
-        "total" => 17004,
-        "url" => "https://lpdp.kemenkeu.go.id/en/beasiswa/kebijakan-umum/"
-      ],
-      [
-        "bidang" => "Beasiswa Bank Indonesia",
-        "image" => "https://upload.wikimedia.org/wikipedia/commons/3/39/BI_Logo.png",
-        "deskripsi" => "Beasiswa unggulan adalah beasiswa yang diberikan pada Perguruan Tinggi Negeri (PTN) yang bekerjasama dengan Bank Indonesia, sedangkan beasiswa reguler adalah beasiswa yang diberikan kepada PTN/PTS/SMK.",
-        "total" => 35919,
-        "url" => "https://bicara131.bi.go.id/knowledgebase/article/KA-01149/en-us"
-      ],
-      [
-        "bidang" => "Beasiswa Unggulan Kemendikbudristek",
-        "image" => "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyp9I_mSXWWyTXCFsJovRyyfoo3s6RyVw8fA&s",
-        "deskripsi" => "Beasiswa unggulan Kemendikbudristek adalah beasiswa yang diberikan oleh Pemerintah Indonesia melalui Kemendikbudristek bagi yang ingin melanjutkan pendidikan ke jenjang S1, S2, dan S3 baik di dalam negeri maupun di luar negeri.",
-        "total" => 9322,
-        "url" => "https://beasiswaunggulan.kemdikbud.go.id"
-      ],
-    ];
+    $pustakaVideo = $pustaka->filter(function ($p) {
+      return $p->type == Common::PUSTAKA_VIDEO;
+    })->sortByDesc('created_at')->take(3)->values()->all();
 
-
-$dataBerita = [
-      [
-        'id' => 1,
-        'bidang_id'=>1,
-        'name' => 'Rizal Azis',
-        'role'=>'Mahasiswa doktoral asal Indonesia di University of Nottingham',
-        'tanggal'=>'2024',
-        'judul'=>'Kabar Baik dari Inggris, Penelitian Mahasiswa Indonesia Soal Sel Punca Raih Hak Paten',
-        'deskripsi'=>'Jakarta: Mahasiswa doktoral asal Indonesia di University of Nottingham, Rizal Azis, meraih hak paten pengembangbiakan sel punca non-hewani (xeno-free) di Inggris. Capaian itu diraih setelah serangkaian penelitian bersama pembimbingnya, Profesor Nick Hannan sejak 2020.',
-        'imageUrl' => 'https://cdn.medcom.id/dynamic/content/2024/10/04/1718010/cgoHsRav8X.jpg?w=1024',
-        'link' => 'https://www.medcom.id/pendidikan/news-pendidikan/Obz5BmxN-kabar-baik-dari-inggris-penelitian-mahasiswa-indonesia-soal-sel-punca-raih-hak-paten',
-        'sumber'=>'medcom.id'
-      ],
-    ];
-
-    $news = News::query()->where('published', '=', 1) ->orderBy('created_at', 'desc')->limit(4)->get();
+    $news = News::query()->where('published', '=', 1)->orderBy('created_at', 'desc')->limit(4)->get();
     $highlightTalenta = HighLightTalenta::limit(8)->get();
-    // @dd( $highlightTalenta);
 
     return view('landing.new-home', [
       'highlight_talenta' => $highlightTalenta,
@@ -92,11 +55,11 @@ $dataBerita = [
       'praktik_baik' => $praktikBaik,
       'bidang' => $bidang,
       'activeMenu' => 'home',
-      'mainVideoSrc' => $mainVideoSrc,
-      'videos' => $videos,
-      'dataBeasiswa' =>  $dataBeasiswa,
+      'mainVideoSrc' => $pustakaMainVideo,
+      'videos' => $pustakaVideo,
+      'dataBeasiswa' =>  $pustakaBeasiswa,
       'dataSorotan' => $highlightTalenta,
-      'dataBerita' =>$news
+      'dataBerita' => $news
     ]);
   }
 
@@ -115,33 +78,33 @@ $dataBerita = [
 
     // Ambil mainNews
     $mainNews = News::query()->where('published', '=', 1)
-        ->orderBy('created_at', 'desc')
-        ->limit(3)
-        ->get();
+      ->orderBy('created_at', 'desc')
+      ->limit(3)
+      ->get();
 
     // Dapatkan ID dari mainNews
     $mainNewsIds = $mainNews->pluck('id');
 
     // Ambil oldNews yang tidak termasuk dalam mainNews
     $oldNews = News::query()->where('published', '=', 1)
-        ->whereNotIn('id', $mainNewsIds)
-        ->orderBy('created_at', 'desc')
-        ->limit(2)
-        ->get();
+      ->whereNotIn('id', $mainNewsIds)
+      ->orderBy('created_at', 'desc')
+      ->limit(2)
+      ->get();
 
- // Ambil oldNews yang tidak termasuk dalam mainNews
+    // Ambil oldNews yang tidak termasuk dalam mainNews
     $moreNews = News::query()->where('published', '=', 1)
-        ->whereNotIn('id', $mainNewsIds)
-        ->orderBy('created_at', 'asc')
-        ->limit(4)
-        ->get();
+      ->whereNotIn('id', $mainNewsIds)
+      ->orderBy('created_at', 'asc')
+      ->limit(4)
+      ->get();
 
 
     return view('landing.news', [
       'highlight_talenta' => $highlightTalenta,
       'anugrah_talenta' => $anugrahTalenta,
       'ajang_talenta' => $ajangTalenta,
-      'mainNews' =>$mainNews,
+      'mainNews' => $mainNews,
       'oldNews' => $oldNews,
       'moreNews' => $moreNews,
       'activeMenu' => 'news'
@@ -273,9 +236,6 @@ $dataBerita = [
     $pustakaVideo = $pustaka->filter(function ($p) {
       return $p->type == Common::PUSTAKA_VIDEO;
     })->sortByDesc('created_at')->take(4)->values()->all();
-    $pustakaAnugrah = $pustaka->filter(function ($p) {
-      return $p->type == Common::PUSTAKA_ANUGRAH;
-    })->sortByDesc('created_at')->take(4)->values()->all();
     $pustakaInfo = $pustaka->filter(function ($p) {
       return $p->type == Common::PUSTAKA_INFOGRAFIS;
     })->sortByDesc('created_at')->take(12)->values()->all();
@@ -285,7 +245,6 @@ $dataBerita = [
       'pedomanTeknis' => $pedomanTeknis,
       'pustakaVideo' => $pustakaVideo,
       'pustakaInfo' => $pustakaInfo,
-      'pustakaAnugrah' => $pustakaAnugrah,
     ]);
   }
 
@@ -320,6 +279,13 @@ $dataBerita = [
     ]);
   }
 
+  public function monev(): View
+  {
+    return view('landing.monev', [
+      'activeMenu' => 'monev'
+    ]);
+  }
+
   public function contact(): View
   {
     return view('landing.contact', [
@@ -327,22 +293,22 @@ $dataBerita = [
     ]);
   }
 
-public function viewNews($slug): View
-{
+  public function viewNews($slug): View
+  {
     // Mendapatkan berita berdasarkan slug
     $model = News::where('slug', $slug)->firstOrFail();
 
     // Mengambil berita lain selain berita yang sedang dilihat
     $oldNews = News::query()
-                ->where('id', '!=', $model->id) // Mengecualikan berita yang sedang dilihat
-                ->orderBy('created_at', 'desc')
-                ->limit(5)
-                ->get();
+      ->where('id', '!=', $model->id) // Mengecualikan berita yang sedang dilihat
+      ->orderBy('created_at', 'desc')
+      ->limit(5)
+      ->get();
 
     return view('landing.view-berita', [
-        'activeMenu' => 'news',
-        'model' => $model,
-        'oldNews' => $oldNews
+      'activeMenu' => 'news',
+      'model' => $model,
+      'oldNews' => $oldNews
     ]);
-}
+  }
 }

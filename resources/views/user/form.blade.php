@@ -102,6 +102,16 @@
                                         <option value="pic_direktorat" @selected(old('role', $model->role) == 'pic_direktorat')>PIC
                                             Direktorat
                                         </option>
+                                        <option value="pic_kl" @selected(old('role', $model->role) == 'pic_kl')>PIC
+                                            Kementerian Lembaga
+                                        </option>
+                                        <option value="pic_pemda" @selected(old('role', $model->role) == 'pic_pemda')>PIC
+                                            Pemerintah Daerah
+                                        </option>
+
+                                        <option value="pic_nonpemerintah" @selected(old('role', $model->role) == 'pic_nonpemerintah')>PIC
+                                            Non Pemerintah
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -132,6 +142,7 @@
                             </div>
                         </div>
                     </div>
+
 
                 </div>
                 <div class="card-footer d-flex justify-content-end py-6 px-9">

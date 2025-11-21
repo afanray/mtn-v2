@@ -202,7 +202,7 @@
                                 </div>
                                 <!--end:Menu item-->
                                 <!--begin:Menu item-->
-                                <div class="menu-item">
+                                {{-- <div class="menu-item">
                                     <!--begin:Menu link-->
                                     <a class="menu-link {{ $activeMenu === 'capaian-indikator' ? 'active' : '' }}"
                                         href="{{ route('capaian-indikator.index') }}">
@@ -212,75 +212,191 @@
                                         <span class="menu-title">Capaian Indikator</span>
                                     </a>
                                     <!--end:Menu link-->
-                                </div>
+                                </div> --}}
                                 <!--end:Menu item-->
-                                <!--begin:Menu item-->
-                                <div class="menu-item">
-                                    <!--begin:Menu link-->
-                                    <a class="menu-link {{ $activeMenu === 'data' ? 'active' : '' }}"
-                                        href="{{ route('data.index') }}">
-                                        <span class="menu-icon">
-                                            <i class='fa fa-database fs-4'></i>
+
+
+                                {{-- @if (auth()->check() &&
+    auth()->user()->hasAccess(['superadmin', 'pic_direktorat', 'operator']))
+                                    <!--begin:Menu item-->
+                                    <div class="menu-item">
+                                        <!--begin:Menu link-->
+                                        <a class="menu-link {{ $activeMenu === 'data' ? 'active' : '' }}"
+                                            href="{{ route('data.index') }}">
+                                            <span class="menu-icon">
+                                                <i class='fa fa-database fs-4'></i>
+                                            </span>
+                                            <span class="menu-title">Data Indikator</span>
+                                        </a>
+                                        <!--end:Menu link-->
+                                    </div>
+                                @endif --}}
+
+                                @if (auth()->check() &&
+                                        auth()->user()->hasAccess(['superadmin', 'pic_direktorat', 'operator']))
+                                    <!--begin:Menu item-->
+                                    <div class="menu-item">
+                                        <!--begin:Menu link-->
+                                        <a class="menu-link {{ $activeMenu === 'Dashboard Sasaran Indikator' ? 'active' : '' }}"
+                                            href="{{ route('data-master.sasaran-indikator.show') }}">
+                                            <span class="menu-icon">
+                                                <i class='fa fa-database fs-4'></i>
+                                            </span>
+                                            <span class="menu-title">Sasaran & Indikator</span>
+                                        </a>
+                                        <!--end:Menu link-->
+                                    </div>
+                                @endif
+
+                                @if (auth()->check() &&
+                                        auth()->user()->hasAccess(['superadmin', 'pic_direktorat']))
+                                    <!--begin:Menu item-->
+                                    <div class="menu-item">
+                                        <!--begin:Menu link-->
+                                        <a class="menu-link {{ $activeMenu === 'renaksi-kl' ? 'active' : '' }}"
+                                            href="{{ route('monev.kl.index') }}">
+                                            <span class="menu-icon">
+                                                <i class='fa-solid fa-file-circle-plus'></i>
+                                            </span>
+                                            <span class="menu-title">Rencana Aksi</span>
+                                        </a>
+                                        <!--end:Menu link-->
+                                    </div>
+                                @endif
+
+                                {{-- @if (auth()->check() &&
+    auth()->user()->hasAccess(['superadmin', 'pic_direktorat']))
+                                    <!--begin:Menu item-->
+                                    <div data-kt-menu-trigger="click" @class([
+                                        'menu-item',
+                                        'menu-accordion',
+                                        'hover show' => in_array($activeMenu, [
+                                            'renaksi-kl',
+                                            'renaksi-pemda',
+                                            'renaksi-nonpemerintah',
+                                        ]),
+                                    ])>
+                                        <!--begin:Menu link-->
+                                        <span class="menu-link">
+                                            <span class="menu-icon">
+                                                <i class="fa-solid fa-file-circle-plus"></i>
+                                            </span>
+                                            <span class="menu-title">Rencana Aksi</span>
+                                            <span class="menu-arrow"></span>
                                         </span>
-                                        <span class="menu-title">Data Indikator</span>
-                                    </a>
-                                    <!--end:Menu link-->
-                                </div>
+                                        <!--end:Menu link-->
+                                        <!--begin:Menu sub-->
+
+                                        <div class="menu-sub menu-sub-accordion">
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link {{ $activeMenu === 'renaksi-kl' ? 'active' : '' }}"
+                                                    href="{{ route('monev.kl.index') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span></span>
+                                                    <span class="menu-title">Monev Kementerian/Lembaga</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link {{ $activeMenu === 'renaksi-pemda' ? 'active' : '' }}"
+                                                    href="{{ route('monev.kl.index') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span></span>
+                                                    <span class="menu-title">Monev Pemerintah daerah</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link {{ $activeMenu === 'renaksi-nonpemerintah' ? 'active' : '' }}"
+                                                    href="{{ route('monev.kl.index') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span></span>
+                                                    <span class="menu-title">Monev Non Pemerintah</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+                                        </div>
+                                        <!--end:Menu sub-->
+
+                                    </div>
+                                    <!--end:Menu item-->
+                                @endif --}}
+
+
+                                @if (auth()->check() &&
+                                        auth()->user()->hasAccess(['superadmin', 'pic_direktorat', 'operator']))
+
+
+                                    <!--begin:Menu item-->
+                                    <div class="menu-item">
+                                        <!--begin:Menu link-->
+                                        <a class="menu-link {{ $activeMenu === 'summary' ? 'active' : '' }}"
+                                            href="{{ route('capaian-indikator.summary') }}">
+                                            <span class="menu-icon">
+                                                <i class='fa fa-users fs-4'></i>
+                                            </span>
+                                            <span class="menu-title">Alur MTN</span>
+                                        </a>
+                                        <!--end:Menu link-->
+                                    </div>
+                                    <!--end:Menu item-->
+                                    @if (auth()->check() &&
+                                            auth()->user()->hasAccess(['superadmin', 'pic_direktorat']))
+                                        <!--begin:Menu item-->
+                                        <div class="menu-item">
+                                            <!--begin:Menu link-->
+                                            <a class="menu-link {{ $activeMenu === 'ht' ? 'active' : '' }}"
+                                                href="{{ route('highlight-talenta.index') }}">
+                                                <span class="menu-icon">
+                                                    <i class='fa fa-users fs-4'></i>
+                                                </span>
+                                                <span class="menu-title">Highlight Talenta</span>
+                                            </a>
+                                            <!--end:Menu link-->
+                                        </div>
+                                        <!--end:Menu item-->
+                                    @endif
+
+                                    <!--begin:Menu item-->
+                                    <div class="menu-item">
+                                        <!--begin:Menu link-->
+                                        <a class="menu-link {{ $activeMenu === 'ant' ? 'active' : '' }}"
+                                            href="{{ route('anugrah-talenta.index') }}">
+                                            <span class="menu-icon">
+                                                <i class='fa fa-users fs-4'></i>
+                                            </span>
+                                            <span class="menu-title">Anugrah Talenta</span>
+                                        </a>
+                                        <!--end:Menu link-->
+                                    </div>
+                                    <!--end:Menu item-->
+                                    <!--begin:Menu item-->
+                                    <div class="menu-item">
+                                        <!--begin:Menu link-->
+                                        <a class="menu-link {{ $activeMenu === 'at' ? 'active' : '' }}"
+                                            href="{{ route('ajang-talenta.index') }}">
+                                            <span class="menu-icon">
+                                                <i class='fa fa-users fs-4'></i>
+                                            </span>
+                                            <span class="menu-title">Ajang Talenta</span>
+                                        </a>
+                                        <!--end:Menu link-->
+                                    </div>
+                                    <!--end:Menu item-->
+                                @endif
+
                                 <!--end:Menu item-->
-                                <!--begin:Menu item-->
-                                <div class="menu-item">
-                                    <!--begin:Menu link-->
-                                    <a class="menu-link {{ $activeMenu === 'summary' ? 'active' : '' }}"
-                                        href="{{ route('capaian-indikator.summary') }}">
-                                        <span class="menu-icon">
-                                            <i class='fa fa-users fs-4'></i>
-                                        </span>
-                                        <span class="menu-title">Ringkasan Jumlah Talenta</span>
-                                    </a>
-                                    <!--end:Menu link-->
-                                </div>
-                                <!--end:Menu item-->
-                                <!--begin:Menu item-->
-                                <div class="menu-item">
-                                    <!--begin:Menu link-->
-                                    <a class="menu-link {{ $activeMenu === 'ht' ? 'active' : '' }}"
-                                        href="{{ route('highlight-talenta.index') }}">
-                                        <span class="menu-icon">
-                                            <i class='fa fa-users fs-4'></i>
-                                        </span>
-                                        <span class="menu-title">Highlight Talenta</span>
-                                    </a>
-                                    <!--end:Menu link-->
-                                </div>
-                                <!--end:Menu item-->
-                                <!--begin:Menu item-->
-                                <div class="menu-item">
-                                    <!--begin:Menu link-->
-                                    <a class="menu-link {{ $activeMenu === 'ant' ? 'active' : '' }}"
-                                        href="{{ route('anugrah-talenta.index') }}">
-                                        <span class="menu-icon">
-                                            <i class='fa fa-users fs-4'></i>
-                                        </span>
-                                        <span class="menu-title">Anugrah Talenta</span>
-                                    </a>
-                                    <!--end:Menu link-->
-                                </div>
-                                <!--end:Menu item-->
-                                <!--begin:Menu item-->
-                                <div class="menu-item">
-                                    <!--begin:Menu link-->
-                                    <a class="menu-link {{ $activeMenu === 'at' ? 'active' : '' }}"
-                                        href="{{ route('ajang-talenta.index') }}">
-                                        <span class="menu-icon">
-                                            <i class='fa fa-users fs-4'></i>
-                                        </span>
-                                        <span class="menu-title">Ajang Talenta</span>
-                                    </a>
-                                    <!--end:Menu link-->
-                                </div>
-                                <!--end:Menu item-->
-                                <!--end:Menu item-->
-                                @if (\App\Models\User::isSuperAdmin())
+                                @if (auth()->check() &&
+                                        auth()->user()->hasAccess(['superadmin', 'pic_direktorat']))
                                     <!--begin:Menu item-->
                                     <div class="menu-item">
                                         <!--begin:Menu link-->
@@ -295,48 +411,42 @@
                                     </div>
                                     <!--end:Menu item-->
                                 @endif
-                                <!--begin:Menu item-->
-                                <div class="menu-item">
-                                    <!--begin:Menu link-->
-                                    <a class="menu-link {{ $activeMenu === 'pb' ? 'active' : '' }}"
-                                        href="{{ route('praktik-baik.index') }}">
-                                        <span class="menu-icon">
-                                            <i class='fa fa-users fs-4'></i>
-                                        </span>
-                                        <span class="menu-title">Praktik Baik</span>
-                                    </a>
-                                    <!--end:Menu link-->
-                                </div>
 
-                                <!--begin:Menu item-->
-                                <div class="menu-item">
-                                    <!--begin:Menu link-->
-                                    <a class="menu-link {{ $activeMenu === 'bk' ? 'active' : '' }}"
-                                        href="{{ route('berita-kegiatan.index') }}">
-                                        <span class="menu-icon">
-                                            <i class="fa-solid fa-file-circle-plus"></i>
-                                            {{-- <i class='fa fa-news fs-4'></i> --}}
-                                        </span>
-                                        <span class="menu-title">Berita dan Kegiatan</span>
-                                    </a>
-                                    <!--end:Menu link-->
-                                </div>
-                                @if (\App\Models\User::isSuperAdmin())
+
+                                @if (auth()->check() &&
+                                        auth()->user()->hasAccess(['superadmin', 'pic_direktorat']))
                                     <!--begin:Menu item-->
                                     <div class="menu-item">
                                         <!--begin:Menu link-->
-                                        <a class="menu-link {{ $activeMenu === 'testi' ? 'active' : '' }}"
-                                            href="{{ route('testimoni.index') }}">
+                                        <a class="menu-link {{ $activeMenu === 'pb' ? 'active' : '' }}"
+                                            href="{{ route('praktik-baik.index') }}">
                                             <span class="menu-icon">
-                                                <i class='fa fa-comments fs-4'></i>
+                                                <i class='fa fa-users fs-4'></i>
                                             </span>
-                                            <span class="menu-title">Testimoni</span>
+                                            <span class="menu-title">Praktik Baik</span>
                                         </a>
                                         <!--end:Menu link-->
                                     </div>
-                                    <!--end:Menu item-->
                                 @endif
-                                @if (\App\Models\User::isSuperAdmin())
+
+                                @if (auth()->check() &&
+                                        auth()->user()->hasAccess(['superadmin', 'pic_direktorat']))
+                                    <!--begin:Menu item-->
+                                    <div class="menu-item">
+                                        <!--begin:Menu link-->
+                                        <a class="menu-link {{ $activeMenu === 'bk' ? 'active' : '' }}"
+                                            href="{{ route('berita-kegiatan.index') }}">
+                                            <span class="menu-icon">
+                                                <i class="fa-solid fa-file-circle-plus"></i>
+                                                {{-- <i class='fa fa-news fs-4'></i> --}}
+                                            </span>
+                                            <span class="menu-title">Berita dan Kegiatan</span>
+                                        </a>
+                                        <!--end:Menu link-->
+                                    </div>
+                                @endif
+                                @if (auth()->check() &&
+                                        auth()->user()->hasAccess(['superadmin']))
                                     <!--begin:Menu item-->
                                     <div class="menu-item">
                                         <!--begin:Menu link-->
@@ -351,79 +461,98 @@
                                     </div>
                                     <!--end:Menu item-->
                                 @endif
-                                <!--begin:Menu item-->
-                                <div data-kt-menu-trigger="click" @class([
-                                    'menu-item',
-                                    'menu-accordion',
-                                    'hover show' => in_array($activeMenu, [
-                                        'master-talenta',
-                                        'master-lembaga',
-                                        'master-penghargaan',
-                                    ]),
-                                ])>
-                                    <!--begin:Menu link-->
-                                    <span class="menu-link">
-                                        <span class="menu-icon">
-                                            <i class="fa fa-cogs fs-4"></i>
+
+                                @if (auth()->check() &&
+                                        auth()->user()->hasAccess(['superadmin', 'pic_direktorat']))
+                                    <!--begin:Menu item-->
+                                    <div data-kt-menu-trigger="click" @class([
+                                        'menu-item',
+                                        'menu-accordion',
+                                        'hover show' => in_array($activeMenu, [
+                                            'master-talenta',
+                                            'master-lembaga',
+                                            'master-penghargaan',
+                                        ]),
+                                    ])>
+                                        <!--begin:Menu link-->
+                                        <span class="menu-link">
+                                            <span class="menu-icon">
+                                                <i class="fa fa-cogs fs-4"></i>
+                                            </span>
+                                            <span class="menu-title">Data Master</span>
+                                            <span class="menu-arrow"></span>
                                         </span>
-                                        <span class="menu-title">Data Master</span>
-                                        <span class="menu-arrow"></span>
-                                    </span>
-                                    <!--end:Menu link-->
-                                    <!--begin:Menu sub-->
-                                    <div class="menu-sub menu-sub-accordion">
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <a class="menu-link {{ $activeMenu === 'master-talenta' ? 'active' : '' }}"
-                                                href="{{ route('data-master.talenta.index') }}">
-                                                <span class="menu-bullet"><span
-                                                        class="bullet bullet-dot"></span></span>
-                                                <span class="menu-title">Data Talenta</span></a>
-                                            <!--end:Menu link-->
-                                        </div>
-                                        <!--end:Menu item-->
-                                        @if (\App\Models\User::isSuperAdmin())
+                                        <!--end:Menu link-->
+                                        <!--begin:Menu sub-->
+
+                                        <div class="menu-sub menu-sub-accordion">
                                             <!--begin:Menu item-->
                                             <div class="menu-item">
                                                 <!--begin:Menu link-->
-                                                <a class="menu-link {{ $activeMenu === 'master-lembaga' ? 'active' : '' }}"
-                                                    href="{{ route('data-master.lembaga.index') }}">
-                                                    <span class="menu-bullet">
-                                                        <span class="bullet bullet-dot"></span></span>
-                                                    <span class="menu-title">Data Lembaga</span>
-                                                </a>
+                                                <a class="menu-link {{ $activeMenu === 'master-talenta' ? 'active' : '' }}"
+                                                    href="{{ route('data-master.talenta.index') }}">
+                                                    <span class="menu-bullet"><span
+                                                            class="bullet bullet-dot"></span></span>
+                                                    <span class="menu-title">Data Talenta</span></a>
                                                 <!--end:Menu link-->
                                             </div>
                                             <!--end:Menu item-->
-                                            <!--begin:Menu item-->
-                                            <div class="menu-item">
-                                                <!--begin:Menu link-->
-                                                <a class="menu-link {{ $activeMenu === 'master-penghargaan' ? 'active' : '' }}"
-                                                    href="{{ route('data-master.penghargaan.index') }}">
-                                                    <span class="menu-bullet">
-                                                        <span class="bullet bullet-dot"></span></span>
-                                                    <span class="menu-title">Data Referensi Penghargaan</span>
-                                                </a>
-                                                <!--end:Menu link-->
-                                            </div>
+                                            @if (auth()->check() &&
+                                                    auth()->user()->hasAccess(['superadmin']))
+                                                <!--begin:Menu item-->
+                                                <div class="menu-item">
+                                                    <!--begin:Menu link-->
+                                                    <a class="menu-link {{ $activeMenu === 'master-lembaga' ? 'active' : '' }}"
+                                                        href="{{ route('data-master.lembaga.index') }}">
+                                                        <span class="menu-bullet">
+                                                            <span class="bullet bullet-dot"></span></span>
+                                                        <span class="menu-title">Data Lembaga</span>
+                                                    </a>
+                                                    <!--end:Menu link-->
+                                                </div>
+                                                <!--end:Menu item-->
+                                                <!--begin:Menu item-->
+                                                <div class="menu-item">
+                                                    <!--begin:Menu link-->
+                                                    <a class="menu-link {{ $activeMenu === 'master-penghargaan' ? 'active' : '' }}"
+                                                        href="{{ route('data-master.penghargaan.index') }}">
+                                                        <span class="menu-bullet">
+                                                            <span class="bullet bullet-dot"></span></span>
+                                                        <span class="menu-title">Data Referensi Penghargaan</span>
+                                                    </a>
+                                                    <!--end:Menu link-->
+                                                </div>
 
-                                            <div class="menu-item">
-                                                <!--begin:Menu link-->
-                                                <a class="menu-link {{ $activeMenu === 'master-sinergi-data' ? 'active' : '' }}"
-                                                    href="{{ route('data-master.sinergi-data.index') }}">
-                                                    <span class="menu-bullet">
-                                                        <span class="bullet bullet-dot"></span></span>
-                                                    <span class="menu-title">Sinergi Data</span>
-                                                </a>
-                                                <!--end:Menu link-->
-                                            </div>
-                                        @endif
-                                        <!--end:Menu item-->
+                                                <div class="menu-item">
+                                                    <!--begin:Menu link-->
+                                                    <a class="menu-link {{ $activeMenu === 'master-sinergi-data' ? 'active' : '' }}"
+                                                        href="{{ route('data-master.sinergi-data.index') }}">
+                                                        <span class="menu-bullet">
+                                                            <span class="bullet bullet-dot"></span></span>
+                                                        <span class="menu-title">Sinergi Data</span>
+                                                    </a>
+                                                    <!--end:Menu link-->
+                                                </div>
+
+                                                <div class="menu-item">
+                                                    <!--begin:Menu link-->
+                                                    <a class="menu-link {{ $activeMenu === 'master-sasaran-indikator' ? 'active' : '' }}"
+                                                        href="{{ route('data-master.sasaran-indikator.index') }}">
+                                                        <span class="menu-bullet">
+                                                            <span class="bullet bullet-dot"></span></span>
+                                                        <span class="menu-title"> Sasaran Indikator</span>
+                                                    </a>
+                                                    <!--end:Menu link-->
+                                                </div>
+                                            @endif
+
+                                            <!--end:Menu item-->
+                                        </div>
+                                        <!--end:Menu sub-->
+
                                     </div>
-                                    <!--end:Menu sub-->
-                                </div>
-                                <!--end:Menu item-->
+                                    <!--end:Menu item-->
+                                @endif
 
                             </div>
                             <!--end::Menu-->
@@ -481,6 +610,9 @@
     <!--end::Global Javascript Bundle-->
     <!--begin::Vendors Javascript(used for this page only)-->
     <script src="{{ asset('/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
     <!--end::Vendors Javascript-->
     <!--begin::Custom Javascript(used for this page only)-->
     <script src="{{ asset('/assets/js/widgets.bundle.js') }}"></script>

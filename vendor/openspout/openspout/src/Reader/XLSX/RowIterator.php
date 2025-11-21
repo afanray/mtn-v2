@@ -7,9 +7,11 @@ namespace OpenSpout\Reader\XLSX;
 use DOMElement;
 use OpenSpout\Common\Entity\Cell;
 use OpenSpout\Common\Entity\Row;
+use OpenSpout\Common\Exception\InvalidArgumentException;
 use OpenSpout\Common\Exception\IOException;
 use OpenSpout\Reader\Common\Manager\RowManager;
 use OpenSpout\Reader\Common\XMLProcessor;
+use OpenSpout\Reader\Exception\SharedStringNotFoundException;
 use OpenSpout\Reader\RowIteratorInterface;
 use OpenSpout\Reader\Wrapper\XMLReader;
 use OpenSpout\Reader\XLSX\Helper\CellHelper;
@@ -45,8 +47,8 @@ final class RowIterator implements RowIteratorInterface
     /** @var XMLProcessor Helper Object to process XML nodes */
     private readonly XMLProcessor $xmlProcessor;
 
-    /** @var Helper\CellValueFormatter Helper to format cell values */
-    private readonly Helper\CellValueFormatter $cellValueFormatter;
+    /** @var CellValueFormatter Helper to format cell values */
+    private readonly CellValueFormatter $cellValueFormatter;
 
     /** @var RowManager Manages rows */
     private readonly RowManager $rowManager;
@@ -123,7 +125,7 @@ final class RowIterator implements RowIteratorInterface
      *
      * @see http://php.net/manual/en/iterator.rewind.php
      *
-     * @throws \OpenSpout\Common\Exception\IOException If the sheet data XML cannot be read
+     * @throws IOException If the sheet data XML cannot be read
      */
     public function rewind(): void
     {
@@ -163,8 +165,8 @@ final class RowIterator implements RowIteratorInterface
      *
      * @see http://php.net/manual/en/iterator.next.php
      *
-     * @throws \OpenSpout\Reader\Exception\SharedStringNotFoundException If a shared string was not found
-     * @throws \OpenSpout\Common\Exception\IOException                   If unable to read the sheet data XML
+     * @throws SharedStringNotFoundException If a shared string was not found
+     * @throws IOException                   If unable to read the sheet data XML
      */
     public function next(): void
     {
@@ -211,9 +213,9 @@ final class RowIterator implements RowIteratorInterface
         // TODO: This should return $this->nextRowIndexToBeProcessed
         //       but to avoid a breaking change, the return value for
         //       this function has been kept as the number of rows read.
-        return $this->shouldPreserveEmptyRows ?
-                $this->nextRowIndexToBeProcessed :
-                $this->numReadRows;
+        return $this->shouldPreserveEmptyRows
+                ? $this->nextRowIndexToBeProcessed
+                : $this->numReadRows;
     }
 
     /**
@@ -250,8 +252,8 @@ final class RowIterator implements RowIteratorInterface
     }
 
     /**
-     * @throws \OpenSpout\Reader\Exception\SharedStringNotFoundException If a shared string was not found
-     * @throws \OpenSpout\Common\Exception\IOException                   If unable to read the sheet data XML
+     * @throws SharedStringNotFoundException If a shared string was not found
+     * @throws IOException                   If unable to read the sheet data XML
      */
     private function readDataForNextRow(): void
     {
@@ -365,16 +367,16 @@ final class RowIterator implements RowIteratorInterface
      *
      * @return int Row index
      *
-     * @throws \OpenSpout\Common\Exception\InvalidArgumentException When the given cell index is invalid
+     * @throws InvalidArgumentException When the given cell index is invalid
      */
     private function getRowIndex(XMLReader $xmlReader): int
     {
         // Get "r" attribute if present (from something like <row r="3"...>
         $currentRowIndex = $xmlReader->getAttribute(self::XML_ATTRIBUTE_ROW_INDEX);
 
-        return (null !== $currentRowIndex) ?
-                (int) $currentRowIndex :
-                $this->lastRowIndexProcessed + 1;
+        return (null !== $currentRowIndex)
+                ? (int) $currentRowIndex
+                : $this->lastRowIndexProcessed + 1;
     }
 
     /**
@@ -382,15 +384,15 @@ final class RowIterator implements RowIteratorInterface
      *
      * @return int Column index
      *
-     * @throws \OpenSpout\Common\Exception\InvalidArgumentException When the given cell index is invalid
+     * @throws InvalidArgumentException When the given cell index is invalid
      */
     private function getColumnIndex(XMLReader $xmlReader): int
     {
         // Get "r" attribute if present (from something like <c r="A1"...>
         $currentCellIndex = $xmlReader->getAttribute(self::XML_ATTRIBUTE_CELL_INDEX);
 
-        return (null !== $currentCellIndex) ?
-                CellHelper::getColumnIndexFromCellIndex($currentCellIndex) :
-                $this->lastColumnIndexProcessed + 1;
+        return (null !== $currentCellIndex)
+                ? CellHelper::getColumnIndexFromCellIndex($currentCellIndex)
+                : $this->lastColumnIndexProcessed + 1;
     }
 }

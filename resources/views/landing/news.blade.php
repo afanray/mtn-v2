@@ -33,7 +33,7 @@
                                         <!-- Gradient Overlay -->
                                         <div class="overlay-gradient"></div>
 
-                                        <div class="carousel-caption d-none d-md-block p-10 rounded">
+                                        <div class="carousel-caption d-block p-10 rounded">
                                             <h5 class="text-white text-bold">{{ $item['title'] }}</h5>
                                             <div class="mb-3 text-muted">
                                                 <small class="text-white"> {{ $item->user->name }} |
@@ -256,6 +256,18 @@
         .carousel-caption {
             position: absolute;
             z-index: 2;
+        }
+
+        @media (max-width: 576px) {
+            .carousel-caption h5 {
+                font-size: 1rem;
+                /* Sesuaikan ukuran font title */
+            }
+
+            .carousel-caption small {
+                font-size: 0.8rem;
+                /* Sesuaikan ukuran font detail */
+            }
         }
     </style>
 

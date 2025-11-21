@@ -58,7 +58,7 @@
       $model->type = $request->input('type');
 
   // Jika ada file foto_penghargaan baru
-    if ($request->file('image') && $model->type != Common::PUSTAKA_VIDEO) {
+    if ($request->file('image')) {
         // Hapus file lama jika ada
         if ($model->image && Storage::exists('public/pustaka/' . $model->image)) {
             Storage::delete('public/pustaka/' . $model->image);
@@ -68,15 +68,6 @@
         $fileName = $request->file('image')->store('public/pustaka');
         $model->image = basename($fileName);
     }
-
-      if ($request->file('file') && $model->type == Common::PUSTAKA_VIDEO){
-        $file = $request->file('file');
-        list($realName,$ext) = explode('.',$file->getClientOriginalName());
-        $fileName = $realName.'_'.time().random_int(1,99).'.'.$file->extension();
-        $file->storeAs('public/pustaka', $fileName);
-        $model->link = $fileName;
-        $model->image = null;
-      }
 
       $model->save();
       return redirect()->route('pustaka.index')->with('alert-success', ($request->input('id') ? 'Sunting' : 'Tambah'). ' Data Berhasil');

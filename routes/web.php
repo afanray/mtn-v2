@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,6 +24,7 @@ Route::get('/praktik-baik', [\App\Http\Controllers\HomeController::class, 'prakt
 Route::get('/praktik-baik/{slug}', [\App\Http\Controllers\HomeController::class, 'praktikBaikDetail'])->name('home.praktik-baik-detail');
 Route::get('/pustaka', [\App\Http\Controllers\HomeController::class, 'pustaka'])->name('home.pustaka');
 Route::get('/sinergi', [\App\Http\Controllers\HomeController::class, 'sinergi'])->name('home.sinergi');
+Route::get('/monev', [\App\Http\Controllers\HomeController::class, 'monev'])->name('home.monev');
 Route::get('/contact', [\App\Http\Controllers\HomeController::class, 'contact'])->name('home.contact');
 Route::post('/common/get-regencies', [\App\Http\Controllers\CommonController::class, 'getRegencies'])->name('home.common.get-regencies');
 Route::post('/common/post-testi', [\App\Http\Controllers\HomeController::class, 'postTesti'])->name('home.common.post-testi');
@@ -40,15 +42,21 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('/summary', [\App\Http\Controllers\CapaianIndikatorController::class, 'summary'])->name('capaian-indikator.summary');
     Route::post('/save-target', [\App\Http\Controllers\CapaianIndikatorController::class, 'saveTarget'])->name('capaian-indikator.save-target');
     Route::prefix('user')->group(function () {
-      Route::get('/', [\App\Http\Controllers\UserController::class, 'index'])->name('user.index');
-      Route::get('/data', [\App\Http\Controllers\UserController::class, 'data'])->name('user.data');
-      Route::get('/add', [\App\Http\Controllers\UserController::class, 'add'])->name('user.add');
-      Route::get('/edit/{id}', [\App\Http\Controllers\UserController::class, 'edit'])->name('user.edit');
-      Route::get('/delete/{id}', [\App\Http\Controllers\UserController::class, 'delete'])->name('user.delete');
-      Route::post('/store', [\App\Http\Controllers\UserController::class, 'store'])->name('user.save');
+      Route::get('/', [\App\Http\Controllers\UserController::class, 'index'])->name('user.index')->middleware('role:superadmin');;
+      Route::get('/data', [\App\Http\Controllers\UserController::class, 'data'])->name('user.data')->middleware('role:superadmin');;
+      Route::get('/add', [\App\Http\Controllers\UserController::class, 'add'])->name('user.add')->middleware('role:superadmin');;
+      Route::get('/edit/{id}', [\App\Http\Controllers\UserController::class, 'edit'])->name('user.edit')->middleware('role:superadmin');;
+      Route::get('/delete/{id}', [\App\Http\Controllers\UserController::class, 'delete'])->name('user.delete')->middleware('role:superadmin');;
+      Route::post('/store', [\App\Http\Controllers\UserController::class, 'store'])->name('user.save')->middleware('role:superadmin');;
       Route::get('/update-password', [\App\Http\Controllers\UserController::class, 'updatePassword'])->name('user.update-password');
       Route::post('/new-password-saved', [\App\Http\Controllers\UserController::class, 'saveNewPassword'])->name('user.save-new-password');
     });
+
+    Route::prefix('sasaran-target')->group(function () {
+      Route::get('/', [\App\Http\Controllers\SasaranTargetController::class, 'index'])->name('sasaran-target.index');
+    });
+
+
     Route::prefix('data')->group(function () {
       Route::get('/', [\App\Http\Controllers\DataDasarController::class, 'index'])->name('data.index');
       Route::get('/add-data/{bidang_id}', [\App\Http\Controllers\DataDasarController::class, 'addData'])->name('data.add-data');
@@ -104,25 +112,23 @@ Route::middleware(['auth:web'])->group(function () {
       Route::post('/delete', [\App\Http\Controllers\PraktikBaikController::class, 'delete'])->name('praktik-baik.delete');
     });
     Route::prefix('pustaka')->group(function () {
-      Route::get('/', [\App\Http\Controllers\PustakaController::class, 'index'])->name('pustaka.index')->middleware('role:superadmin');
-      Route::get('/data', [\App\Http\Controllers\PustakaController::class, 'data'])->name('pustaka.data')->middleware('role:superadmin');
-      Route::get('/add', [\App\Http\Controllers\PustakaController::class, 'add'])->name('pustaka.add')->middleware('role:superadmin');
-      Route::get('/edit/{id}', [\App\Http\Controllers\PustakaController::class, 'edit'])->name('pustaka.edit')->middleware('role:superadmin');
-      Route::post('/delete', [\App\Http\Controllers\PustakaController::class, 'delete'])->name('pustaka.delete')->middleware('role:superadmin');
-      Route::post('/store', [\App\Http\Controllers\PustakaController::class, 'store'])->name('pustaka.save')->middleware('role:superadmin');
-      
-      });
+      Route::get('/', [\App\Http\Controllers\PustakaController::class, 'index'])->name('pustaka.index')->middleware('role:superadmin,pic_direktorat');
+      Route::get('/data', [\App\Http\Controllers\PustakaController::class, 'data'])->name('pustaka.data')->middleware('role:superadmin,pic_direktorat');
+      Route::get('/add', [\App\Http\Controllers\PustakaController::class, 'add'])->name('pustaka.add')->middleware('role:superadmin,pic_direktorat');
+      Route::get('/edit/{id}', [\App\Http\Controllers\PustakaController::class, 'edit'])->name('pustaka.edit')->middleware('role:superadmin,pic_direktorat');
+      Route::post('/delete', [\App\Http\Controllers\PustakaController::class, 'delete'])->name('pustaka.delete')->middleware('role:superadmin,pic_direktorat');
+      Route::post('/store', [\App\Http\Controllers\PustakaController::class, 'store'])->name('pustaka.save')->middleware('role:superadmin,pic_direktorat');
+    });
 
-  Route::prefix('berita-kegiatan')->group(function () {
-        Route::get('/', [\App\Http\Controllers\NewsController::class, 'index'])->name('berita-kegiatan.index');
-        Route::get('/data', [\App\Http\Controllers\NewsController::class, 'data'])->name('berita-kegiatan.data');
-        Route::get('/show/{id}', [\App\Http\Controllers\NewsController::class, 'show'])->name('berita-kegiatan.show');
-        Route::get('/add', [\App\Http\Controllers\NewsController::class, 'add'])->name('berita-kegiatan.add');
-        Route::get('/edit/{id}', [\App\Http\Controllers\NewsController::class, 'edit'])->name('berita-kegiatan.edit');
-        Route::post('/store', [\App\Http\Controllers\NewsController::class, 'store'])->name('berita-kegiatan.save');
-        Route::post('/delete/{id}', [\App\Http\Controllers\NewsController::class, 'destroy'])->name('berita-kegiatan.delete');
-      });
-
+    Route::prefix('berita-kegiatan')->group(function () {
+      Route::get('/', [\App\Http\Controllers\NewsController::class, 'index'])->name('berita-kegiatan.index');
+      Route::get('/data', [\App\Http\Controllers\NewsController::class, 'data'])->name('berita-kegiatan.data');
+      Route::get('/show/{id}', [\App\Http\Controllers\NewsController::class, 'show'])->name('berita-kegiatan.show');
+      Route::get('/add', [\App\Http\Controllers\NewsController::class, 'add'])->name('berita-kegiatan.add');
+      Route::get('/edit/{id}', [\App\Http\Controllers\NewsController::class, 'edit'])->name('berita-kegiatan.edit');
+      Route::post('/store', [\App\Http\Controllers\NewsController::class, 'store'])->name('berita-kegiatan.save');
+      Route::post('/delete/{id}', [\App\Http\Controllers\NewsController::class, 'destroy'])->name('berita-kegiatan.delete');
+    });
 
     Route::prefix('data-master')->group(function () {
       Route::prefix('talenta')->group(function () {
@@ -137,7 +143,7 @@ Route::middleware(['auth:web'])->group(function () {
         Route::post('/{id}/prestasi/save/', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'prestasiStore'])->name('data-master.talenta.prestasi.save')->middleware('role:superadmin,pic_direktorat');
         Route::post('/prestasi/saveedit/{id}', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'prestasiStoreEdit'])->name('data-master.talenta.prestasi.saveedit')->middleware('role:superadmin,pic_direktorat');
         Route::get('/delete/prestasi/{id}', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'prestasiDelete'])->name('data-master.talenta.prestasi.delete')->middleware('role:superadmin,pic_direktorat');
-    
+
         Route::get('/{id}/kehalian/add/', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'keahlianAdd'])->name('data-master.talenta.keahlian.add')->middleware('role:superadmin,pic_direktorat');
         Route::get('/keahlian/edit/{id}', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'keahlianEdit'])->name('data-master.talenta.keahlian.edit')->middleware('role:superadmin,pic_direktorat');
         Route::post('/{id}/keahlian/save/', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'keahlianStore'])->name('data-master.talenta.keahlian.save')->middleware('role:superadmin,pic_direktorat');
@@ -154,7 +160,6 @@ Route::middleware(['auth:web'])->group(function () {
         Route::post('/store', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'store'])->name('data-master.talenta.save')->middleware('role:superadmin,pic_direktorat');
 
         Route::get('/get-talenta-list', [\App\Http\Controllers\DataMaster\DataTalentaController::class, 'getTalentaList'])->name('data-master.talenta.get-talenta-list')->middleware('role:superadmin,pic_direktorat');
-
       });
       Route::prefix('lembaga')->group(function () {
         Route::get('/', [\App\Http\Controllers\DataMaster\DataLembagaController::class, 'index'])->name('data-master.lembaga.index')->middleware('role:superadmin');
@@ -172,24 +177,57 @@ Route::middleware(['auth:web'])->group(function () {
         Route::get('/delete/{id}', [\App\Http\Controllers\DataMaster\DataPenghargaanController::class, 'delete'])->name('data-master.penghargaan.delete')->middleware('role:superadmin');
         Route::post('/store', [\App\Http\Controllers\DataMaster\DataPenghargaanController::class, 'store'])->name('data-master.penghargaan.save')->middleware('role:superadmin');
       });
-    Route::prefix('sinergi-data')->group(function () {
+      Route::prefix('sinergi-data')->group(function () {
         Route::get('/', [\App\Http\Controllers\DataMaster\SinergiDataController::class, 'index'])->name('data-master.sinergi-data.index')->middleware('role:superadmin, pic_direktorat');
-      Route::get('/add', [\App\Http\Controllers\DataMaster\SinergiDataController::class, 'add'])->name('data-master.sinergi-data.add')->middleware('role:superadmin, pic_direktorat');
-      Route::get('/edit/{id}', [\App\Http\Controllers\DataMaster\SinergiDataController::class, 'edit'])->name('data-master.sinergi-data.edit')->middleware('role:superadmin, pic_direktorat');
-      Route::get('/show/{id}', [\App\Http\Controllers\DataMaster\SinergiDataController::class, 'show'])->name('data-master.sinergi-data.show')->middleware('role:superadmin, pic_direktorat');
-      Route::get('/data', [\App\Http\Controllers\DataMaster\SinergiDataController::class, 'data'])->name('data-master.sinergi-data.data')->middleware('role:superadmin, pic_direktorat');
-      Route::post('/store', [\App\Http\Controllers\DataMaster\SinergiDataController::class, 'store'])->name('data-master.sinergi-data.save')->middleware('role:superadmin,pic_direktorat');
-      Route::get('/delete/{id}', [\App\Http\Controllers\DataMaster\SinergiDataController::class, 'destroy'])->name('data-master.sinergi-data.delete')->middleware('role:superadmin, pic_direktorat');
+        Route::get('/add', [\App\Http\Controllers\DataMaster\SinergiDataController::class, 'add'])->name('data-master.sinergi-data.add')->middleware('role:superadmin, pic_direktorat');
+        Route::get('/edit/{id}', [\App\Http\Controllers\DataMaster\SinergiDataController::class, 'edit'])->name('data-master.sinergi-data.edit')->middleware('role:superadmin, pic_direktorat');
+        Route::get('/show/{id}', [\App\Http\Controllers\DataMaster\SinergiDataController::class, 'show'])->name('data-master.sinergi-data.show')->middleware('role:superadmin, pic_direktorat');
+        Route::get('/data', [\App\Http\Controllers\DataMaster\SinergiDataController::class, 'data'])->name('data-master.sinergi-data.data')->middleware('role:superadmin, pic_direktorat');
+        Route::post('/store', [\App\Http\Controllers\DataMaster\SinergiDataController::class, 'store'])->name('data-master.sinergi-data.save')->middleware('role:superadmin,pic_direktorat');
+        Route::get('/delete/{id}', [\App\Http\Controllers\DataMaster\SinergiDataController::class, 'destroy'])->name('data-master.sinergi-data.delete')->middleware('role:superadmin, pic_direktorat');
 
-      Route::prefix('population')->group(function () {
-        Route::get('/store', [\App\Http\Controllers\DataMaster\PopulationsController::class, 'store'])->name('data-master.population.save')->middleware('role:superadmin, pic_direktorat');
+        Route::prefix('population')->group(function () {
+          Route::get('/store', [\App\Http\Controllers\DataMaster\PopulationsController::class, 'store'])->name('data-master.population.save')->middleware('role:superadmin, pic_direktorat');
 
-        Route::post('/sync-populasi/{id}', [\App\Http\Controllers\DataMaster\PopulationsController::class, 'syncPopulasi'])->name('sync.populasi')->middleware('role:superadmin, pic_direktorat');
+          Route::post('/sync-populasi/{id}', [\App\Http\Controllers\DataMaster\PopulationsController::class, 'syncPopulasi'])->name('sync.populasi')->middleware('role:superadmin, pic_direktorat');
 
-        Route::get('/delete/{id}', [\App\Http\Controllers\DataMaster\PopulationsController::class, 'destroy'])->name('data-master.sinergi-data.population.delete')->middleware('role:superadmin, pic_direktorat');
+          Route::get('/delete/{id}', [\App\Http\Controllers\DataMaster\PopulationsController::class, 'destroy'])->name('data-master.sinergi-data.population.delete')->middleware('role:superadmin, pic_direktorat');
 
-        Route::get('/reset/{id}', [\App\Http\Controllers\DataMaster\PopulationsController::class, 'resetPopulation'])->name('data-master.population.reset')->middleware('role:superadmin, pic_direktorat');
+          Route::get('/reset/{id}', [\App\Http\Controllers\DataMaster\PopulationsController::class, 'resetPopulation'])->name('data-master.population.reset')->middleware('role:superadmin, pic_direktorat');
+        });
       });
+
+      Route::prefix('sasaran-indikator')->group(function () {
+        Route::get('/', [\App\Http\Controllers\DataMaster\SasaranIndikatorController::class, 'index'])->name('data-master.sasaran-indikator.index')->middleware('role:superadmin, pic_direktorat');
+
+        Route::get('/data', [\App\Http\Controllers\DataMaster\SasaranIndikatorController::class, 'data'])->name('data-master.sasaran-indikator.data')->middleware('role:superadmin, pic_direktorat');
+
+        Route::get('/data-dashboard', [\App\Http\Controllers\DataMaster\SasaranIndikatorController::class, 'data_dashboard'])->name('data-master.sasaran-indikator.data-dashboard')->middleware('role:superadmin, pic_direktorat');
+
+        Route::get('/add', [\App\Http\Controllers\DataMaster\SasaranIndikatorController::class, 'add'])->name('data-master.sasaran-indikator.add')->middleware('role:superadmin');
+
+        Route::post('/store', [\App\Http\Controllers\DataMaster\SasaranIndikatorController::class, 'store'])->name('data-master.sasaran-indikator.save')->middleware('role:superadmin');
+
+        Route::get('/edit/{id}', [\App\Http\Controllers\DataMaster\SasaranIndikatorController::class, 'edit'])->name('data-master.sasaran-indikator.edit')->middleware('role:superadmin');
+
+        Route::get('/show', [\App\Http\Controllers\DataMaster\SasaranIndikatorController::class, 'show'])->name('data-master.sasaran-indikator.show')->middleware('role:superadmin');
+
+
+        Route::get('/delete/{id}', [\App\Http\Controllers\DataMaster\SasaranIndikatorController::class, 'destroy'])->name('data-master.sasaran-indikator.delete')->middleware('role:superadmin');
+      });
+    });
+
+    Route::prefix('monev')->group(function () {
+      Route::prefix('kl')->group(function () {
+        Route::get('/', [\App\Http\Controllers\MonevController::class, 'index'])->name('monev.kl.index')->middleware('role:superadmin,pic_direktorat,pic_pemda');
+        Route::get('/data', [\App\Http\Controllers\MonevController::class, 'data'])->name('monev.kl.data')->middleware('role:superadmin,pic_direktorat,pic_pemda');
+        Route::get('/add', [\App\Http\Controllers\MonevController::class, 'add'])->name('monev.kl.add')->middleware('role:superadmin,pic_direktorat,pic_pemda');
+        Route::get('/edit/{id}', [\App\Http\Controllers\MonevController::class, 'edit'])->name('monev.kl.edit')->middleware('role:superadmin, pic_direktorat,pic_pemda');
+        Route::get('/show/{id}', [\App\Http\Controllers\MonevController::class, 'show'])->name('monev.kl.show')->middleware('role:superadmin,pic_direktorat,pic_pemda');
+        Route::get('/delete/{id}', [\App\Http\Controllers\MonevController::class, 'delete'])->name('monev.kl.delete')->middleware('role:superadmin,pic_direktorat,pic_pemda');
+        Route::post('/store', [\App\Http\Controllers\MonevController::class, 'store'])->name('monev.kl.save')->middleware('role:superadmin,pic_direktorat,pic_pemda');
+        Route::get('/{id}/monitoring/add/', [\App\Http\Controllers\MonevController::class, 'monitoringAdd'])->name('monev.kl.monitoring.add')->middleware('role:superadmin, pic_direktorat,pic_pemda');
+        Route::post('/monitoring/save', [\App\Http\Controllers\MonevController::class, 'monitoringSave'])->name('monev.monitoring.save')->middleware('role:superadmin,pic_direktorat,pic_pemda');
       });
     });
   });

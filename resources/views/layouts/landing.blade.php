@@ -30,7 +30,7 @@
     <!--====== Flaticon CSS ======-->
     <link rel="stylesheet" href="{{ asset('assets/landing/css/flaticon.css') }}">
     <!--====== Bootstrap css ======-->
-    <link rel="stylesheet" href="{{ asset('assets/landing/css/bootstrap.4.5.3.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/landing/css/bootstrap.4.6.2.min.css') }}">
     <!--====== Magnific Popup ======-->
     <link rel="stylesheet" href="{{ asset('assets/landing/css/magnific-popup.css') }}">
     <!--====== Slick Slider ======-->
@@ -63,7 +63,6 @@
 
         <!-- Preloader -->
         <div class="preloader"></div>
-
 
         <!--====== Header Part Start ======-->
         <header class="main-header">
@@ -104,16 +103,18 @@
                                         <li @class(['current' => $activeMenu === 'library'])><a href="/pustaka">Pustaka</a></li>
                                         {{-- <li @class(['current' => $activeMenu === 'pb'])><a href="/praktik-baik">Praktik Baik</a></li> --}}
                                         <li @class(['current' => $activeMenu === 'sinergi'])><a href="/sinergi">Sinergi Data</a></li>
+                                        <li @class(['current' => $activeMenu === 'monev'])><a href="{{ route('dashboard') }}">Monev</a>
+                                        </li>
                                         <li @class(['current' => $activeMenu === 'contact'])><a href="/contact">Kontak</a></li>
                                     </ul>
                                 </div>
                             </nav>
                             <!-- Main Menu End-->
                         </div>
-                        {{-- <div class="menu-right d-none d-lg-flex align-items-center ml-lg-auto">
-                            <a href="{{ route('dashboard-capaian') }}" class="theme-btn style-one">Dashboard <i
-                                    class="fas fa-arrow-right"></i></a>
-                        </div> --}}
+                        <div class="menu-right d-none d-lg-flex align-items-center ml-lg-auto">
+                            <a href="{{ route('dashboard-capaian') }}" class="theme-btn style-one"
+                                style="background-color: #4575B8;">Dashboard <i class="fas fa-arrow-right"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -209,7 +210,7 @@
         integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous">
     </script>
     <!--====== Bootstrap ======-->
-    <script src="{{ asset('assets/landing/js/bootstrap.4.5.3.min.js') }}"></script>
+    <script src="{{ asset('assets/landing/js/bootstrap.4.6.2.min.js') }}"></script>
     <!--====== Appear js ======-->
     <script src="{{ asset('assets/landing/js/appear.js') }}"></script>
     <!--====== WOW js ======-->

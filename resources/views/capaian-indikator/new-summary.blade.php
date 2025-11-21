@@ -4,24 +4,27 @@
     <section class="services-section-three bg-lighter pt-50 rel z-1 bg-white">
         <div class="card ">
             <div class="card-header card-header-stretch">
-                <h3 class="card-title">Ringkasan Jumlah Talenta</h3>
+                <h3 class="card-title">Alur MTN</h3>
                 <div class="card-toolbar">
                     <ul class="nav nav-tabs nav-line-tabs nav-stretch fs-6 border-0" id="talenta-tab" role="tablist">
                         <li class="nav-item p-10" role="presentation" onclick="showTahapanSasaranMtn(event, 'talenta-tab-1')">
-                            <button class="nav-link" id="talenta-1-tab" data-toggle="tab" data-target="#talenta-1"
-                                type="button" role="tab" aria-controls="talenta-1" aria-selected="false">Bidang Riset &
+                            <button class="nav-link text-black bg-hover-secondary   px-1" id="talenta-1-tab"
+                                data-toggle="tab" data-target="#talenta-1" type="button" role="tab"
+                                aria-controls="talenta-1" aria-selected="false">Bidang Riset &
                                 Inovasi</button>
                         </li>
                         <li class="nav-item p-10" role="presentation"
                             onclick="showTahapanSasaranMtn(event, 'talenta-tab-2')">
-                            <button class="nav-link " id="talenta-2-tab" data-toggle="tab" data-target="#talenta-2"
-                                type="button" role="tab" aria-controls="talenta-2" aria-selected="false">Bidang Seni
+                            <button class="nav-link text-black bg-hover-secondary   px-1" id="talenta-2-tab"
+                                data-toggle="tab" data-target="#talenta-2" type="button" role="tab"
+                                aria-controls="talenta-2" aria-selected="false">Bidang Seni
                                 Budaya</button>
                         </li>
                         <li class="nav-item p-10" role="presentation"
                             onclick="showTahapanSasaranMtn(event, 'talenta-tab-3')">
-                            <button class="nav-link " id="talenta-3-tab" data-toggle="tab" data-target="#talenta-3"
-                                type="button" role="tab" aria-controls="talenta-3" aria-selected="false">Bidang
+                            <button class="nav-link text-black bg-hover-secondary   px-1" id="talenta-3-tab"
+                                data-toggle="tab" data-target="#talenta-3" type="button" role="tab"
+                                aria-controls="talenta-3" aria-selected="false">Bidang
                                 Olahraga</button>
                         </li>
                     </ul>
@@ -33,9 +36,17 @@
                 <div class="tab-pane fade show active" id="talenta-1" role="tabpanel" aria-labelledby="talenta-1-tab">
                     <ul class="nav solutions-tab-nav nav-pills flex-xl-column nav-fill mb-50 wow fadeInUp delay-0-2s">
                         <div class="container">
-                            <div class="row" id="talenta-tab-1-details">
-                                <!-- Content for Riset & Inovasi goes here -->
+                            <div class="col-xl-7 col-lg-6 w-100 mb-30">
+                                <div class="about-page-images justify-content-lg-end wow fadeInRight delay-0-2s w-100"
+                                    style="visibility: visible; animation-name: fadeInRight;">
+                                    <img src="{{ asset('assets/media/illustrations/tahapan_risnov.jpg') }}"
+                                        class="w-100 auto" alt="About">
+                                </div>
                             </div>
+
+                            {{-- <div class="row" id="talenta-tab-1-details">
+                                <!-- Content for Riset & Inovasi goes here -->
+                            </div> --}}
                         </div>
                     </ul>
                 </div>
@@ -47,9 +58,16 @@
                 <div class="tab-pane fade show active" id="talenta-2" role="tabpanel" aria-labelledby="talenta-2-tab">
                     <ul class="nav solutions-tab-nav nav-pills flex-xl-column nav-fill mb-50">
                         <div class="container">
-                            <div class="row" id="talenta-tab-2-details">
-                                <!-- Content for Seni Budaya goes here -->
+                            <div class="col-xl-7 col-lg-6 w-100 mb-30">
+                                <div class="about-page-images justify-content-lg-end wow fadeInRight delay-0-2s w-100"
+                                    style="visibility: visible; animation-name: fadeInRight;">
+                                    <img src="{{ asset('assets/media/illustrations/tahapan_seni_budaya.jpg') }}"
+                                        class="w-100 auto" alt="About">
+                                </div>
                             </div>
+                            {{-- <div class="row" id="talenta-tab-2-details">
+                                <!-- Content for Seni Budaya goes here -->
+                            </div> --}}
                         </div>
                     </ul>
                 </div>
@@ -61,9 +79,16 @@
                 <div class="tab-pane fade show active" id="talenta-3" role="tabpanel" aria-labelledby="talenta-3-tab">
                     <ul class="nav solutions-tab-nav nav-pills flex-xl-column nav-fill mb-50">
                         <div class="container">
-                            <div class="row" id="talenta-tab-3-details">
-                                <!-- Content for Olahraga goes here -->
+                            <div class="col-xl-7 col-lg-6 w-100 mb-30">
+                                <div class="about-page-images justify-content-lg-end wow fadeInRight delay-0-2s w-100"
+                                    style="visibility: visible; animation-name: fadeInRight;">
+                                    <img src="{{ asset('assets/media/illustrations/tahapan_olahraga.jpg') }}"
+                                        class="w-100 auto" alt="About">
+                                </div>
                             </div>
+                            {{-- <div class="row" id="talenta-tab-3-details">
+                                <!-- Content for Olahraga goes here -->
+                            </div> --}}
                         </div>
                     </ul>
                 </div>
@@ -150,6 +175,7 @@
             let contentHtml = '';
 
             data.tahapan.forEach(item => {
+                const formattedTotal = item.total.toLocaleString('id-ID');
                 contentHtml += `
                 <div class="col-md-3">
                     <div class="tahapan-card text-center wow fadeInUp delay-0-2s"
@@ -158,7 +184,7 @@
                             <img src="/assets/media/icons/tahapan/${item.image}" class="img" alt="">
                         </div>
                         <h5 class="text-white mt-5">${item.tahapan}</h5>
-                        <h3 class="text-white">${item.total} Talenta</h3>
+                        <h3 class="text-white">${formattedTotal} Talenta</h3>
                     </div>
                 </div>
             `;

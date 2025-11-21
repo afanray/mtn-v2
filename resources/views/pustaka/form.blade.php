@@ -41,8 +41,7 @@
                             </div>
                         </div>
                     </div>
-                    <div
-                        class="non-file {{ $model->id && $model->type != \App\Constants\Common::PUSTAKA_VIDEO ? '' : 'd-none' }}">
+                    <div class="">
                         <div class="row mb-6">
                             <label class="col-lg-4 col-form-label required fw-semibold fs-6">Deskripsi</label>
                             <div class="col-lg-8">
@@ -55,7 +54,7 @@
                             </div>
                         </div>
                         <div class="row mb-6">
-                            <label class="col-lg-4 col-form-label fw-semibold fs-6">Link</label>
+                            <label class="col-lg-4 col-form-label required fw-semibold fs-6">Link</label>
                             <div class="col-lg-8">
                                 <div class="row">
                                     <div class="col-12 fv-row">
@@ -87,29 +86,7 @@
                             </div>
                         </div>
                     </div>
-                    <div
-                        class="with-file {{ $model->id && $model->type == \App\Constants\Common::PUSTAKA_VIDEO ? '' : 'd-none' }}">
-                        <div class="row mb-6">
-                            <label class="col-lg-4 col-form-label required fw-semibold fs-6">Video</label>
-                            <div class="col-lg-8">
-                                <div class="row">
-                                    <div class="col-12 fv-row">
-                                        @if ($model->link)
-                                            <div class="foto-wrapper mb-3 w-200px">
-                                                sssss
-                                            </div>
-                                        @endif
-                                        <input type="file"
-                                            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                            name="file" id="file" />
-                                        @if ($model->link)
-                                            <span class="form-text text-muted">Abaikan Bila tidak ingin diubah.</span>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
 
 
                 </div>
@@ -154,13 +131,13 @@
                                 },
                             }
                         },
-                        // 'link': {
-                        //     validators: {
-                        //         notEmpty: {
-                        //             message: 'Link is required'
-                        //         },
-                        //     }
-                        // },
+                        'link': {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Link is required'
+                                },
+                            }
+                        },
                         'image': {
                             validators: {
                                 file: {
@@ -172,21 +149,6 @@
                                 ...(!isEdit ? {
                                     notEmpty: {
                                         message: 'Gambar is required'
-                                    }
-                                } : {})
-                            },
-                        },
-                        'file': {
-                            validators: {
-                                file: {
-                                    extension: 'mp4,webm,ogg',
-                                    type: 'video/mp4,video/webm,video/ogg',
-                                    maxSize: 52428800, // 2048 * 1024
-                                    message: 'format Video tidak valid',
-                                },
-                                ...(!isEdit ? {
-                                    notEmpty: {
-                                        message: 'Video is required'
                                     }
                                 } : {})
                             },

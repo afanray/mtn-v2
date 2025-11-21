@@ -14,40 +14,51 @@ use Illuminate\View\View;
 
 class CapaianIndikatorController extends Controller
 {
-    //
-    public function index(Request $request) : View {
-      $data = DataIndikator::all()->collect()->groupBy('year')->toArray();
-      $targetIndikator = TargetIndikator::all()->collect();
-      $targetRiset = $targetIndikator->filter(function($t){
-        return $t->bidang_id == Common::BIDANG_RISET_ID;
-      })->groupBy('field')->map(function($g){
-        return collect($g)->groupBy('year');
-      })->toArray();
-      $targetSeni = $targetIndikator->filter(function($t){
-        return $t->bidang_id == Common::BIDANG_SENI_ID;
-      })->groupBy('field')->map(function($g){
-        return collect($g)->groupBy('year');
-      })->toArray();
-      $targetOr = $targetIndikator->filter(function($t){
-        return $t->bidang_id == Common::BIDANG_OR_ID;
-      })->groupBy('field')->map(function($g){
-        return collect($g)->groupBy('year');
-      })->toArray();
-      $yearIndex = $request->input('year_group', 0);
-      $activeYearGroup = Common::getTahun()[$yearIndex];
-      return view('capaian-indikator.index',[
-        'activeMenu' => 'capaian-indikator',
-        'data'=>$data,
-        'targetRiset'=>$targetRiset,
-        'targetSeni'=>$targetSeni,
-        'targetOr'=>$targetOr,
-        'activeYearGroup'=>$activeYearGroup,
-        'yearIndex'=>$yearIndex
-      ]);
-    }
+  //
+  public function index(Request $request): View
+  {
 
-    public function summary(): View{
-      $ringkasan = DB::select('
+    // @dd($request->all());
+    $data = DataIndikator::all()->collect()->groupBy('year')->toArray();
+    $targetIndikator = TargetIndikator::all()->collect();
+
+
+    $targetRiset = $targetIndikator->filter(function ($t) {
+      return $t->bidang_id == Common::BIDANG_RISET_ID;
+    })->groupBy('field')->map(function ($g) {
+      return collect($g)->groupBy('year');
+    })->toArray();
+
+    // @dd($targetRiset);
+
+    $targetSeni = $targetIndikator->filter(function ($t) {
+      return $t->bidang_id == Common::BIDANG_SENI_ID;
+    })->groupBy('field')->map(function ($g) {
+      return collect($g)->groupBy('year');
+    })->toArray();
+    $targetOr = $targetIndikator->filter(function ($t) {
+      return $t->bidang_id == Common::BIDANG_OR_ID;
+    })->groupBy('field')->map(function ($g) {
+      return collect($g)->groupBy('year');
+    })->toArray();
+    $yearIndex = $request->input('year_group', 0);
+    $activeYearGroup = Common::getTahun()[$yearIndex];
+
+    return view('capaian-indikator.index', [
+      'activeMenu' => 'capaian-indikator',
+      'data' => $data,
+      'targetRiset' => $targetRiset,
+      'targetSeni' => $targetSeni,
+      'targetOr' => $targetOr,
+      'activeYearGroup' => $activeYearGroup,
+      'yearIndex' => $yearIndex,
+      'targetIndikator' => $targetIndikator
+    ]);
+  }
+
+  public function summary(): View
+  {
+    $ringkasan = DB::select('
         select
         (select count(id) from talenta where level_talenta_id = 1) as riset_pra_bibit,
         (select count(id) from talenta where level_talenta_id = 2) as riset_bibit,
@@ -61,28 +72,29 @@ class CapaianIndikatorController extends Controller
         (select count(id) from talenta where level_talenta_id = 10) as or_potensial,
         (select count(id) from talenta where level_talenta_id = 11) as or_unggul
       ');
-      return view('capaian-indikator.new-summary',[
-        'activeMenu' => 'summary',
-        // 'ringkasan'=>$ringkasan[0],
-      ]);
-    }
+    return view('capaian-indikator.new-summary', [
+      'activeMenu' => 'summary',
+      // 'ringkasan'=>$ringkasan[0],
+    ]);
+  }
 
-    public function saveTarget(Request $request): JsonResponse{
-      $target = $request->input('target');
-      $saved = [];
-      foreach($target as $k=>$v){
-        $tItem = TargetIndikator::query()->find($k);
-        if($tItem){
-          $tItem->target = $v ?? null;
-          $tItem->save();
-          $saved[] = [
-            'id'=>$tItem->id,
-            'val'=>$tItem->target,
-          ];
-        }
+  public function saveTarget(Request $request): JsonResponse
+  {
+    $target = $request->input('target');
+    $saved = [];
+    foreach ($target as $k => $v) {
+      $tItem = TargetIndikator::query()->find($k);
+      if ($tItem) {
+        $tItem->target = $v ?? null;
+        $tItem->save();
+        $saved[] = [
+          'id' => $tItem->id,
+          'val' => $tItem->target,
+        ];
       }
-      return response()->json([
-        'data'=>$saved
-      ]);
     }
+    return response()->json([
+      'data' => $saved
+    ]);
+  }
 }

@@ -16,6 +16,7 @@ use App\Models\DataIndikator;
 use App\Models\HighLightTalenta;
 use App\Models\InputDataMapping;
 use App\Models\PraktikBaik;
+use App\Models\RencanaAksi;
 use App\Models\Talenta;
 use App\Models\Testimoni;
 use App\Models\User;
@@ -28,6 +29,7 @@ class DashboardController extends Controller
   //
   public function index(Request $request): View
   {
+    $rencanaAksi = RencanaAksi::query();
     $ajangTalenta = AjangTalenta::query();
     $anugrahTalenta = AnugrahTalenta::query();
     $highlightTalenta = HighLightTalenta::query();
@@ -36,6 +38,7 @@ class DashboardController extends Controller
       $anugrahTalenta = $anugrahTalenta->where('created_by', \Auth::user()->id);
       $highlightTalenta = $highlightTalenta->where('created_by', \Auth::user()->id);
     }
+    $countRA = $rencanaAksi->count();
     $countAT = $ajangTalenta->count();
     $countANT = $anugrahTalenta->count();
     $countHT = $highlightTalenta->count();
@@ -86,6 +89,7 @@ class DashboardController extends Controller
     $activeYearGroup = Common::getTahun()[$yearIndex];
     return view('dashboard.index', [
       'activeMenu' => 'dashboard',
+      'countRA' => $countRA,
       'countAT' => $countAT,
       'countANT' => $countANT,
       'countHT' => $countHT,
@@ -121,7 +125,7 @@ class DashboardController extends Controller
       $req = new DataOlahragaRequest();
     }
     $rules = $req->rules();
-    $attributes = InputDataMapping::query()->with('users')->where('bidang_id', $bidang_id)->get();
+    $attributes = InputDataMapping::query()->with('users.lembaga_induk_unit', 'users.lembaga')->where('bidang_id', $bidang_id)->get();
     if (User::isOperator()) {
       $userInputs = UsersInput::query()->with('inputs')->where('user_id', auth()->user()->id)->get()->collect();
       $keys_input = $userInputs->pluck('input_data_id')->all();
@@ -129,6 +133,8 @@ class DashboardController extends Controller
     } else {
       $attributes = $attributes->toArray();
     }
+
+    // @dd($attributes);
     return [
       'rules' => $rules,
       'attributes' => $attributes,

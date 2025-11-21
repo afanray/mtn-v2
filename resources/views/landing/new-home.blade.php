@@ -35,7 +35,7 @@
         <div class="row align-items-center">
             <div class="col-lg-6 col-md-6">
                 <h3 class="font-weight-bold text-left mx-auto mt-4 mb-4">
-                    Highlight Talenta Nasional
+                    Tokoh Inspiratif Talenta Nasional
                 </h3>
             </div>
         </div>
@@ -110,7 +110,7 @@
                 @foreach ($dataBerita as $key => $item)
                     <div class="carousel-item  {{ $key == 0 ? 'active' : '' }}">
 
-                        <div class="card wow fadeInUp delay-0-3s border-0 shadow p-20 rounded">
+                        <div class="card wow delay-0-3s border-0 p-20 rounded">
                             <div class="row no-gutters">
                                 <div class="col-md-2 d-flex ml-20 align-items-center justify-content-center">
                                     <img src="storage/berita_kegiatan/{{ $item['image'] }}" alt="Profile Picture"
@@ -148,33 +148,35 @@
         </div>
     </section>
 
+
     <section class="container bg-white mt-5 mb-5">
-        <h3 class="font-weight-bold text-left mx-auto mt-4 mb-4">
-            Stakeholder Parnertship
-        </h3>
+        <div class="row align-items-center">
+            <div class="col-lg-6 col-md-6">
+                <h3 class="font-weight-bold text-left mx-auto mt-4 mb-4">
+                    Stakeholder Partnership
+                </h3>
+            </div>
+        </div>
 
-        <div class="row">
-            @foreach ($dataBeasiswa as $item)
-                <div class="col-lg-4 col-md-12 ">
-                    <a href="{{ $item['url'] }}">
-                        <div class="beasiswa-card text-center wow fadeInUp delay-0-3s"
-                            style="visibility: visible; animation-name: fadeInUp; ">
-                            <div class="icon-beasiswa">
-                                <img src="{{ $item['image'] }}" class="img" alt="image">
+        <div class="swiper-container" style="overflow: hidden;">
+            <div class="swiper-wrapper">
+                @foreach ($dataBeasiswa as $item)
+                    <div class="swiper-slide">
+                        <a href="{{ $item['link'] }}">
+                            <div class="card"
+                                style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); height: 200px; overflow: hidden; display: flex; flex-direction: column;">
+                                <img class="card-img-top"
+                                    src="{{ $item['image'] ? asset('storage/pustaka/' . $item['image']) : 'https://avatar.iran.liara.run/public/boy?username=Ash' }}"
+                                    alt="Stakeholders Image"
+                                    style="border-radius: 10px 10px 0 0; height: 200px; object-fit: contain; background-color:#283593; padding:20px">
                             </div>
-
-                            <h5 class="text-lg md:text-2xl font-bold text-center mb-4 text-blue-600 dark:text-blue-300">
-                                {{ $item['bidang'] }}
-                            </h5>
-                            <p class="text-sm ">
-                                {{ $item['deskripsi'] }}
-                            </p>
-                        </div>
-                    </a>
-                </div>
-            @endforeach
+                        </a>
+                    </div>
+                @endforeach
+            </div>
         </div>
     </section>
+
 
     <section class="container bg-white mt-5 mb-10">
         <h3 class="font-weight-bold text-left mx-auto mt-4 mb-4">
@@ -186,8 +188,9 @@
             <div class="col-lg-9 mb-4 mb-lg-0">
                 <div class="card">
                     <div class="embed-responsive embed-responsive-16by9 rounded-lg">
-                        <iframe class="embed-responsive-item" id="mainVideo" src="{{ $mainVideoSrc }}"
-                            title="YouTube video player"
+                        <iframe class="embed-responsive-item" id="mainVideo"
+                            sandbox="allow-same-origin allow-scripts allow-presentation allow-popups"
+                            src="{{ $mainVideoSrc->link }}" title="YouTube video player"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                     </div>
@@ -199,10 +202,13 @@
                 <h3 class="h5 font-weight-bold mb-4">Video lainnya</h3>
                 <ul class="list-unstyled">
                     @foreach ($videos as $index => $videoUrl)
-                        <li onclick="setMainVideoSrc('{{ $videoUrl }}')" class="cursor-pointer mb-3" role="button">
+                        <li onclick="setMainVideoSrc('{{ $videoUrl->link }}')" class="cursor-pointer mb-3"
+                            role="button">
                             <div class="embed-responsive embed-responsive-16by9 rounded-lg">
-                                <iframe class="embed-responsive-item secondaryIframe" src="{{ $videoUrl }}"
-                                    title="YouTube video {{ $index + 1 }}" frameborder="0"
+                                <iframe class="embed-responsive-item secondaryIframe"
+                                    sandbox="allow-same-origin allow-scripts allow-presentation allow-popups"
+                                    src="{{ $videoUrl->link }}" title="YouTube video {{ $index + 1 }}"
+                                    frameborder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                     referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                             </div>
@@ -243,8 +249,8 @@
                     </div>
 
                     <div class="col-lg-12">
-                        <img src=" {{ asset('assets/landing/images/background/gugus-tugas-mtn.png') }}" class="img-fluid"
-                            alt="anggota gugus tugas">
+                        <img src=" {{ asset('assets/landing/images/background/gugus-tugas-update.png') }}"
+                            class="img-fluid" alt="anggota gugus tugas">
                     </div>
                 </div>
             </div>
@@ -420,10 +426,8 @@
 
         document.addEventListener('DOMContentLoaded', async function() {
             const container = document.getElementById('talent-cards-container');
-            const apiEndpoint = `${baseUrl}api/bidang-count`; // Ganti dengan endpoint API Anda
-            // Menampilkan indikator loading
+            const apiEndpoint = `${baseUrl}api/bidang-count`;
 
-            console.log(apiEndpoint);
             container.innerHTML = '<p>Loading data...</p>';
             try {
                 const response = await fetch(apiEndpoint);
@@ -449,7 +453,6 @@
                     </div>
                     <h5>${talent.bidang}</h5>
                     <p>${talent.deskripsi}</p>
-                    <h6>${talent.total} Talenta</h6>
                 </div>
             `;
 
@@ -486,55 +489,6 @@
             // Initialize the first text
             rotateText();
         });
-    </script>
-
-    <script>
-        const map = L.map('map').setView([-4.574485818324603, 114.23146202697515], 4);
-
-        const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        }).addTo(map);
-
-        const baseballIcon = L.icon({
-            iconUrl: 'baseball-marker.png',
-            iconSize: [32, 37],
-            iconAnchor: [16, 37],
-            popupAnchor: [0, -28]
-        });
-
-        function onEachFeature(feature, layer) {
-            let popupContent = `<p>I started out as a GeoJSON ${feature.geometry.type}, but now I'm a Leaflet vector!</p>`;
-
-            if (feature.properties && feature.properties.popupContent) {
-                popupContent += feature.properties.popupContent;
-            }
-
-            layer.bindPopup(popupContent);
-        }
-        const legend = L.control({
-            position: 'bottomright'
-        });
-
-        legend.onAdd = function(map) {
-
-            const div = L.DomUtil.create('div', 'info legend');
-            const grades = [0, 10, 20, 50, 100, 200, 500, 1000];
-            const labels = [];
-            let from, to;
-
-            for (let i = 0; i < grades.length; i++) {
-                from = grades[i];
-                to = grades[i + 1];
-
-                labels.push(`<i style="background:${getColor(from + 1)}"></i> ${from}${to ? `&ndash;${to}` : '+'}`);
-            }
-
-            div.innerHTML = labels.join('<br>');
-            return div;
-        };
-
-        legend.addTo(map);
     </script>
 
     <script>

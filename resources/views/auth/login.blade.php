@@ -35,6 +35,14 @@
                 <!--end::Password-->
             </div>
             <!--end::Input group=-->
+            {{-- <div class="fv-row  justify-content-center py-5">
+                <x-turnstile" />
+            </div> --}}
+            <div class="fv-row  justify-content-center py-5">
+                <x-turnstile data-action="login" data-cdata="sessionid-123456789" data-callback="callback"
+                    data-expired-callback="expiredCallback" data-error-callback="errorCallback" data-theme="light" data-
+                    data-size="normal" data-tabindex="0" style="transform: scale(0.85); transform-origin: 0 0;" />
+            </div>
 
             <!--begin::Submit button-->
             <div class="d-grid mb-10">

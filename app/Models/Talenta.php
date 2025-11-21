@@ -19,6 +19,8 @@ class Talenta extends Model
     'level_talenta_id',
     'province_id',
     'regency_id',
+    'user_id',
+    'created_by',
   ];
 
   public function lembaga(): BelongsTo
@@ -66,8 +68,29 @@ class Talenta extends Model
     return $this->hasMany(TalentaPrestasi::class);
   }
 
+  public function pembinaan()
+  {
+    return $this->hasMany(RiwayatPembinaan::class);
+  }
+
   public function keahlian()
   {
     return $this->hasMany(TalentaKeahlian::class);
+  }
+
+  public function detail_risnov()
+  {
+    return $this->hasMany(DetailRisnov::class);
+  }
+
+
+  public function detail_senbud()
+  {
+    return $this->hasMany(DetailSenbud::class);
+  }
+
+  public function detail_olahraga()
+  {
+    return $this->hasMany(DetailOlahraga::class);
   }
 }

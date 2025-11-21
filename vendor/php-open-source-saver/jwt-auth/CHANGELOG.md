@@ -4,9 +4,79 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-You can find and compare releases at the GitHub release page.
+You can find and compare releases at the [GitHub release page](https://github.com/PHP-Open-Source-Saver/jwt-auth/releases).
 
 ## [Unreleased]
+### Fixed
+ - Fixed the return type of getMinutesUntilExpired in BlackList, which returned a float instead of an int when using Carbon v2.
+ - Fixed PHPStan issue in JWTGenerateSecretCommand by ensuring displayKey($key); is called before returning, avoiding returning a void method.  
+ - Fixed missing return true; statements in validatePayload() and validateRefresh() methods of Expiration.php, IssuedAt.php, and NotBefore.php to resolve PHPStan errors.  
+ - Fixed PHPStan error related to new static() by refactoring hasAllClaims method in Collection class.
+
+
+## [2.8.0] 2025-02-11
+Please see (https://github.com/PHP-Open-Source-Saver/jwt-auth/releases/tag/2.8.0)
+
+### Added
+- Adds support for Laravel 12
+- Adds CI testing for PHP 8.4
+- Don't show jwt secret if show option is false even if the key is updated
+- Casts config ints to int by default in new config file publishes
+- Override "id" method in JWTGuard
+
+### Removed
+
+- Dropping support for PHP 8.1, if you are still on this version, please update your PHP version in order to use the latest version of this package.
+
+## [2.7.2] 2024-09-28
+
+### Added
+- Add `cookie_key_name` config to customize cookie name for authentication
+- Delegate `Auth::id()` calls to the newly added `getUserId` method
+
+## [2.7.0] 2024-07-24
+
+### Fixed
+- Support for Carbon 3 alongside Carbon 2
+
+## [2.6.0] 2024-07-11
+
+### Added
+- New `getUserId` method
+
+## [2.5.0] 2024-07-03
+
+### Added
+- Refresh iat claim when refreshing a token
+
+## [2.4.0] 2024-05-27
+
+### Added
+- Support for lcobucci/jwt^5.0 (and dropped support for ^4.0)
+- SetSecret regenerates config with new secret in the Lcobucci provider
+
+## [2.3.0] 2024-05-09
+
+### Added
+- Support for Carbon 3 (and drop Carbon 1, but it was unused anyway)
+
+### Removed
+- Dropped support for Laravel < 10 and PHP < 8.1
+
+### Fixed
+- Use `id` claim for identify user if `sub` doesn't exists.
+
+## [2.2.0] 2024-03-12
+
+### Added
+- Different TTL configurations for each guard
+- lcobucci/jwt: add array support for `aud` claim
+- Laravel 11 support
+
+## [2.1.0] 2023-02-17
+
+### Added
+- Laravel 10 support
 
 ## [2.0.0] 2022-09-08
 - No changes to 2.0.0-RC1
