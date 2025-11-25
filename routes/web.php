@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home.index');
-Route::get('/dashboard-capaian', [\App\Http\Controllers\DashboardCapaianController::class, 'index'])->name('dashboard-capaian');
+// Route::get('/dashboard-capaian', [\App\Http\Controllers\DashboardCapaianController::class, 'index'])->name('dashboard-capaian');
 Route::get('/about', [\App\Http\Controllers\HomeController::class, 'about'])->name('home.about');
 Route::get('/news', [\App\Http\Controllers\HomeController::class, 'news'])->name('home.news');
 Route::get('/highlight-talenta', [\App\Http\Controllers\HomeController::class, 'highlightTalenta'])->name('home.highlight-talenta');

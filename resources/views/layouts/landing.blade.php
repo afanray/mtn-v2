@@ -111,10 +111,10 @@
                             </nav>
                             <!-- Main Menu End-->
                         </div>
-                        <div class="menu-right d-none d-lg-flex align-items-center ml-lg-auto">
+                        {{-- <div class="menu-right d-none d-lg-flex align-items-center ml-lg-auto">
                             <a href="{{ route('dashboard-capaian') }}" class="theme-btn style-one"
                                 style="background-color: #4575B8;">Dashboard <i class="fas fa-arrow-right"></i></a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
