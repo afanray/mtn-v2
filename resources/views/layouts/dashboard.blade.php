@@ -533,7 +533,10 @@
                                                     </a>
                                                     <!--end:Menu link-->
                                                 </div>
+                                            @endif
 
+                                            @if (auth()->check() &&
+                                                    auth()->user()->hasAccess(['superadmin', 'pic_direktorat']))
                                                 <div class="menu-item">
                                                     <!--begin:Menu link-->
                                                     <a class="menu-link {{ $activeMenu === 'master-sasaran-indikator' ? 'active' : '' }}"

@@ -52,9 +52,9 @@ Route::middleware(['auth:web'])->group(function () {
       Route::post('/new-password-saved', [\App\Http\Controllers\UserController::class, 'saveNewPassword'])->name('user.save-new-password');
     });
 
-    Route::prefix('sasaran-target')->group(function () {
-      Route::get('/', [\App\Http\Controllers\SasaranTargetController::class, 'index'])->name('sasaran-target.index');
-    });
+    // Route::prefix('sasaran-target')->group(function () {
+    //   Route::get('/', [\App\Http\Controllers\SasaranTargetController::class, 'index'])->name('sasaran-target.index');
+    // });
 
 
     Route::prefix('data')->group(function () {
@@ -198,22 +198,22 @@ Route::middleware(['auth:web'])->group(function () {
       });
 
       Route::prefix('sasaran-indikator')->group(function () {
-        Route::get('/', [\App\Http\Controllers\DataMaster\SasaranIndikatorController::class, 'index'])->name('data-master.sasaran-indikator.index')->middleware('role:superadmin, pic_direktorat');
+        Route::get('/', [\App\Http\Controllers\DataMaster\SasaranIndikatorController::class, 'index'])->name('data-master.sasaran-indikator.index')->middleware('role:superadmin,pic_direktorat');
 
-        Route::get('/data', [\App\Http\Controllers\DataMaster\SasaranIndikatorController::class, 'data'])->name('data-master.sasaran-indikator.data')->middleware('role:superadmin, pic_direktorat');
+        Route::get('/data', [\App\Http\Controllers\DataMaster\SasaranIndikatorController::class, 'data'])->name('data-master.sasaran-indikator.data')->middleware('role:superadmin,pic_direktorat');
 
-        Route::get('/data-dashboard', [\App\Http\Controllers\DataMaster\SasaranIndikatorController::class, 'data_dashboard'])->name('data-master.sasaran-indikator.data-dashboard')->middleware('role:superadmin, pic_direktorat');
+        Route::get('/data-dashboard', [\App\Http\Controllers\DataMaster\SasaranIndikatorController::class, 'data_dashboard'])->name('data-master.sasaran-indikator.data-dashboard')->middleware('role:superadmin,pic_direktorat');
 
-        Route::get('/add', [\App\Http\Controllers\DataMaster\SasaranIndikatorController::class, 'add'])->name('data-master.sasaran-indikator.add')->middleware('role:superadmin');
+        Route::get('/add', [\App\Http\Controllers\DataMaster\SasaranIndikatorController::class, 'add'])->name('data-master.sasaran-indikator.add')->middleware('role:superadmin,pic_direktorat');
 
-        Route::post('/store', [\App\Http\Controllers\DataMaster\SasaranIndikatorController::class, 'store'])->name('data-master.sasaran-indikator.save')->middleware('role:superadmin');
+        Route::post('/store', [\App\Http\Controllers\DataMaster\SasaranIndikatorController::class, 'store'])->name('data-master.sasaran-indikator.save')->middleware('role:superadmin,pic_direktorat');
 
-        Route::get('/edit/{id}', [\App\Http\Controllers\DataMaster\SasaranIndikatorController::class, 'edit'])->name('data-master.sasaran-indikator.edit')->middleware('role:superadmin');
+        Route::get('/edit/{id}', [\App\Http\Controllers\DataMaster\SasaranIndikatorController::class, 'edit'])->name('data-master.sasaran-indikator.edit')->middleware('role:superadmin,pic_direktorat');
 
-        Route::get('/show', [\App\Http\Controllers\DataMaster\SasaranIndikatorController::class, 'show'])->name('data-master.sasaran-indikator.show')->middleware('role:superadmin');
+        Route::get('/show', [\App\Http\Controllers\DataMaster\SasaranIndikatorController::class, 'show'])->name('data-master.sasaran-indikator.show')->middleware('role:superadmin,pic_direktorat');
 
 
-        Route::get('/delete/{id}', [\App\Http\Controllers\DataMaster\SasaranIndikatorController::class, 'destroy'])->name('data-master.sasaran-indikator.delete')->middleware('role:superadmin');
+        Route::get('/delete/{id}', [\App\Http\Controllers\DataMaster\SasaranIndikatorController::class, 'destroy'])->name('data-master.sasaran-indikator.delete')->middleware('role:superadmin,pic_direktorat');
       });
     });
 
